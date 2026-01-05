@@ -95,11 +95,50 @@ def get_custom_training_params():
         return 10, 10, 100
 
 
-def run_play(mode: str, difficulty: str = "easy"):
+def run_play(mode: str, difficulty: str = "easy", difficulty2: str = None):
     """Lance une partie de Quarto"""
     cmd = [sys.executable, str(SCRIPTS_DIR / "play.py"), "--mode", mode, "--difficulty", difficulty]
+    if difficulty2:
+        cmd.extend(["--difficulty2", difficulty2])
     subprocess.run(cmd)
     input(f"\n{Colors.CYAN}Appuyez sur Entree pour revenir au menu...{Colors.RESET}")
+
+
+def print_ai_level_menu(ai_number: int):
+    """Affiche le menu de selection du niveau d'une IA"""
+    print(f"\n{Colors.BROWN}  Niveau de l'IA {ai_number}:{Colors.RESET}")
+    print(f"    1. Random")
+    print(f"    2. Facile")
+    print(f"    3. Moyen")
+    print(f"    4. Difficile")
+
+
+def get_ai_level_choice(ai_number: int) -> str:
+    """Demande et retourne le niveau choisi pour une IA"""
+    level_map = {"1": "random", "2": "easy", "3": "medium", "4": "hard"}
+    level_names = {"1": "Random", "2": "Facile", "3": "Moyen", "4": "Difficile"}
+
+    print_ai_level_menu(ai_number)
+    while True:
+        choice = input(f"{Colors.BOLD}  Choix [1-4]: {Colors.RESET}").strip()
+        if choice in level_map:
+            print(f"  -> IA {ai_number}: {Colors.YELLOW}{level_names[choice]}{Colors.RESET}")
+            return level_map[choice]
+        print(f"{Colors.RED}  Choix invalide{Colors.RESET}")
+
+
+def handle_ai_vs_ai_menu():
+    """Gere le sous-menu IA vs IA"""
+    clear_screen()
+    print_header()
+    print(f"{Colors.BROWN}{Colors.BOLD}  IA VS IA - CONFIGURATION{Colors.RESET}")
+
+    # Choisir le niveau de chaque IA
+    difficulty0 = get_ai_level_choice(0)
+    difficulty1 = get_ai_level_choice(1)
+
+    print(f"\n{Colors.GREEN}Lancement: IA 0 ({difficulty0}) vs IA 1 ({difficulty1}){Colors.RESET}")
+    run_play("ai_vs_ai", difficulty0, difficulty1)
 
 
 def run_training(iterations: int, games_per_iter: int, mcts_sims: int):
@@ -169,7 +208,7 @@ def main():
         elif choice == "4":
             run_play("human_vs_ai", "hard")
         elif choice == "5":
-            run_play("ai_vs_ai", "medium")
+            handle_ai_vs_ai_menu()
         elif choice == "6":
             run_play("human_vs_human")
         elif choice == "7":

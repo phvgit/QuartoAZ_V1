@@ -31,13 +31,14 @@ DIFFICULTY_CONFIG = {
 class SimpleQuartoGame:
     """Jeu Quarto avec IA configurable"""
 
-    def __init__(self, difficulty: str = 'easy'):
+    def __init__(self, difficulty: str = 'easy', difficulty2: str = None):
         self.game = Quarto()
         self.input_handler = InputHandler()
         self.display = QuartoDisplay()
         self.difficulty = difficulty
+        self.difficulty2 = difficulty2 if difficulty2 else difficulty
 
-        # Configurer l'IA selon la difficulte
+        # Configurer l'IA 0 selon la difficulte
         config = DIFFICULTY_CONFIG[difficulty]
         self.use_mcts = config['use_mcts']
         if self.use_mcts:
@@ -47,6 +48,17 @@ class SimpleQuartoGame:
             )
         else:
             self.mcts = None
+
+        # Configurer l'IA 1 (pour mode ai_vs_ai)
+        config2 = DIFFICULTY_CONFIG[self.difficulty2]
+        self.use_mcts2 = config2['use_mcts']
+        if self.use_mcts2:
+            self.mcts2 = MCTS(
+                num_simulations=config2['num_simulations'],
+                use_dirichlet=False
+            )
+        else:
+            self.mcts2 = None
 
     def _get_ai_move(self) -> int:
         """Retourne le coup de l'IA selon la difficulte"""
@@ -61,6 +73,37 @@ class SimpleQuartoGame:
         """Retourne la piece choisie par l'IA selon la difficulte"""
         if self.use_mcts and self.mcts:
             return self.mcts.get_best_piece(self.game)
+        else:
+            pieces = self.game.get_available_pieces()
+            return np.random.choice(pieces)
+
+    def _get_ai_move_for(self, ai_id: int) -> int:
+        """Retourne le coup de l'IA specifique selon sa difficulte"""
+        if ai_id == 0:
+            use_mcts = self.use_mcts
+            mcts = self.mcts
+        else:
+            use_mcts = self.use_mcts2
+            mcts = self.mcts2
+
+        if use_mcts and mcts:
+            print(f"{Colors.BLUE}(L'IA reflechit...){Colors.RESET}")
+            return mcts.get_best_move(self.game)
+        else:
+            legal_moves = self.game.get_legal_moves()
+            return np.random.choice(legal_moves)
+
+    def _get_ai_piece_for(self, ai_id: int) -> int:
+        """Retourne la piece choisie par l'IA specifique selon sa difficulte"""
+        if ai_id == 0:
+            use_mcts = self.use_mcts
+            mcts = self.mcts
+        else:
+            use_mcts = self.use_mcts2
+            mcts = self.mcts2
+
+        if use_mcts and mcts:
+            return mcts.get_best_piece(self.game)
         else:
             pieces = self.game.get_available_pieces()
             return np.random.choice(pieces)
@@ -164,8 +207,16 @@ class SimpleQuartoGame:
         4. Alternance jusqu'a fin de partie
         """
         difficulty_names = {'random': 'Random', 'easy': 'Facile', 'medium': 'Moyen', 'hard': 'Difficile'}
-        title = f"Quarto - IA vs IA ({difficulty_names[self.difficulty]})"
+        level_0 = difficulty_names[self.difficulty]
+        level_1 = difficulty_names[self.difficulty2]
+        title = f"Quarto - IA 0 ({level_0}) vs IA 1 ({level_1})"
         self.display.render_game_header(title, show_rules=False)
+
+        # Noms des IAs avec leur niveau
+        ai_names = {
+            0: f"IA 0 ({level_0})",
+            1: f"IA 1 ({level_1})"
+        }
 
         # Premiere piece aleatoire
         first_piece = np.random.randint(1, 17)
@@ -178,15 +229,15 @@ class SimpleQuartoGame:
 
         while not self.game.game_over:
             self.display.render_turn_header(turn)
-            print(f"{Colors.BLUE}IA {current_ai} joue{Colors.RESET}")
+            print(f"{Colors.BLUE}{ai_names[current_ai]} joue{Colors.RESET}")
             self.display.render(self.game)
 
             # IA courante PLACE la piece
-            move = self._get_ai_move()
+            move = self._get_ai_move_for(current_ai)
             piece_code = encode_piece_code(self.game.current_piece)
             self.game.play_move(move)
             self.display.set_last_placed(move // 4, move % 4)
-            print(f"IA {current_ai} a placé la pièce {piece_code} sur la case {index_to_coord(move)}")
+            print(f"{ai_names[current_ai]} a placé la pièce {piece_code} sur la case {index_to_coord(move)}")
 
             if self.game.game_over:
                 break
@@ -195,16 +246,16 @@ class SimpleQuartoGame:
             pieces = self.game.get_available_pieces()
             if not pieces:
                 break
-            piece = self._get_ai_piece()
+            piece = self._get_ai_piece_for(current_ai)
             self.game.choose_piece(piece)
             next_ai = 1 - current_ai
-            self.display.render_piece_choice(piece, f"IA {current_ai} choisit la pièce ", f" pour IA {next_ai}")
+            self.display.render_piece_choice(piece, f"{ai_names[current_ai]} choisit la pièce ", f" pour {ai_names[next_ai]}")
 
             current_ai = next_ai
             turn += 1
 
         # Fin du jeu
-        self.display.render_game_over(self.game, ("IA 0", "IA 1"))
+        self.display.render_game_over(self.game, (ai_names[0], ai_names[1]))
 
     def play_human_vs_human(self):
         """
@@ -269,7 +320,7 @@ def main():
 Exemples:
   python scripts/play.py --mode human_vs_ai --difficulty easy
   python scripts/play.py --mode human_vs_ai --difficulty hard
-  python scripts/play.py --mode ai_vs_ai --difficulty medium
+  python scripts/play.py --mode ai_vs_ai --difficulty easy --difficulty2 hard
   python scripts/play.py --mode human_vs_human
 
 Niveaux de difficulte:
@@ -297,13 +348,20 @@ Regles du Quarto:
         type=str,
         default='random',
         choices=['random', 'easy', 'medium', 'hard'],
-        help='Difficulte de l\'IA (defaut: random)'
+        help='Difficulte de l\'IA 0 (defaut: random)'
+    )
+    parser.add_argument(
+        '--difficulty2',
+        type=str,
+        default=None,
+        choices=['random', 'easy', 'medium', 'hard'],
+        help='Difficulte de l\'IA 1 pour le mode ai_vs_ai (defaut: meme que difficulty)'
     )
 
     args = parser.parse_args()
 
     # Lancer le jeu
-    game = SimpleQuartoGame(difficulty=args.difficulty)
+    game = SimpleQuartoGame(difficulty=args.difficulty, difficulty2=args.difficulty2)
 
     if args.mode == 'human_vs_ai':
         game.play_human_vs_ai()
