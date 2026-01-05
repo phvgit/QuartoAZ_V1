@@ -196,9 +196,12 @@ class SimpleQuartoGame:
         # Fin du jeu
         self.display.render_game_over(self.game, ("Humain", "IA"))
 
-    def _play_single_ai_game_silent(self) -> int:
+    def _play_single_ai_game_silent(self, starting_ai: int = 0) -> int:
         """
         Joue une partie IA vs IA silencieusement (sans affichage).
+
+        Args:
+            starting_ai: L'IA qui commence (0 ou 1)
 
         Returns:
             0 si IA 0 gagne, 1 si IA 1 gagne, -1 si match nul
@@ -210,7 +213,7 @@ class SimpleQuartoGame:
         first_piece = np.random.randint(1, 17)
         self.game.choose_piece(first_piece)
 
-        current_ai = 0
+        current_ai = starting_ai
 
         while not self.game.game_over:
             # IA courante PLACE la piece
@@ -278,19 +281,21 @@ class SimpleQuartoGame:
         progress_interval = max(1, num_games // 50)
 
         for i in range(num_games):
-            result = self._play_single_ai_game_silent()
+            # Alterner qui commence pour eliminer le biais du premier joueur
+            starting_ai = i % 2
+            result = self._play_single_ai_game_silent(starting_ai)
 
             if result == -1:
                 draws += 1
             else:
                 wins[result] += 1
 
-            # Afficher la progression
+            # Afficher la progression (caracteres ASCII pour compatibilite Windows)
             if (i + 1) % progress_interval == 0 or i == num_games - 1:
                 progress = (i + 1) / num_games * 100
                 bar_width = 40
                 filled = int(bar_width * (i + 1) / num_games)
-                bar = '█' * filled + '░' * (bar_width - filled)
+                bar = '#' * filled + '-' * (bar_width - filled)
                 print(f"\r  [{bar}] {progress:5.1f}% ({i + 1}/{num_games})", end="", flush=True)
 
         print("\n")
