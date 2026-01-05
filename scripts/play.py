@@ -12,11 +12,11 @@ sys.path.insert(0, str(current_dir))
 import argparse
 import numpy as np
 
-from alphaquarto_v1.game import Quarto
-from alphaquarto_v1.ai import MCTS
-from alphaquarto_v1.ui.colors import Colors
-from alphaquarto_v1.ui.input_handler import InputHandler
-from alphaquarto_v1.ui.display import QuartoDisplay
+from alphaquarto.game import Quarto
+from alphaquarto.ai import MCTS
+from alphaquarto.ui.colors import Colors
+from alphaquarto.ui.input_handler import InputHandler
+from alphaquarto.ui.display import QuartoDisplay, encode_piece_code, index_to_coord
 
 
 # Configuration des niveaux de difficulte
@@ -103,8 +103,9 @@ class SimpleQuartoGame:
             # Humain PLACE la piece courante
             legal_moves = self.game.get_legal_moves()
             move = self.input_handler.get_square_input(legal_moves)
+            piece_code = encode_piece_code(self.game.current_piece)
             self.game.play_move(move)
-            print(f"Vous avez place la piece sur la case {move}")
+            print(f"Vous avez place la piece {piece_code} sur la case {index_to_coord(move)}")
 
             if self.game.game_over:
                 break

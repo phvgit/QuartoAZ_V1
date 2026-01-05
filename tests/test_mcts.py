@@ -3,10 +3,10 @@
 
 import pytest
 import numpy as np
-from alphaquarto_v1.game import Quarto
-from alphaquarto_v1.ai.mcts import MCTS
-from alphaquarto_v1.ai.types import MCTSNode
-from alphaquarto_v1.game.constants import NUM_SQUARES, NUM_PIECES
+from alphaquarto.game import Quarto
+from alphaquarto.ai.mcts import MCTS
+from alphaquarto.ai.types import MCTSNode
+from alphaquarto.game.constants import NUM_SQUARES, NUM_PIECES
 
 
 # =============================================================================

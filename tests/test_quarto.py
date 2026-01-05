@@ -2,13 +2,13 @@
 
 import pytest
 import numpy as np
-from alphaquarto_v1.game import Quarto
-from alphaquarto_v1.game.quarto import (
+from alphaquarto.game import Quarto
+from alphaquarto.game.quarto import (
     get_piece_properties,
     get_property,
     check_line_quarto,
 )
-from alphaquarto_v1.game.constants import COLOR_BIT, SHAPE_BIT, SIZE_BIT, HOLE_BIT
+from alphaquarto.game.constants import COLOR_BIT, SHAPE_BIT, SIZE_BIT, HOLE_BIT
 
 
 # =============================================================================

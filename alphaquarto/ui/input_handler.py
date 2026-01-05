@@ -7,15 +7,15 @@ class InputHandler:
     
     @staticmethod
     def get_square_input(legal_moves):
-        """Demande un carre valide"""
+        """Demande une case valide"""
         while True:
             try:
-                square = int(input("Choisissez un carre (0-15): "))
+                square = int(input("Choisissez une case(0-15): "))
                 if square in legal_moves:
                     return square
-                print("Carre non valide ou deja occupe!")
+                print("Case non valide ou deja occupée!")
             except ValueError:
-                print("Entree invalide!")
+                print("Entrée invalide!")
             except KeyboardInterrupt:
                 print("\nJeu interrompu")
                 exit()
@@ -25,7 +25,7 @@ class InputHandler:
         """Demande une piece valide"""
         while True:
             try:
-                print(f"Pieces disponibles: {available_pieces}")
+                # print(f"Pieces disponibles: {available_pieces}")
                 piece = int(input("Choisissez une piece: "))
                 if piece in available_pieces:
                     return piece

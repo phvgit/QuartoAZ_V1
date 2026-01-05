@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """Affichage du jeu Quarto"""
 
-from alphaquarto_v1.game.constants import BOARD_SIZE
-from alphaquarto_v1.game.quarto import get_piece_properties
-from alphaquarto_v1.ui.colors import Colors
+from alphaquarto.game.constants import BOARD_SIZE
+from alphaquarto.game.quarto import get_piece_properties
+from alphaquarto.ui.colors import Colors
 
 
 def encode_piece_code(piece_id: int) -> str:
@@ -50,6 +50,22 @@ def encode_piece_code(piece_id: int) -> str:
     hole_char = "o" if hole == 1 else "*"
 
     return f"{open_char}{size_color}{hole_char}{close_char}"
+
+
+def index_to_coord(index: int) -> str:
+    """
+    Convertit un index de case (0-15) en coordonnées (a1, b2, etc.).
+
+    Args:
+        index: Index de la case (0-15)
+
+    Returns:
+        Coordonnées sous forme de chaîne (ex: "a1", "d4")
+    """
+    row = index // BOARD_SIZE
+    col = index % BOARD_SIZE
+    col_labels = "abcd"
+    return f"{col_labels[col]}{row + 1}"
 
 
 class QuartoDisplay:
@@ -225,7 +241,7 @@ class QuartoDisplay:
             prefix: Texte à afficher avant (ex: "Piece choisie: ")
         """
         code = encode_piece_code(piece_id)
-        print(f"{prefix}{piece_id} {code}")
+        print(f"{prefix}{code}")
 
     def render_game_over(self, game, player_names: tuple[str, str] = ("Joueur 0", "Joueur 1")) -> None:
         """

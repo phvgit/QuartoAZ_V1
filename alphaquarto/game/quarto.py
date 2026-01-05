@@ -2,7 +2,7 @@
 """Classe Quarto - Moteur du jeu"""
 
 import numpy as np
-from alphaquarto_v1.game.constants import (
+from alphaquarto.game.constants import (
     BOARD_SIZE, NUM_SQUARES, NUM_PIECES, NUM_PROPERTIES,
     COLOR_BIT, SHAPE_BIT, SIZE_BIT, HOLE_BIT
 )

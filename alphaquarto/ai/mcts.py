@@ -11,8 +11,8 @@ Implémentation suivant l'approche AlphaZero:
 
 import numpy as np
 from typing import Optional, Tuple, Callable, List
-from alphaquarto_v1.ai.types import MCTSNode
-from alphaquarto_v1.game.constants import NUM_SQUARES, NUM_PIECES
+from alphaquarto.ai.types import MCTSNode
+from alphaquarto.game.constants import NUM_SQUARES, NUM_PIECES
 
 
 class MCTS:

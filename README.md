@@ -1,6 +1,6 @@
 # AlphaQuarto V1
 
-Une implémentation d'**AlphaZero** pour le jeu **Quarto**.
+Une implï¿½mentation d'**AlphaZero** pour le jeu **Quarto**.
 
 ## Installation
 
@@ -10,7 +10,7 @@ pip install -r requirements.txt
 
 ## Utilisation
 
-### Entraîner
+### Entraï¿½ner
 ```bash
 python scripts/train.py --iterations 5
 ```
@@ -21,8 +21,8 @@ python scripts/play.py --difficulty easy
 ```
 
 ## Structure
-- `alphaquarto_v1/game/` : Moteur du jeu
-- `alphaquarto_v1/ai/` : Algorithmes IA
-- `alphaquarto_v1/ui/` : Interface CLI
-- `scripts/` : Scripts exécutables
+- `alphaquarto/game/` : Moteur du jeu
+- `alphaquarto/ai/` : Algorithmes IA
+- `alphaquarto/ui/` : Interface CLI
+- `scripts/` : Scripts exï¿½cutables
 - `tests/` : Tests unitaires
