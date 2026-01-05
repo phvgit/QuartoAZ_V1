@@ -196,6 +196,186 @@ class SimpleQuartoGame:
         # Fin du jeu
         self.display.render_game_over(self.game, ("Humain", "IA"))
 
+    def _play_single_ai_game_silent(self) -> int:
+        """
+        Joue une partie IA vs IA silencieusement (sans affichage).
+
+        Returns:
+            0 si IA 0 gagne, 1 si IA 1 gagne, -1 si match nul
+        """
+        # Reset du jeu
+        self.game = Quarto()
+
+        # Premiere piece aleatoire
+        first_piece = np.random.randint(1, 17)
+        self.game.choose_piece(first_piece)
+
+        current_ai = 0
+
+        while not self.game.game_over:
+            # IA courante PLACE la piece
+            if current_ai == 0:
+                use_mcts = self.use_mcts
+                mcts = self.mcts
+            else:
+                use_mcts = self.use_mcts2
+                mcts = self.mcts2
+
+            if use_mcts and mcts:
+                move = mcts.get_best_move(self.game)
+            else:
+                legal_moves = self.game.get_legal_moves()
+                move = np.random.choice(legal_moves)
+
+            self.game.play_move(move)
+
+            if self.game.game_over:
+                break
+
+            # IA courante CHOISIT une piece pour l'autre IA
+            pieces = self.game.get_available_pieces()
+            if not pieces:
+                break
+
+            if use_mcts and mcts:
+                piece = mcts.get_best_piece(self.game)
+            else:
+                piece = np.random.choice(list(pieces))
+
+            self.game.choose_piece(piece)
+            current_ai = 1 - current_ai
+
+        # Determiner le gagnant
+        if self.game.winner is None:
+            return -1  # Match nul
+        # Le gagnant est l'IA qui a joue le dernier coup (current_ai)
+        return current_ai
+
+    def play_ai_vs_ai_tournament(self, num_games: int):
+        """
+        Lance un tournoi de plusieurs parties IA vs IA.
+
+        Args:
+            num_games: Nombre de parties a jouer
+        """
+        difficulty_names = {'random': 'Random', 'easy': 'Facile', 'medium': 'Moyen', 'hard': 'Difficile'}
+        level_0 = difficulty_names[self.difficulty]
+        level_1 = difficulty_names[self.difficulty2]
+
+        print(f"\n{Colors.BOLD}{'='*60}{Colors.RESET}")
+        print(f"{Colors.BROWN}{Colors.BOLD}  TOURNOI IA VS IA{Colors.RESET}")
+        print(f"{Colors.BOLD}{'='*60}{Colors.RESET}")
+        print(f"\n  IA 0: {Colors.YELLOW}{level_0}{Colors.RESET}")
+        print(f"  IA 1: {Colors.YELLOW}{level_1}{Colors.RESET}")
+        print(f"  Parties: {Colors.CYAN}{num_games}{Colors.RESET}")
+        print(f"\n{Colors.BLUE}Tournoi en cours...{Colors.RESET}\n")
+
+        # Statistiques
+        wins = {0: 0, 1: 0}
+        draws = 0
+
+        # Barre de progression
+        progress_interval = max(1, num_games // 50)
+
+        for i in range(num_games):
+            result = self._play_single_ai_game_silent()
+
+            if result == -1:
+                draws += 1
+            else:
+                wins[result] += 1
+
+            # Afficher la progression
+            if (i + 1) % progress_interval == 0 or i == num_games - 1:
+                progress = (i + 1) / num_games * 100
+                bar_width = 40
+                filled = int(bar_width * (i + 1) / num_games)
+                bar = '█' * filled + '░' * (bar_width - filled)
+                print(f"\r  [{bar}] {progress:5.1f}% ({i + 1}/{num_games})", end="", flush=True)
+
+        print("\n")
+
+        # Afficher le tableau recapitulatif
+        self._render_tournament_results(wins, draws, num_games, level_0, level_1)
+
+    def _render_tournament_results(self, wins: dict, draws: int, total: int, level_0: str, level_1: str):
+        """Affiche le tableau recapitulatif du tournoi"""
+        losses = {0: wins[1], 1: wins[0]}
+
+        # Calculer les pourcentages
+        def pct(n):
+            return (n / total * 100) if total > 0 else 0
+
+        # Largeurs des colonnes
+        col_widths = {
+            'player': 20,
+            'wins': 8,
+            'wins_pct': 10,
+            'losses': 8,
+            'losses_pct': 10,
+            'draws': 8,
+            'draws_pct': 10,
+        }
+
+        # Ligne de separation
+        total_width = sum(col_widths.values()) + 6  # +6 pour les separateurs
+        separator = "+" + "-" * (col_widths['player'] + 1) + "+" + "-" * (col_widths['wins'] + col_widths['wins_pct'] + 2) + "+"
+        separator += "-" * (col_widths['losses'] + col_widths['losses_pct'] + 2) + "+"
+        separator += "-" * (col_widths['draws'] + col_widths['draws_pct'] + 2) + "+"
+
+        # En-tete
+        print(f"{Colors.BOLD}{'='*total_width}{Colors.RESET}")
+        print(f"{Colors.BROWN}{Colors.BOLD}  RESULTATS DU TOURNOI{Colors.RESET}")
+        print(f"{Colors.BOLD}{'='*total_width}{Colors.RESET}")
+        print()
+
+        # Ligne d'en-tete du tableau
+        header = f"| {'Joueur':<{col_widths['player']}} | {'Gains':>{col_widths['wins']}} {'%':>{col_widths['wins_pct']-1}} |"
+        header += f" {'Pertes':>{col_widths['losses']}} {'%':>{col_widths['losses_pct']-1}} |"
+        header += f" {'Nuls':>{col_widths['draws']}} {'%':>{col_widths['draws_pct']-1}} |"
+        print(separator)
+        print(header)
+        print(separator)
+
+        # Ligne IA 0
+        row0 = f"| {f'IA 0 ({level_0})':<{col_widths['player']}} |"
+        row0 += f" {wins[0]:>{col_widths['wins']}} {pct(wins[0]):>{col_widths['wins_pct']-1}.1f}% |"
+        row0 += f" {losses[0]:>{col_widths['losses']}} {pct(losses[0]):>{col_widths['losses_pct']-1}.1f}% |"
+        row0 += f" {draws:>{col_widths['draws']}} {pct(draws):>{col_widths['draws_pct']-1}.1f}% |"
+        print(row0)
+
+        # Ligne IA 1
+        row1 = f"| {f'IA 1 ({level_1})':<{col_widths['player']}} |"
+        row1 += f" {wins[1]:>{col_widths['wins']}} {pct(wins[1]):>{col_widths['wins_pct']-1}.1f}% |"
+        row1 += f" {losses[1]:>{col_widths['losses']}} {pct(losses[1]):>{col_widths['losses_pct']-1}.1f}% |"
+        row1 += f" {draws:>{col_widths['draws']}} {pct(draws):>{col_widths['draws_pct']-1}.1f}% |"
+        print(row1)
+
+        print(separator)
+
+        # Ligne des totaux
+        total_wins = wins[0] + wins[1]
+        total_losses = losses[0] + losses[1]
+        total_draws = draws * 2  # Compte pour les deux joueurs
+
+        row_total = f"| {Colors.BOLD}{'TOTAL':<{col_widths['player']}}{Colors.RESET} |"
+        row_total += f" {total_wins:>{col_widths['wins']}} {pct(total_wins):>{col_widths['wins_pct']-1}.1f}% |"
+        row_total += f" {total_losses:>{col_widths['losses']}} {pct(total_losses):>{col_widths['losses_pct']-1}.1f}% |"
+        row_total += f" {draws:>{col_widths['draws']}} {pct(draws):>{col_widths['draws_pct']-1}.1f}% |"
+        print(row_total)
+        print(separator)
+
+        # Resume
+        print()
+        print(f"  Total parties jouees: {Colors.CYAN}{total}{Colors.RESET}")
+        if wins[0] > wins[1]:
+            print(f"  {Colors.GREEN}Vainqueur: IA 0 ({level_0}){Colors.RESET}")
+        elif wins[1] > wins[0]:
+            print(f"  {Colors.GREEN}Vainqueur: IA 1 ({level_1}){Colors.RESET}")
+        else:
+            print(f"  {Colors.YELLOW}Egalite parfaite !{Colors.RESET}")
+        print()
+
     def play_ai_vs_ai(self):
         """
         Lance une partie IA vs IA.
@@ -321,6 +501,7 @@ Exemples:
   python scripts/play.py --mode human_vs_ai --difficulty easy
   python scripts/play.py --mode human_vs_ai --difficulty hard
   python scripts/play.py --mode ai_vs_ai --difficulty easy --difficulty2 hard
+  python scripts/play.py --mode ai_vs_ai --difficulty easy --difficulty2 hard --games 100
   python scripts/play.py --mode human_vs_human
 
 Niveaux de difficulte:
@@ -357,6 +538,12 @@ Regles du Quarto:
         choices=['random', 'easy', 'medium', 'hard'],
         help='Difficulte de l\'IA 1 pour le mode ai_vs_ai (defaut: meme que difficulty)'
     )
+    parser.add_argument(
+        '--games',
+        type=int,
+        default=1,
+        help='Nombre de parties pour le mode tournoi ai_vs_ai (defaut: 1)'
+    )
 
     args = parser.parse_args()
 
@@ -366,7 +553,10 @@ Regles du Quarto:
     if args.mode == 'human_vs_ai':
         game.play_human_vs_ai()
     elif args.mode == 'ai_vs_ai':
-        game.play_ai_vs_ai()
+        if args.games > 1:
+            game.play_ai_vs_ai_tournament(args.games)
+        else:
+            game.play_ai_vs_ai()
     elif args.mode == 'human_vs_human':
         game.play_human_vs_human()
 

@@ -95,11 +95,13 @@ def get_custom_training_params():
         return 10, 10, 100
 
 
-def run_play(mode: str, difficulty: str = "easy", difficulty2: str = None):
+def run_play(mode: str, difficulty: str = "easy", difficulty2: str = None, games: int = None):
     """Lance une partie de Quarto"""
     cmd = [sys.executable, str(SCRIPTS_DIR / "play.py"), "--mode", mode, "--difficulty", difficulty]
     if difficulty2:
         cmd.extend(["--difficulty2", difficulty2])
+    if games and games > 1:
+        cmd.extend(["--games", str(games)])
     subprocess.run(cmd)
     input(f"\n{Colors.CYAN}Appuyez sur Entree pour revenir au menu...{Colors.RESET}")
 
@@ -127,6 +129,22 @@ def get_ai_level_choice(ai_number: int) -> str:
         print(f"{Colors.RED}  Choix invalide{Colors.RESET}")
 
 
+def get_num_games() -> int:
+    """Demande et retourne le nombre de parties pour le tournoi"""
+    print(f"\n{Colors.BROWN}  Nombre de parties:{Colors.RESET}")
+    while True:
+        choice = input(f"{Colors.BOLD}  Entrez un nombre entre 1 et 1000000 (defaut: 1): {Colors.RESET}").strip()
+        if not choice:
+            return 1
+        try:
+            num = int(choice)
+            if 1 <= num <= 1000000:
+                return num
+            print(f"{Colors.RED}  Le nombre doit etre entre 1 et 1000000{Colors.RESET}")
+        except ValueError:
+            print(f"{Colors.RED}  Veuillez entrer un nombre valide{Colors.RESET}")
+
+
 def handle_ai_vs_ai_menu():
     """Gere le sous-menu IA vs IA"""
     clear_screen()
@@ -137,8 +155,16 @@ def handle_ai_vs_ai_menu():
     difficulty0 = get_ai_level_choice(0)
     difficulty1 = get_ai_level_choice(1)
 
-    print(f"\n{Colors.GREEN}Lancement: IA 0 ({difficulty0}) vs IA 1 ({difficulty1}){Colors.RESET}")
-    run_play("ai_vs_ai", difficulty0, difficulty1)
+    # Choisir le nombre de parties
+    num_games = get_num_games()
+
+    level_names = {"random": "Random", "easy": "Facile", "medium": "Moyen", "hard": "Difficile"}
+    if num_games == 1:
+        print(f"\n{Colors.GREEN}Lancement: IA 0 ({level_names[difficulty0]}) vs IA 1 ({level_names[difficulty1]}){Colors.RESET}")
+    else:
+        print(f"\n{Colors.GREEN}Lancement du tournoi: {num_games} parties{Colors.RESET}")
+        print(f"  IA 0 ({level_names[difficulty0]}) vs IA 1 ({level_names[difficulty1]})")
+    run_play("ai_vs_ai", difficulty0, difficulty1, num_games)
 
 
 def run_training(iterations: int, games_per_iter: int, mcts_sims: int):
