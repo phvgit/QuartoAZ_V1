@@ -312,48 +312,38 @@ class SimpleQuartoGame:
             return (n / total * 100) if total > 0 else 0
 
         # Largeurs des colonnes
-        col_widths = {
-            'player': 20,
-            'wins': 8,
-            'wins_pct': 10,
-            'losses': 8,
-            'losses_pct': 10,
-            'draws': 8,
-            'draws_pct': 10,
-        }
+        col_player = 20
+        col_stat = 16  # Largeur pour chaque colonne de stats (nombre + pourcentage)
+
+        # Fonction pour formater une cellule de stats
+        def format_stat(value, pct_val):
+            pct_str = f"{pct_val:.1f}%"
+            return f"{value:>6}  {pct_str:>7}"
 
         # Ligne de separation
-        total_width = sum(col_widths.values()) + 6  # +6 pour les separateurs
-        separator = "+" + "-" * (col_widths['player'] + 1) + "+" + "-" * (col_widths['wins'] + col_widths['wins_pct'] + 2) + "+"
-        separator += "-" * (col_widths['losses'] + col_widths['losses_pct'] + 2) + "+"
-        separator += "-" * (col_widths['draws'] + col_widths['draws_pct'] + 2) + "+"
+        total_width = col_player + 2 + (col_stat + 3) * 3
+        separator = f"+{'-' * (col_player + 2)}+{'-' * (col_stat + 2)}+{'-' * (col_stat + 2)}+{'-' * (col_stat + 2)}+"
 
         # En-tete
-        print(f"{Colors.BOLD}{'='*total_width}{Colors.RESET}")
+        print(f"{Colors.BOLD}{'=' * total_width}{Colors.RESET}")
         print(f"{Colors.BROWN}{Colors.BOLD}  RESULTATS DU TOURNOI{Colors.RESET}")
-        print(f"{Colors.BOLD}{'='*total_width}{Colors.RESET}")
+        print(f"{Colors.BOLD}{'=' * total_width}{Colors.RESET}")
         print()
 
         # Ligne d'en-tete du tableau
-        header = f"| {'Joueur':<{col_widths['player']}} | {'Gains':>{col_widths['wins']}} {'%':>{col_widths['wins_pct']-1}} |"
-        header += f" {'Pertes':>{col_widths['losses']}} {'%':>{col_widths['losses_pct']-1}} |"
-        header += f" {'Nuls':>{col_widths['draws']}} {'%':>{col_widths['draws_pct']-1}} |"
+        header = f"| {'Joueur':<{col_player}} | {'Gains':^{col_stat}} | {'Pertes':^{col_stat}} | {'Nuls':^{col_stat}} |"
         print(separator)
         print(header)
         print(separator)
 
         # Ligne IA 0
-        row0 = f"| {f'IA 0 ({level_0})':<{col_widths['player']}} |"
-        row0 += f" {wins[0]:>{col_widths['wins']}} {pct(wins[0]):>{col_widths['wins_pct']-1}.1f}% |"
-        row0 += f" {losses[0]:>{col_widths['losses']}} {pct(losses[0]):>{col_widths['losses_pct']-1}.1f}% |"
-        row0 += f" {draws:>{col_widths['draws']}} {pct(draws):>{col_widths['draws_pct']-1}.1f}% |"
+        player0 = f"IA 0 ({level_0})"
+        row0 = f"| {player0:<{col_player}} | {format_stat(wins[0], pct(wins[0]))} | {format_stat(losses[0], pct(losses[0]))} | {format_stat(draws, pct(draws))} |"
         print(row0)
 
         # Ligne IA 1
-        row1 = f"| {f'IA 1 ({level_1})':<{col_widths['player']}} |"
-        row1 += f" {wins[1]:>{col_widths['wins']}} {pct(wins[1]):>{col_widths['wins_pct']-1}.1f}% |"
-        row1 += f" {losses[1]:>{col_widths['losses']}} {pct(losses[1]):>{col_widths['losses_pct']-1}.1f}% |"
-        row1 += f" {draws:>{col_widths['draws']}} {pct(draws):>{col_widths['draws_pct']-1}.1f}% |"
+        player1 = f"IA 1 ({level_1})"
+        row1 = f"| {player1:<{col_player}} | {format_stat(wins[1], pct(wins[1]))} | {format_stat(losses[1], pct(losses[1]))} | {format_stat(draws, pct(draws))} |"
         print(row1)
 
         print(separator)
@@ -361,12 +351,8 @@ class SimpleQuartoGame:
         # Ligne des totaux
         total_wins = wins[0] + wins[1]
         total_losses = losses[0] + losses[1]
-        total_draws = draws * 2  # Compte pour les deux joueurs
 
-        row_total = f"| {Colors.BOLD}{'TOTAL':<{col_widths['player']}}{Colors.RESET} |"
-        row_total += f" {total_wins:>{col_widths['wins']}} {pct(total_wins):>{col_widths['wins_pct']-1}.1f}% |"
-        row_total += f" {total_losses:>{col_widths['losses']}} {pct(total_losses):>{col_widths['losses_pct']-1}.1f}% |"
-        row_total += f" {draws:>{col_widths['draws']}} {pct(draws):>{col_widths['draws_pct']-1}.1f}% |"
+        row_total = f"| {Colors.BOLD}{'TOTAL':<{col_player}}{Colors.RESET} | {format_stat(total_wins, pct(total_wins))} | {format_stat(total_losses, pct(total_losses))} | {format_stat(draws, pct(draws))} |"
         print(row_total)
         print(separator)
 
