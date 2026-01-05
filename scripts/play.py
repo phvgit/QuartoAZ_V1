@@ -97,6 +97,7 @@ class SimpleQuartoGame:
             # =====================
             self.display.render_turn_header(turn)
             self.display.render(self.game, show_available_pieces=False, show_piece_in_hand=False)
+            self.display.render_available_pieces(self.game, show_index=False)
             piece_in_hand = encode_piece_code(self.game.current_piece)
             self.display.render_message(f"Votre tour - PLACEZ la pièce {Colors.LIGHT_BROWN}{piece_in_hand}{Colors.RESET}", Colors.GREEN)
             self.display.render_board_mapping(self.game)

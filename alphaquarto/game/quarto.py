@@ -151,9 +151,8 @@ class Quarto:
         if self.board.flat[square] != 0 or self.current_piece is None:
             return False
 
-        # Placer la pièce
+        # Placer la pièce (déjà retirée de available_pieces dans choose_piece)
         self.board.flat[square] = self.current_piece
-        self.available_pieces.discard(self.current_piece)
         self.current_piece = None
 
         # Vérifier si un Quarto a été formé
@@ -171,10 +170,22 @@ class Quarto:
         return True
     
     def choose_piece(self, piece):
-        """Choisit une piece"""
+        """
+        Choisit une pièce pour l'adversaire.
+
+        La pièce est immédiatement retirée des pièces disponibles
+        car elle est maintenant assignée.
+
+        Args:
+            piece: ID de la pièce (1-16)
+
+        Returns:
+            True si la pièce a été choisie, False sinon
+        """
         if piece not in self.available_pieces:
             return False
         self.current_piece = piece
+        self.available_pieces.discard(piece)
         return True
     
     def clone(self):

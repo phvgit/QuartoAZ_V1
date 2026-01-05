@@ -197,11 +197,20 @@ class QuartoDisplay:
             print("  " + " | ".join(row_str))
         print()
 
-    def render_available_pieces(self, game) -> None:
-        """Affiche les pièces disponibles avec leur code visuel"""
+    def render_available_pieces(self, game, show_index: bool = True) -> None:
+        """
+        Affiche les pièces disponibles avec leur code visuel.
+
+        Args:
+            game: Instance du jeu Quarto
+            show_index: Afficher l'index des pièces (ex: "1:[W*]" vs "[W*]")
+        """
         pieces = game.get_available_pieces()
         if pieces:
-            pieces_str = " ".join(f"{p}:{encode_piece_code(p)}" for p in pieces)
+            if show_index:
+                pieces_str = " ".join(f"{p}:{encode_piece_code(p)}" for p in pieces)
+            else:
+                pieces_str = " ".join(encode_piece_code(p) for p in pieces)
             print(f"Pieces disponibles: {pieces_str}")
         else:
             print("Pieces disponibles: aucune")
