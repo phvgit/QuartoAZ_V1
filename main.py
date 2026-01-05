@@ -16,6 +16,7 @@ class Colors:
     YELLOW = "\033[93m"
     RED = "\033[91m"
     CYAN = "\033[96m"
+    BROWN = "\033[38;5;130m"
 
 
 # Chemin vers les scripts
@@ -29,7 +30,7 @@ def clear_screen():
 
 def print_header():
     """Affiche l'en-tete du menu"""
-    print(f"{Colors.CYAN}{Colors.BOLD}")
+    print(f"{Colors.BROWN}{Colors.BOLD}")
     print(r"      ___   __    ____  _   _   ___   ____   _   _   ___   ____  ____  ___  ")
     print(r"     / _ | / /   / __ \/ / / / / _ | / __ \ / / / / / _ | / __ \/_  _// _ \ ")
     print(r"    / __ |/ /__ / /_/ /  _  / / __ |/ /_/ // /_/ / / __ |/ /_/ / / / / // / ")
