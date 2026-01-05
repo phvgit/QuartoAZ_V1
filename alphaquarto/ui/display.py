@@ -265,7 +265,7 @@ class QuartoDisplay:
             print(f"{Colors.YELLOW}Egalite ! Plateau plein.{Colors.RESET}")
         else:
             winner_name = player_names[game.winner]
-            print(f"{Colors.GREEN}{winner_name} gagne !{Colors.RESET}")
+            print(f"{Colors.GREEN}Quarto ! - {winner_name} a gagné.{Colors.RESET}")
 
     def render_message(self, message: str, color: str | None = None) -> None:
         """
