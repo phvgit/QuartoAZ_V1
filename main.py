@@ -30,9 +30,11 @@ def clear_screen():
 def print_header():
     """Affiche l'en-tete du menu"""
     print(f"{Colors.CYAN}{Colors.BOLD}")
-    print("+" + "=" * 42 + "+")
-    print("|" + " " * 10 + "QUARTO ALPHAZERO" + " " * 16 + "|")
-    print("+" + "=" * 42 + "+")
+    print(r"      ___   __    ____  _   _   ___   ____   _   _   ___   ____  ____  ___  ")
+    print(r"     / _ | / /   / __ \/ / / / / _ | / __ \ / / / / / _ | / __ \/_  _// _ \ ")
+    print(r"    / __ |/ /__ / /_/ /  _  / / __ |/ /_/ // /_/ / / __ |/ /_/ / / / / // / ")
+    print(r"   /_/ |_|____// ____//_//_/ /_/ |_|\___\_\\__,_/ /_/ |_|\___\_\/_/ /\___/  ")
+    print(r"              /_/                                                          ")
     print(f"{Colors.RESET}")
 
 
