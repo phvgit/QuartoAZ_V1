@@ -113,7 +113,11 @@ def run_training(iterations: int, games_per_iter: int, mcts_sims: int):
         "--games-per-iter", str(games_per_iter),
         "--mcts-sims", str(mcts_sims)
     ]
-    subprocess.run(cmd)
+    result = subprocess.run(cmd)
+
+    if result.returncode != 0:
+        print(f"\n{Colors.RED}Echec de l'entrainement (code de sortie: {result.returncode}){Colors.RESET}")
+
     input(f"\n{Colors.CYAN}Appuyez sur Entree pour revenir au menu...{Colors.RESET}")
 
 
