@@ -82,11 +82,11 @@ class SimpleQuartoGame:
 
         # Premiere piece - l'humain choisit pour lui-meme (simplification)
         print("\n" + "=" * 50)
-        print("Choisissez la premiere piece (que vous allez placer):")
+        print("Choisissez la première pièce (que vous allez placer):")
         self.display.render_available_pieces(self.game)
         first_piece = self.input_handler.get_piece_input(self.game.get_available_pieces())
         self.game.choose_piece(first_piece)
-        self.display.render_piece_choice(first_piece, "Vous commencez avec la piece ")
+        self.display.render_piece_choice(first_piece, "Vous commencez avec la pièce ")
         print()
 
         turn = 1
@@ -96,53 +96,55 @@ class SimpleQuartoGame:
             # TOUR DE L'HUMAIN
             # =====================
             self.display.render_turn_header(turn)
-            self.display.render(self.game)
-            self.display.render_message("Votre tour - PLACEZ votre piece", Colors.GREEN)
+            self.display.render(self.game, show_available_pieces=False, show_piece_in_hand=False)
+            piece_in_hand = encode_piece_code(self.game.current_piece)
+            self.display.render_message(f"Votre tour - PLACEZ la pièce {Colors.LIGHT_BROWN}{piece_in_hand}{Colors.RESET}", Colors.GREEN)
             self.display.render_board_mapping(self.game)
 
-            # Humain PLACE la piece courante
+            # Humain PLACE la pièce courante
             legal_moves = self.game.get_legal_moves()
             move = self.input_handler.get_square_input(legal_moves)
             piece_code = encode_piece_code(self.game.current_piece)
             self.game.play_move(move)
-            print(f"Vous avez place la piece {piece_code} sur la case {index_to_coord(move)}")
+            self.display.set_last_placed(move // 4, move % 4)
+            print(f"Vous avez placé la pièce {piece_code} sur la case {index_to_coord(move)}")
+            self.display.render(self.game)
 
             if self.game.game_over:
                 break
 
-            # Humain CHOISIT une piece pour l'IA
+            # Humain CHOISIT une pièce pour l'IA
             pieces = self.game.get_available_pieces()
             if not pieces:
                 break
-            print(f"\n{Colors.GREEN}Choisissez une piece pour l'IA:{Colors.RESET}")
+            print(f"{Colors.GREEN}Choisissez une pièce pour l'IA:{Colors.RESET}")
             self.display.render_available_pieces(self.game)
             human_chosen_piece = self.input_handler.get_piece_input(pieces)
             self.game.choose_piece(human_chosen_piece)
-            self.display.render_piece_choice(human_chosen_piece, "L'IA devra jouer avec la piece ")
-
+            self.display.render_piece_choice(human_chosen_piece, "L'IA devra jouer avec la pièce ")
             # =====================
             # TOUR DE L'IA
             # =====================
             print(f"\n{Colors.BLUE}--- Tour de l'IA ---{Colors.RESET}")
-            self.display.render(self.game)
 
-            # IA PLACE la piece que l'humain a choisie pour elle
+            # IA PLACE la pièce que l'humain a choisie pour elle
             ai_move = self._get_ai_move()
+            piece_code = encode_piece_code(self.game.current_piece)
             self.game.play_move(ai_move)
-            print(f"L'IA a place la piece sur la case {ai_move}")
+            self.display.set_last_placed(ai_move // 4, ai_move % 4)
+            print(f"L'IA a placé la pièce {piece_code} sur la case {index_to_coord(ai_move)}")
             self.display.render(self.game)
 
             if self.game.game_over:
                 break
 
-            # IA CHOISIT une piece pour l'Humain
+            # IA CHOISIT une pièce pour l'Humain
             pieces = self.game.get_available_pieces()
             if not pieces:
                 break
             ai_piece = self._get_ai_piece()
             self.game.choose_piece(ai_piece)
-            self.display.render_piece_choice(ai_piece, f"{Colors.BLUE}L'IA choisit la piece ")
-            print(f" pour vous{Colors.RESET}")
+            self.display.render_piece_choice(ai_piece, f"{Colors.BLUE}L'IA choisit la pièce ", f" pour vous{Colors.RESET}")
 
             turn += 1
 
@@ -166,7 +168,7 @@ class SimpleQuartoGame:
         # Premiere piece aleatoire
         first_piece = np.random.randint(1, 17)
         self.game.choose_piece(first_piece)
-        self.display.render_piece_choice(first_piece, "Premiere piece: ")
+        self.display.render_piece_choice(first_piece, "Première pièce: ")
         print()
 
         turn = 1
@@ -179,21 +181,22 @@ class SimpleQuartoGame:
 
             # IA courante PLACE la piece
             move = self._get_ai_move()
+            piece_code = encode_piece_code(self.game.current_piece)
             self.game.play_move(move)
-            print(f"IA {current_ai} a place la piece sur la case {move}")
+            self.display.set_last_placed(move // 4, move % 4)
+            print(f"IA {current_ai} a placé la pièce {piece_code} sur la case {index_to_coord(move)}")
 
             if self.game.game_over:
                 break
 
-            # IA courante CHOISIT une piece pour l'autre IA
+            # IA courante CHOISIT une pièce pour l'autre IA
             pieces = self.game.get_available_pieces()
             if not pieces:
                 break
             piece = self._get_ai_piece()
             self.game.choose_piece(piece)
             next_ai = 1 - current_ai
-            self.display.render_piece_choice(piece, f"IA {current_ai} choisit la piece ")
-            print(f" pour IA {next_ai}")
+            self.display.render_piece_choice(piece, f"IA {current_ai} choisit la pièce ", f" pour IA {next_ai}")
 
             current_ai = next_ai
             turn += 1
@@ -206,20 +209,19 @@ class SimpleQuartoGame:
         Lance une partie Humain vs Humain.
 
         Flux:
-        1. Joueur 1 choisit la premiere piece (pour lui-meme)
+        1. Joueur 1 choisit la première pièce (pour lui-même)
         2. Joueur 1 PLACE, puis CHOISIT pour Joueur 2
         3. Joueur 2 PLACE, puis CHOISIT pour Joueur 1
         4. Alternance jusqu'a fin de partie
         """
         self.display.render_game_header("Quarto - Humain vs Humain")
 
-        # Premiere piece
-        print("Joueur 1, choisissez la premiere piece (que vous allez placer):")
+        # Première pièce
+        print("Joueur 1, choisissez la première pièce (que vous allez placer):")
         self.display.render_available_pieces(self.game)
         first_piece = self.input_handler.get_piece_input(self.game.get_available_pieces())
         self.game.choose_piece(first_piece)
-        self.display.render_piece_choice(first_piece, "Joueur 1 commence avec la piece ")
-
+        self.display.render_piece_choice(first_piece, "Joueur 1 commence avec la pièce ")
         player = 1
         turn = 1
 
@@ -228,27 +230,27 @@ class SimpleQuartoGame:
             self.display.render(self.game)
             self.display.render_board_mapping(self.game)
 
-            # Joueur actuel PLACE la piece
-            print(f"Joueur {player}, placez votre piece:")
+            # Joueur actuel PLACE la pièce
+            print(f"Joueur {player}, placez votre pièce:")
             legal_moves = self.game.get_legal_moves()
             move = self.input_handler.get_square_input(legal_moves)
+            piece_code = encode_piece_code(self.game.current_piece)
             self.game.play_move(move)
-            print(f"Joueur {player} a place la piece sur la case {move}")
-
+            self.display.set_last_placed(move // 4, move % 4)
+            print(f"Joueur {player} a placé la pièce {piece_code} sur la case {index_to_coord(move)}")
             if self.game.game_over:
                 break
 
-            # Joueur actuel CHOISIT une piece pour l'adversaire
+            # Joueur actuel CHOISIT une pièce pour l'adversaire
             pieces = self.game.get_available_pieces()
             if not pieces:
                 break
             next_player = 3 - player  # Alterne entre 1 et 2
-            print(f"\nJoueur {player}, choisissez une piece pour Joueur {next_player}:")
+            print(f"\nJoueur {player}, choisissez une pièce pour Joueur {next_player}:")
             self.display.render_available_pieces(self.game)
             piece = self.input_handler.get_piece_input(pieces)
             self.game.choose_piece(piece)
-            self.display.render_piece_choice(piece, f"Joueur {next_player} devra jouer avec la piece ")
-
+            self.display.render_piece_choice(piece, f"Joueur {next_player} devra jouer avec la pièce ")
             player = next_player
             turn += 1
 

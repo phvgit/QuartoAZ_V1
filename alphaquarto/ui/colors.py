@@ -8,3 +8,4 @@ class Colors:
     RED = '\033[31m'
     BLUE = '\033[34m'
     YELLOW = '\033[33m'
+    LIGHT_BROWN = '\033[38;5;180m'  # Marron clair / tan

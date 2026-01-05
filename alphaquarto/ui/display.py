@@ -74,12 +74,17 @@ class QuartoDisplay:
     def __init__(self):
         self.last_placed_position: tuple[int, int] | None = None
 
-    def render(self, game) -> None:
+    def render(self, game, show_available_pieces: bool = True, show_piece_in_hand: bool = True) -> None:
         """
         Affiche un rendu texte de l'état courant, avec :
         - Coordonnées de colonnes a..d en haut
         - Coordonnées de lignes 1..4 à gauche
         - Codes de pièces dans chaque case
+
+        Args:
+            game: Instance du jeu Quarto
+            show_available_pieces: Afficher la liste des pièces disponibles
+            show_piece_in_hand: Afficher la pièce en main
         """
         # Entête colonnes
         col_labels = ["a", "b", "c", "d"]
@@ -97,9 +102,9 @@ class QuartoDisplay:
                 else:
                     # Case occupée
                     code = encode_piece_code(piece)
-                    # Dernière pièce placée en bleu
+                    # Dernière pièce placée en jaune
                     if self.last_placed_position == (row, col):
-                        cell_str = f" {Colors.BLUE}{code}{Colors.RESET} "
+                        cell_str = f" {Colors.YELLOW}{code}{Colors.RESET} "
                     else:
                         cell_str = f" {code} "
                 row_cells.append(cell_str)
@@ -110,20 +115,19 @@ class QuartoDisplay:
 
         print()
 
-        # Affiche la pièce en main
-        if game.current_piece is not None:
+        # Affiche la pièce en main (seulement si une pièce est en main)
+        if show_piece_in_hand and game.current_piece is not None:
             code = encode_piece_code(game.current_piece)
-            print(f"Piece en main : {game.current_piece} -> {Colors.YELLOW}{code}{Colors.RESET}")
-        else:
-            print("Piece en main : None")
+            print(f"Piece en main : {game.current_piece} -> {Colors.LIGHT_BROWN}{code}{Colors.RESET}")
 
-        # Affiche les pièces disponibles
-        available = game.get_available_pieces()
-        if available:
-            pieces_str = " ".join(f"{p}:{encode_piece_code(p)}" for p in available)
-            print(f"Pieces disponibles : {pieces_str}")
-        else:
-            print("Pieces disponibles : aucune")
+        # Affiche les pièces disponibles (seulement si une pièce est en main)
+        if show_available_pieces and game.current_piece is not None:
+            available = game.get_available_pieces()
+            if available:
+                pieces_str = " ".join(f"{p}:{encode_piece_code(p)}" for p in available)
+                print(f"Pièces disponibles : {pieces_str}")
+            else:
+                print("Pièces disponibles : aucune")
 
     def render_board(self, game) -> str:
         """
@@ -158,15 +162,15 @@ class QuartoDisplay:
 
     def render_piece_legend(self) -> None:
         """Affiche la légende des codes de pièces"""
-        print("\n=== Legende des pieces ===")
-        print("Forme   : () = Ronde    [] = Carree")
+        print("\n=== légende des pièces ===")
+        print("Forme   : () = Ronde    [] = Carrée")
         print("Taille  : Majuscule = Grande, Minuscule = Petite")
-        print("Couleur : W/w = Claire   B/b = Foncee")
+        print("Couleur : W/w = Claire   B/b = Foncée")
         print("Trou    : * = Pleine    o = Creuse")
         print()
         print("Exemples:")
-        print("  [W*] = Carree, Grande, Claire, Pleine")
-        print("  (bo) = Ronde, Petite, Foncee, Creuse")
+        print("  [W*] = Carrée, Grande, Claire, Pleine")
+        print("  (bo) = Ronde, Petite, Foncée, Creuse")
         print()
 
     def render_board_mapping(self, game) -> None:
@@ -216,8 +220,8 @@ class QuartoDisplay:
         self.render_piece_legend()
         if show_rules:
             print("Regles:")
-            print("1. Choisissez une piece pour votre adversaire")
-            print("2. Placez votre piece sur le plateau (index 0-15)")
+            print("1. Choisissez une pièce pour votre adversaire")
+            print("2. Placez votre pièce sur le plateau (index 0-15)")
 
     def render_turn_header(self, turn: int, player: int | None = None) -> None:
         """
@@ -232,16 +236,17 @@ class QuartoDisplay:
         else:
             print(f"\n--- Tour {turn} ---")
 
-    def render_piece_choice(self, piece_id: int, prefix: str = "") -> None:
+    def render_piece_choice(self, piece_id: int, prefix: str = "", suffix: str = "") -> None:
         """
         Affiche une pièce choisie avec son code visuel.
 
         Args:
             piece_id: ID de la pièce
             prefix: Texte à afficher avant (ex: "Piece choisie: ")
+            suffix: Texte à afficher après le code (ex: " pour vous")
         """
         code = encode_piece_code(piece_id)
-        print(f"{prefix}{code}")
+        print(f"{prefix}{Colors.LIGHT_BROWN}{code}{Colors.RESET}{suffix}")
 
     def render_game_over(self, game, player_names: tuple[str, str] = ("Joueur 0", "Joueur 1")) -> None:
         """

@@ -22,16 +22,16 @@ class InputHandler:
     
     @staticmethod
     def get_piece_input(available_pieces):
-        """Demande une pièce valide"""
+        """Demande une piece valide"""
         while True:
             try:
                 # print(f"Pieces disponibles: {available_pieces}")
-                piece = int(input("Choisissez une pièce: "))
+                piece = int(input("Choisissez une piece: "))
                 if piece in available_pieces:
                     return piece
-                print("Pièce non disponible!")
+                print("Piece non disponible!")
             except ValueError:
-                print("Entrée invalide!")
+                print("Entree invalide!")
             except KeyboardInterrupt:
                 print("\nJeu interrompu")
                 exit()
