@@ -21,9 +21,10 @@ from alphaquarto.ui.display import QuartoDisplay, encode_piece_code, index_to_co
 
 # Configuration des niveaux de difficulte
 DIFFICULTY_CONFIG = {
-    'easy': {'num_simulations': 0, 'use_mcts': False},      # Aleatoire
-    'medium': {'num_simulations': 50, 'use_mcts': True},    # MCTS leger
-    'hard': {'num_simulations': 200, 'use_mcts': True},     # MCTS intensif
+    'random': {'num_simulations': 0, 'use_mcts': False},    # Aleatoire
+    'easy': {'num_simulations': 100, 'use_mcts': True},     # MCTS leger (Rapide)
+    'medium': {'num_simulations': 200, 'use_mcts': True},   # MCTS moyen (Standard)
+    'hard': {'num_simulations': 500, 'use_mcts': True},     # MCTS intensif (Intensif)
 }
 
 
@@ -76,7 +77,7 @@ class SimpleQuartoGame:
         5. IA CHOISIT une piece pour l'Humain
         6. Retour a l'etape 2
         """
-        difficulty_names = {'easy': 'Facile', 'medium': 'Moyen', 'hard': 'Difficile'}
+        difficulty_names = {'random': 'Random', 'easy': 'Facile', 'medium': 'Moyen', 'hard': 'Difficile'}
         title = f"Quarto - Humain vs IA ({difficulty_names[self.difficulty]})"
         self.display.render_game_header(title)
 
@@ -162,7 +163,7 @@ class SimpleQuartoGame:
         3. IA 1 PLACE, puis CHOISIT pour IA 0
         4. Alternance jusqu'a fin de partie
         """
-        difficulty_names = {'easy': 'Facile', 'medium': 'Moyen', 'hard': 'Difficile'}
+        difficulty_names = {'random': 'Random', 'easy': 'Facile', 'medium': 'Moyen', 'hard': 'Difficile'}
         title = f"Quarto - IA vs IA ({difficulty_names[self.difficulty]})"
         self.display.render_game_header(title, show_rules=False)
 
@@ -272,9 +273,10 @@ Exemples:
   python scripts/play.py --mode human_vs_human
 
 Niveaux de difficulte:
-  easy   - IA aleatoire (instantane)
-  medium - MCTS avec 50 simulations (rapide)
-  hard   - MCTS avec 200 simulations (reflechie)
+  random - IA aleatoire (instantane)
+  easy   - MCTS avec 100 simulations (Rapide)
+  medium - MCTS avec 200 simulations (Standard)
+  hard   - MCTS avec 500 simulations (Intensif)
 
 Regles du Quarto:
   - Apres avoir PLACE une piece, vous CHOISISSEZ une piece pour l'adversaire
@@ -293,9 +295,9 @@ Regles du Quarto:
     parser.add_argument(
         '--difficulty',
         type=str,
-        default='easy',
-        choices=['easy', 'medium', 'hard'],
-        help='Difficulte de l\'IA (defaut: easy)'
+        default='random',
+        choices=['random', 'easy', 'medium', 'hard'],
+        help='Difficulte de l\'IA (defaut: random)'
     )
 
     args = parser.parse_args()

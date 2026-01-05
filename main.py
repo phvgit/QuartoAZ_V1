@@ -43,14 +43,15 @@ def print_main_menu():
     """Affiche le menu principal"""
     print_header()
     print(f"{Colors.BROWN}  JOUER{Colors.RESET}")
-    print(f"    1. Humain vs IA {Colors.YELLOW}(Facile){Colors.RESET}")
-    print(f"    2. Humain vs IA {Colors.YELLOW}(Moyen){Colors.RESET}")
-    print(f"    3. Humain vs IA {Colors.YELLOW}(Difficile){Colors.RESET}")
-    print(f"    4. IA vs IA")
-    print(f"    5. Humain vs Humain")
+    print(f"    1. Humain vs IA {Colors.YELLOW}(Random){Colors.RESET}")
+    print(f"    2. Humain vs IA {Colors.YELLOW}(Facile){Colors.RESET}")
+    print(f"    3. Humain vs IA {Colors.YELLOW}(Moyen){Colors.RESET}")
+    print(f"    4. Humain vs IA {Colors.YELLOW}(Difficile){Colors.RESET}")
+    print(f"    5. IA vs IA")
+    print(f"    6. Humain vs Humain")
     print()
     print(f"{Colors.BROWN}  ENTRAINEMENT{Colors.RESET}")
-    print(f"    6. Entrainer l'IA")
+    print(f"    7. Entrainer l'IA")
     print()
     print(f"{Colors.RED}    0. Quitter{Colors.RESET}")
     print()
@@ -63,9 +64,9 @@ def print_training_menu():
     print(f"{Colors.BROWN}{Colors.BOLD}  ENTRAINEMENT DE L'IA{Colors.RESET}")
     print()
     print(f"  {Colors.BROWN}Presets:{Colors.RESET}")
-    print(f"    1. Rapide    (5 iterations, 5 parties, 50 simulations)")
-    print(f"    2. Standard  (10 iterations, 10 parties, 100 simulations)")
-    print(f"    3. Intensif  (20 iterations, 25 parties, 200 simulations)")
+    print(f"    1. Rapide    (10 iterations, 10 parties, 100 simulations)")
+    print(f"    2. Standard  (100 iterations, 100 parties, 200 simulations)")
+    print(f"    3. Intensif  (1000 iterations, 1000 parties, 500 simulations)")
     print()
     print(f"  {Colors.BROWN}Personnalise:{Colors.RESET}")
     print(f"    4. Parametres personnalises")
@@ -128,9 +129,9 @@ def handle_training_menu():
     """Gere le sous-menu d'entrainement"""
     # Presets d'entrainement
     presets = {
-        "1": (5, 5, 50),      # Rapide
-        "2": (10, 10, 100),   # Standard
-        "3": (20, 25, 200),   # Intensif
+        "1": (10, 10, 100),       # Rapide
+        "2": (100, 100, 200),     # Standard
+        "3": (1000, 1000, 500),   # Intensif
     }
 
     while True:
@@ -154,22 +155,24 @@ def main():
     while True:
         clear_screen()
         print_main_menu()
-        choice = input(f"{Colors.BOLD}Choix [0-6]: {Colors.RESET}").strip()
+        choice = input(f"{Colors.BOLD}Choix [0-7]: {Colors.RESET}").strip()
 
         if choice == "0":
             print(f"\n{Colors.GREEN}Merci d'avoir joue ! A bientot !{Colors.RESET}\n")
             break
         elif choice == "1":
-            run_play("human_vs_ai", "easy")
+            run_play("human_vs_ai", "random")
         elif choice == "2":
-            run_play("human_vs_ai", "medium")
+            run_play("human_vs_ai", "easy")
         elif choice == "3":
-            run_play("human_vs_ai", "hard")
+            run_play("human_vs_ai", "medium")
         elif choice == "4":
-            run_play("ai_vs_ai", "medium")
+            run_play("human_vs_ai", "hard")
         elif choice == "5":
-            run_play("human_vs_human")
+            run_play("ai_vs_ai", "medium")
         elif choice == "6":
+            run_play("human_vs_human")
+        elif choice == "7":
             handle_training_menu()
         else:
             print(f"{Colors.RED}Choix invalide{Colors.RESET}")
