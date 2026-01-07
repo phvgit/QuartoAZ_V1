@@ -11,6 +11,18 @@ Architecture optimisée:
 - Workers utilisent CPU pour l'inférence, GPU réservé au processus principal
 """
 
+# =============================================================================
+# CRITICAL: Configuration TensorFlow AVANT tout import
+# Ces variables DOIVENT être définies avant que TensorFlow soit importé
+# NOTE: CUDA_VISIBLE_DEVICES est défini dans _init_worker, pas ici
+# =============================================================================
+import os
+import warnings
+warnings.filterwarnings('ignore', category=FutureWarning)
+warnings.filterwarnings('ignore', category=DeprecationWarning)
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # Supprime INFO, WARNING, ERROR
+os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
+
 import numpy as np
 import multiprocessing as mp
 from multiprocessing import Pool
@@ -18,7 +30,6 @@ from typing import List, Dict, Any, Tuple
 from pathlib import Path
 import time
 import tempfile
-import os
 
 # Configuration multiprocessing - 'spawn' requis pour compatibilité CUDA/TensorFlow
 # Sur Linux, 'fork' (défaut) cause des erreurs CUDA_ERROR_NOT_INITIALIZED
@@ -52,19 +63,9 @@ def _init_worker(weights_path: str, network_config: Dict[str, Any], mcts_config:
     """
     global _worker_network, _worker_encoder, _worker_mcts_config
 
-    # Configurer l'environnement AVANT d'importer TensorFlow
-    # Ceci supprime tous les warnings et messages
-    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # FATAL only
-    os.environ['CUDA_VISIBLE_DEVICES'] = ''   # Désactive GPU pour ce worker
-    os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'  # Désactive les optimisations oneDNN (évite warnings)
-
-    # Importer TensorFlow avec les bonnes configurations
-    import tensorflow as tf
-    tf.get_logger().setLevel('ERROR')
-
-    # Désactiver les warnings autograph
-    import logging
-    logging.getLogger('tensorflow').setLevel(logging.ERROR)
+    # Désactiver GPU pour ce worker (CPU uniquement pour l'inférence)
+    # NOTE: TF_CPP_MIN_LOG_LEVEL est déjà défini au niveau du module
+    os.environ['CUDA_VISIBLE_DEVICES'] = ''
 
     from alphaquarto.ai.network import AlphaZeroNetwork, StateEncoder
 

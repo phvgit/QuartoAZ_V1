@@ -10,23 +10,34 @@ Architecture:
 - Value head: Évaluation de la position (-1 à 1)
 """
 
+# =============================================================================
+# CRITICAL: Configuration TensorFlow AVANT tout import
+# TF_CPP_MIN_LOG_LEVEL=3 supprime INFO, WARNING et ERROR (C++ layer)
+# Doit être défini AVANT l'import de tensorflow
+# =============================================================================
+import os
+if 'TF_CPP_MIN_LOG_LEVEL' not in os.environ:
+    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+if 'TF_ENABLE_ONEDNN_OPTS' not in os.environ:
+    os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
+
 import numpy as np
 from typing import Tuple, Optional
 from pathlib import Path
 
-# Import TensorFlow avec gestion d'erreur et suppression des warnings
+# Import TensorFlow avec gestion d'erreur
 try:
-    import os
-    # Configurer AVANT l'import de TensorFlow pour supprimer les messages
-    if 'TF_CPP_MIN_LOG_LEVEL' not in os.environ:
-        os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-
     import tensorflow as tf
     from tensorflow import keras
     from tensorflow.keras import layers, Model, regularizers
 
-    # Configurer le logger TensorFlow
+    # Configurer le logger Python de TensorFlow
     tf.get_logger().setLevel('ERROR')
+
+    # Désactiver aussi les logs absl
+    import logging
+    logging.getLogger('tensorflow').setLevel(logging.ERROR)
+    logging.getLogger('absl').setLevel(logging.ERROR)
 
     TF_AVAILABLE = True
 except ImportError:

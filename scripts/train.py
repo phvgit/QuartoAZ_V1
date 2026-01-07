@@ -12,13 +12,15 @@ Usage:
 import argparse
 import sys
 import os
+import warnings
 
 # =============================================================================
-# Configuration TensorFlow AVANT tout import
-# Ceci supprime les warnings et messages inutiles
+# Suppression de TOUS les warnings et messages avant tout import
 # =============================================================================
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'  # Supprime INFO et WARNING
-os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'  # Désactive les optimisations oneDNN (évite warnings)
+warnings.filterwarnings('ignore', category=FutureWarning)  # Keras/numpy warnings
+warnings.filterwarnings('ignore', category=DeprecationWarning)
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # Supprime INFO, WARNING, ERROR (C++)
+os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'  # Désactive les optimisations oneDNN
 
 # Ajouter le répertoire parent au path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
