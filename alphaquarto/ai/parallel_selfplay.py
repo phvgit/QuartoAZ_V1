@@ -33,6 +33,9 @@ def _play_single_game(args: Tuple) -> Dict[str, Any]:
     Cette fonction est exécutée dans un processus séparé.
     Elle crée son propre réseau et charge les poids depuis un fichier.
 
+    Note: Les workers utilisent le CPU pour l'inférence pendant le self-play.
+    Le GPU est réservé au processus principal pour l'entraînement (plus efficace).
+
     Args:
         args: Tuple (weights_path, network_config, mcts_config, game_id)
 
@@ -41,15 +44,17 @@ def _play_single_game(args: Tuple) -> Dict[str, Any]:
     """
     weights_path, network_config, mcts_config, game_id = args
 
-    # Imports locaux pour éviter les problèmes de pickling
+    # Configuration pour les workers: utiliser CPU uniquement
+    # Le GPU est réservé au processus principal pour l'entraînement
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+    os.environ['CUDA_VISIBLE_DEVICES'] = ''  # Désactive GPU pour ce worker
 
     from alphaquarto.game.quarto import Quarto
     from alphaquarto.game.constants import NUM_SQUARES, NUM_PIECES
     from alphaquarto.ai.mcts import MCTS
     from alphaquarto.ai.network import AlphaZeroNetwork, StateEncoder
 
-    # Créer le réseau local
+    # Créer le réseau local (sur CPU)
     network = AlphaZeroNetwork(
         num_filters=network_config['num_filters'],
         num_res_blocks=network_config['num_res_blocks'],

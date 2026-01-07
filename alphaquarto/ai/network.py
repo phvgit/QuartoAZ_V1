@@ -28,6 +28,128 @@ from alphaquarto.game.constants import BOARD_SIZE, NUM_SQUARES, NUM_PIECES, NUM_
 
 
 # =============================================================================
+# Configuration GPU
+# =============================================================================
+
+def configure_gpu(
+    use_gpu: bool = True,
+    memory_growth: bool = True,
+    mixed_precision: bool = False,
+    verbose: bool = True
+) -> dict:
+    """
+    Configure TensorFlow pour utiliser le GPU de manière optimale.
+
+    Args:
+        use_gpu: Si True, utilise le GPU si disponible. Si False, force CPU.
+        memory_growth: Si True, alloue la mémoire GPU progressivement.
+        mixed_precision: Si True, utilise la précision mixte (float16/float32)
+                        pour accélérer le calcul sur GPU compatible.
+        verbose: Afficher les informations de configuration.
+
+    Returns:
+        Dictionnaire avec les informations de configuration
+    """
+    if not TF_AVAILABLE:
+        return {'gpu_available': False, 'device': 'cpu', 'error': 'TensorFlow not available'}
+
+    config = {
+        'gpu_available': False,
+        'gpu_name': None,
+        'device': 'cpu',
+        'mixed_precision': False,
+        'memory_growth': False
+    }
+
+    # Lister les GPUs disponibles
+    gpus = tf.config.list_physical_devices('GPU')
+
+    if not use_gpu or not gpus:
+        # Forcer l'utilisation du CPU
+        if not use_gpu:
+            tf.config.set_visible_devices([], 'GPU')
+            if verbose:
+                print("  GPU désactivé, utilisation du CPU")
+        elif verbose:
+            print("  Aucun GPU détecté, utilisation du CPU")
+        return config
+
+    # GPU disponible
+    config['gpu_available'] = True
+    config['device'] = 'gpu'
+
+    try:
+        # Obtenir le nom du GPU
+        config['gpu_name'] = gpus[0].name
+
+        # Configuration memory growth (évite d'allouer toute la VRAM)
+        if memory_growth:
+            for gpu in gpus:
+                tf.config.experimental.set_memory_growth(gpu, True)
+            config['memory_growth'] = True
+
+        # Mixed precision (float16 pour les calculs, float32 pour les poids)
+        # Accélère significativement sur les GPU avec Tensor Cores (RTX, etc.)
+        if mixed_precision:
+            policy = tf.keras.mixed_precision.Policy('mixed_float16')
+            tf.keras.mixed_precision.set_global_policy(policy)
+            config['mixed_precision'] = True
+
+        if verbose:
+            print(f"  GPU détecté: {gpus[0].name}")
+            print(f"  Memory growth: {'Activé' if memory_growth else 'Désactivé'}")
+            print(f"  Mixed precision (float16): {'Activé' if mixed_precision else 'Désactivé'}")
+
+            # Afficher la mémoire GPU disponible si possible
+            try:
+                gpu_details = tf.config.experimental.get_device_details(gpus[0])
+                if 'device_name' in gpu_details:
+                    print(f"  Nom complet: {gpu_details['device_name']}")
+            except Exception:
+                pass
+
+    except RuntimeError as e:
+        if verbose:
+            print(f"  Erreur configuration GPU: {e}")
+        config['error'] = str(e)
+
+    return config
+
+
+def get_gpu_info() -> dict:
+    """
+    Retourne les informations sur le GPU disponible.
+
+    Returns:
+        Dictionnaire avec les informations GPU
+    """
+    if not TF_AVAILABLE:
+        return {'available': False, 'error': 'TensorFlow not available'}
+
+    gpus = tf.config.list_physical_devices('GPU')
+
+    if not gpus:
+        return {'available': False, 'count': 0}
+
+    info = {
+        'available': True,
+        'count': len(gpus),
+        'devices': []
+    }
+
+    for gpu in gpus:
+        device_info = {'name': gpu.name}
+        try:
+            details = tf.config.experimental.get_device_details(gpu)
+            device_info.update(details)
+        except Exception:
+            pass
+        info['devices'].append(device_info)
+
+    return info
+
+
+# =============================================================================
 # Encodeur d'état
 # =============================================================================
 

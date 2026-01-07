@@ -16,7 +16,7 @@ import os
 # Ajouter le répertoire parent au path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from alphaquarto.ai.network import AlphaZeroNetwork, create_network
+from alphaquarto.ai.network import AlphaZeroNetwork, create_network, configure_gpu, get_gpu_info
 from alphaquarto.ai.trainer import AlphaZeroTrainer, Evaluator
 
 
@@ -25,6 +25,15 @@ def train(args):
     print(f"\n{'='*60}")
     print("INITIALISATION")
     print(f"{'='*60}")
+
+    # Configuration GPU
+    print("\nConfiguration matérielle...")
+    gpu_config = configure_gpu(
+        use_gpu=args.gpu,
+        memory_growth=True,
+        mixed_precision=args.mixed_precision,
+        verbose=True
+    )
 
     # Créer le réseau
     print(f"\nCréation du réseau ({args.network_size})...")
@@ -176,6 +185,9 @@ Exemples:
   # Entraînement PARALLÈLE (recommandé - 4x plus rapide)
   python scripts/train.py --iterations 100 --games-per-iter 50 --workers 4
 
+  # Entraînement avec GPU et précision mixte (machines puissantes)
+  python scripts/train.py --iterations 100 --games-per-iter 100 --workers 20 --mixed-precision
+
   # Test rapide
   python scripts/train.py --quick
 
@@ -184,6 +196,9 @@ Exemples:
 
   # Reprendre un entraînement avec parallélisation
   python scripts/train.py --resume-from 7 --iterations 50 --workers 4
+
+  # Forcer CPU uniquement (debug ou comparaison)
+  python scripts/train.py --no-gpu --iterations 10 --games-per-iter 10
         """
     )
 
@@ -213,6 +228,14 @@ Exemples:
                        default='medium', help='Taille du réseau (défaut: medium)')
     parser.add_argument('--learning-rate', type=float, default=0.001,
                        help='Taux d\'apprentissage (défaut: 0.001)')
+
+    # Configuration GPU
+    parser.add_argument('--gpu', action='store_true', default=True,
+                       help='Utiliser le GPU si disponible (défaut: True)')
+    parser.add_argument('--no-gpu', action='store_false', dest='gpu',
+                       help='Forcer l\'utilisation du CPU uniquement')
+    parser.add_argument('--mixed-precision', action='store_true',
+                       help='Activer la précision mixte float16 (accélère sur GPU RTX/Ada)')
 
     # Replay buffer
     parser.add_argument('--buffer-size', type=int, default=100000,
