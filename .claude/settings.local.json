@@ -12,7 +12,8 @@
       "Bash(gh repo create:*)",
       "Bash(rm:*)",
       "Bash(rmdir:*)",
-      "Bash(findstr:*)"
+      "Bash(findstr:*)",
+      "Bash(echo:*)"
     ]
   }
 }

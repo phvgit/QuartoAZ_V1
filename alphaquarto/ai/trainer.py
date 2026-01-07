@@ -328,6 +328,8 @@ class AlphaZeroTrainer:
     2. Stockage dans le replay buffer
     3. Entraînement du réseau
     4. Évaluation et sauvegarde des checkpoints
+
+    Supporte le mode parallèle pour accélérer le self-play.
     """
 
     def __init__(
@@ -336,7 +338,8 @@ class AlphaZeroTrainer:
         mcts_sims: int = 100,
         buffer_size: int = 100000,
         checkpoint_dir: str = "data/checkpoints",
-        model_dir: str = "data/models"
+        model_dir: str = "data/models",
+        num_workers: int = 1
     ):
         """
         Initialise le trainer.
@@ -347,12 +350,14 @@ class AlphaZeroTrainer:
             buffer_size: Taille du replay buffer
             checkpoint_dir: Répertoire pour les checkpoints
             model_dir: Répertoire pour les modèles sauvegardés
+            num_workers: Nombre de workers pour le self-play parallèle (1 = séquentiel)
         """
         self.network = network
         self.mcts_sims = mcts_sims
         self.replay_buffer = ReplayBuffer(max_size=buffer_size)
         self.checkpoint_dir = Path(checkpoint_dir)
         self.model_dir = Path(model_dir)
+        self.num_workers = num_workers
 
         # Créer les répertoires
         self.checkpoint_dir.mkdir(parents=True, exist_ok=True)
@@ -363,11 +368,21 @@ class AlphaZeroTrainer:
         self.iteration = 0
         self.total_games = 0
 
-        # Self-play
+        # Self-play (séquentiel)
         self.self_play = SelfPlay(
             network=network,
             num_simulations=mcts_sims
         )
+
+        # Self-play parallèle (si num_workers > 1)
+        self.parallel_self_play = None
+        if num_workers > 1:
+            from alphaquarto.ai.parallel_selfplay import ParallelSelfPlay
+            self.parallel_self_play = ParallelSelfPlay(
+                network=network,
+                num_workers=num_workers,
+                num_simulations=mcts_sims
+            )
 
     def play_game(self) -> GameRecord:
         """Joue une partie de self-play."""
@@ -381,6 +396,8 @@ class AlphaZeroTrainer:
         """
         Génère des données de self-play.
 
+        Utilise le mode parallèle si num_workers > 1.
+
         Args:
             num_games: Nombre de parties à générer
             verbose: Afficher les informations
@@ -388,6 +405,11 @@ class AlphaZeroTrainer:
         Returns:
             Statistiques de génération
         """
+        # Mode parallèle
+        if self.parallel_self_play is not None and self.num_workers > 1:
+            return self._generate_parallel(num_games, verbose)
+
+        # Mode séquentiel (original)
         if verbose:
             print(f"\n=== Génération de {num_games} parties de self-play ===")
 
@@ -422,6 +444,66 @@ class AlphaZeroTrainer:
             'buffer_size': len(self.replay_buffer),
             'duration': duration,
             'games_per_second': num_games / duration if duration > 0 else 0
+        }
+
+        if verbose:
+            print(f"  Terminé en {duration:.1f}s ({stats['games_per_second']:.2f} parties/s)")
+            print(f"  Victoires: J0={wins[0]}, J1={wins[1]}, Nuls={wins[None]}")
+
+        return stats
+
+    def _generate_parallel(
+        self,
+        num_games: int,
+        verbose: bool = False
+    ) -> Dict[str, Any]:
+        """
+        Génère des données en mode parallèle.
+
+        Args:
+            num_games: Nombre de parties
+            verbose: Afficher la progression
+
+        Returns:
+            Statistiques de génération
+        """
+        from alphaquarto.ai.parallel_selfplay import convert_results_to_records
+
+        if verbose:
+            print(f"\n=== Génération PARALLÈLE de {num_games} parties ({self.num_workers} workers) ===")
+
+        start_time = time.time()
+
+        # Générer les parties en parallèle
+        results = self.parallel_self_play.generate_games(num_games, verbose=verbose)
+
+        # Convertir en GameRecords et ajouter au buffer
+        records = convert_results_to_records(results)
+
+        wins = {0: 0, 1: 0, None: 0}
+        total_moves = 0
+        total_examples = 0
+
+        for record in records:
+            self.replay_buffer.add_game(record)
+            wins[record.winner] = wins.get(record.winner, 0) + 1
+            total_moves += record.num_moves
+            total_examples += len(record.examples)
+            self.total_games += 1
+
+        duration = time.time() - start_time
+
+        stats = {
+            'num_games': num_games,
+            'wins_player_0': wins[0],
+            'wins_player_1': wins[1],
+            'draws': wins[None],
+            'avg_moves': total_moves / num_games if num_games > 0 else 0,
+            'total_examples': total_examples,
+            'buffer_size': len(self.replay_buffer),
+            'duration': duration,
+            'games_per_second': num_games / duration if duration > 0 else 0,
+            'num_workers': self.num_workers
         }
 
         if verbose:

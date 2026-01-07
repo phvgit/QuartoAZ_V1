@@ -36,12 +36,15 @@ def train(args):
 
     # Créer le trainer
     print("\nInitialisation du trainer...")
+    if args.workers > 1:
+        print(f"  Mode PARALLÈLE activé: {args.workers} workers")
     trainer = AlphaZeroTrainer(
         network=network,
         mcts_sims=args.mcts_sims,
         buffer_size=args.buffer_size,
         checkpoint_dir=args.checkpoint_dir,
-        model_dir=args.model_dir
+        model_dir=args.model_dir,
+        num_workers=args.workers
     )
 
     # Charger un checkpoint existant si spécifié
@@ -58,14 +61,25 @@ def train(args):
 
     # Lancer l'entraînement
     print("\nDémarrage de l'entraînement...")
-    trainer.train(
-        num_iterations=args.iterations,
-        games_per_iteration=args.games_per_iter,
-        epochs_per_iteration=args.epochs,
-        batch_size=args.batch_size,
-        save_frequency=args.save_frequency,
-        verbose=True
-    )
+    try:
+        trainer.train(
+            num_iterations=args.iterations,
+            games_per_iteration=args.games_per_iter,
+            epochs_per_iteration=args.epochs,
+            batch_size=args.batch_size,
+            save_frequency=args.save_frequency,
+            verbose=True
+        )
+    except KeyboardInterrupt:
+        print("\n\n*** Entraînement interrompu par l'utilisateur ***")
+        print("Sauvegarde du modèle actuel...")
+        trainer.save_best_model()
+        trainer.save_training_stats()
+        if args.save_buffer:
+            trainer.save_replay_buffer()
+        print(f"Modèle sauvé à l'itération {trainer.iteration}")
+        print("Vous pouvez reprendre avec: --resume-from", trainer.iteration)
+        return 0
 
     # Sauvegarder le replay buffer
     if args.save_buffer:
@@ -159,14 +173,17 @@ Exemples:
   # Entraînement standard
   python scripts/train.py --iterations 100 --games-per-iter 50
 
+  # Entraînement PARALLÈLE (recommandé - 4x plus rapide)
+  python scripts/train.py --iterations 100 --games-per-iter 50 --workers 4
+
   # Test rapide
   python scripts/train.py --quick
 
   # Évaluation du modèle
   python scripts/train.py --evaluate
 
-  # Reprendre un entraînement
-  python scripts/train.py --resume-from 50 --iterations 100
+  # Reprendre un entraînement avec parallélisation
+  python scripts/train.py --resume-from 7 --iterations 50 --workers 4
         """
     )
 
@@ -188,6 +205,8 @@ Exemples:
                        help='Taille des batches (défaut: 32)')
     parser.add_argument('--mcts-sims', type=int, default=100,
                        help='Simulations MCTS par coup (défaut: 100)')
+    parser.add_argument('--workers', '-w', type=int, default=1,
+                       help='Nombre de workers pour le self-play parallèle (défaut: 1, max recommandé: nb CPUs - 1)')
 
     # Paramètres du réseau
     parser.add_argument('--network-size', choices=['small', 'medium', 'large'],
@@ -210,8 +229,8 @@ Exemples:
                        help='Répertoire des modèles')
     parser.add_argument('--resume-from', type=int, default=None,
                        help='Reprendre depuis une itération spécifique')
-    parser.add_argument('--save-frequency', type=int, default=10,
-                       help='Fréquence de sauvegarde (défaut: 10)')
+    parser.add_argument('--save-frequency', type=int, default=1,
+                       help='Fréquence de sauvegarde du best_model (défaut: 1)')
 
     # Évaluation
     parser.add_argument('--eval-games', type=int, default=50,
