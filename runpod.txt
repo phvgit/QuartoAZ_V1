@@ -1,0 +1,56 @@
+ssh zn685sbttq0a1x-64410d59@ssh.runpod.io -i ~/.ssh/id_ed25519
+The authenticity of host 'ssh.runpod.io (3.209.22.108)' can't be established.
+RSA key fingerprint is SHA256:eYprmeBVqJ5hik4sEtaEbsrBsY0LBcNCGgJzj2v1KVI.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'ssh.runpod.io' (RSA) to the list of known hosts.
+
+-- RUNPOD.IO --
+Enjoy your Pod #zn685sbttq0a1x ^_^
+
+ ______                 ______            _
+(_____ \               (_____ \          | |
+ _____) ) _   _  ____   _____) )___    __| |
+|  __  / | | | ||  _ \ |  ____// _ \  / _  |
+| |  \ \ | |_| || | | || |    | |_| |( (_| |
+|_|   |_||____/ |_| |_||_|     \___/  \____|
+
+For detailed documentation and guides, please visit:
+https://docs.runpod.io/ and https://blog.runpod.io/
+
+
+root@abd5f804c365:/# nvidia-smi
+Wed Jan  7 17:35:08 2026
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 570.172.08             Driver Version: 570.172.08     CUDA Version: 12.8     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA GeForce RTX 4090        On  |   00000000:05:00.0 Off |                  Off |
+|  0%   28C    P8             23W /  450W |       1MiB /  24564MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+root@abd5f804c365:/# python --version
+Python 3.11.11
+root@abd5f804c365:/# pip show tensorflow
+Name: tensorflow
+Version: 2.15.0
+Summary: TensorFlow is an open source machine learning framework for everyone.
+Home-page: https://www.tensorflow.org/
+Author: Google Inc.
+Author-email: packages@tensorflow.org
+License: Apache 2.0
+Location: /usr/local/lib/python3.11/dist-packages
+Requires: absl-py, astunparse, flatbuffers, gast, google-pasta, grpcio, h5py, keras, libclang, ml-dtypes, numpy, opt-einsum, packaging, protobuf, setuptools, six, tensorboard, tensorflow-estimator, tensorflow-io-gcs-filesystem, termcolor, typing-extensions, wrapt
+Required-by: tf_keras
+root@abd5f804c365:/#
