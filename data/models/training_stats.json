@@ -1,0 +1,62 @@
+[
+  {
+    "iteration": 8,
+    "selfplay": {
+      "num_games": 10,
+      "wins_player_0": 6,
+      "wins_player_1": 4,
+      "draws": 0,
+      "avg_moves": 9.0,
+      "total_examples": 90,
+      "buffer_size": 90,
+      "duration": 40.870920181274414,
+      "games_per_second": 0.2446727393375802,
+      "num_workers": 4
+    },
+    "training": {
+      "loss": 0.0
+    },
+    "total_games": 710,
+    "buffer_size": 90
+  },
+  {
+    "iteration": 9,
+    "selfplay": {
+      "num_games": 10,
+      "wins_player_0": 3,
+      "wins_player_1": 7,
+      "draws": 0,
+      "avg_moves": 10.5,
+      "total_examples": 105,
+      "buffer_size": 195,
+      "duration": 44.82998061180115,
+      "games_per_second": 0.22306500836111395,
+      "num_workers": 4
+    },
+    "training": {
+      "loss": 0.0
+    },
+    "total_games": 720,
+    "buffer_size": 195
+  },
+  {
+    "iteration": 10,
+    "selfplay": {
+      "num_games": 10,
+      "wins_player_0": 6,
+      "wins_player_1": 4,
+      "draws": 0,
+      "avg_moves": 9.0,
+      "total_examples": 90,
+      "buffer_size": 285,
+      "duration": 42.63177299499512,
+      "games_per_second": 0.23456683354863003,
+      "num_workers": 4
+    },
+    "training": {
+      "loss": 0.0
+    },
+    "total_games": 730,
+    "buffer_size": 285
+  }
+]
