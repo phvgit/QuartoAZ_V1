@@ -14,11 +14,20 @@ import numpy as np
 from typing import Tuple, Optional
 from pathlib import Path
 
-# Import TensorFlow avec gestion d'erreur
+# Import TensorFlow avec gestion d'erreur et suppression des warnings
 try:
+    import os
+    # Configurer AVANT l'import de TensorFlow pour supprimer les messages
+    if 'TF_CPP_MIN_LOG_LEVEL' not in os.environ:
+        os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
     import tensorflow as tf
     from tensorflow import keras
     from tensorflow.keras import layers, Model, regularizers
+
+    # Configurer le logger TensorFlow
+    tf.get_logger().setLevel('ERROR')
+
     TF_AVAILABLE = True
 except ImportError:
     TF_AVAILABLE = False
@@ -616,10 +625,20 @@ class AlphaZeroNetwork:
             Path(path).parent.mkdir(parents=True, exist_ok=True)
             self.model.save_weights(path)
 
-    def load_weights(self, path: str):
-        """Charge les poids du modèle."""
+    def load_weights(self, path: str, skip_optimizer: bool = False):
+        """
+        Charge les poids du modèle.
+
+        Args:
+            path: Chemin vers le fichier de poids
+            skip_optimizer: Si True, ignore les variables de l'optimizer (évite warnings)
+                           Utile pour l'inférence seule.
+        """
         if self.model is not None and Path(path).exists():
-            self.model.load_weights(path)
+            if skip_optimizer:
+                self.model.load_weights(path, skip_mismatch=True)
+            else:
+                self.model.load_weights(path)
 
     def save_model(self, path: str):
         """Sauvegarde le modèle complet."""

@@ -4,12 +4,17 @@ Self-play parallélisé pour AlphaZero.
 
 Utilise multiprocessing pour générer des parties en parallèle,
 accélérant significativement la phase de self-play.
+
+Architecture optimisée:
+- Chaque worker charge le réseau UNE SEULE FOIS au démarrage
+- Les parties suivantes réutilisent ce réseau (pas de réinitialisation)
+- Workers utilisent CPU pour l'inférence, GPU réservé au processus principal
 """
 
 import numpy as np
 import multiprocessing as mp
-from multiprocessing import Queue, Process
-from typing import List, Dict, Any, Optional, Tuple
+from multiprocessing import Pool
+from typing import List, Dict, Any, Tuple
 from pathlib import Path
 import time
 import tempfile
@@ -24,59 +29,86 @@ except RuntimeError:
     pass  # Déjà configuré
 
 
-def _init_worker():
-    """Initialise un worker (appelé une fois par processus)."""
-    # Réduire la verbosité de TensorFlow dans les workers
-    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+# =============================================================================
+# Variables globales pour les workers (initialisées une fois par processus)
+# =============================================================================
+
+_worker_network = None
+_worker_encoder = None
+_worker_mcts_config = None
 
 
-def _play_single_game(args: Tuple) -> Dict[str, Any]:
+def _init_worker(weights_path: str, network_config: Dict[str, Any], mcts_config: Dict[str, Any]):
     """
-    Joue une seule partie de self-play (fonction worker).
+    Initialise un worker (appelé une fois par processus au démarrage du pool).
 
-    Cette fonction est exécutée dans un processus séparé.
-    Elle crée son propre réseau et charge les poids depuis un fichier.
-
-    Note: Les workers utilisent le CPU pour l'inférence pendant le self-play.
-    Le GPU est réservé au processus principal pour l'entraînement (plus efficace).
+    Charge le réseau et configure TensorFlow pour le CPU.
+    Le réseau est stocké dans une variable globale et réutilisé pour toutes les parties.
 
     Args:
-        args: Tuple (weights_path, network_config, mcts_config, game_id)
-
-    Returns:
-        Dictionnaire avec les données de la partie
+        weights_path: Chemin vers les poids du réseau
+        network_config: Configuration du réseau (num_filters, num_res_blocks, etc.)
+        mcts_config: Configuration MCTS (num_simulations, etc.)
     """
-    weights_path, network_config, mcts_config, game_id = args
+    global _worker_network, _worker_encoder, _worker_mcts_config
 
-    # Configuration pour les workers: utiliser CPU uniquement
-    # Le GPU est réservé au processus principal pour l'entraînement
-    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-    os.environ['CUDA_VISIBLE_DEVICES'] = ''  # Désactive GPU pour ce worker
+    # Configurer l'environnement AVANT d'importer TensorFlow
+    # Ceci supprime tous les warnings et messages
+    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # FATAL only
+    os.environ['CUDA_VISIBLE_DEVICES'] = ''   # Désactive GPU pour ce worker
+    os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'  # Désactive les optimisations oneDNN (évite warnings)
 
-    from alphaquarto.game.quarto import Quarto
-    from alphaquarto.game.constants import NUM_SQUARES, NUM_PIECES
-    from alphaquarto.ai.mcts import MCTS
+    # Importer TensorFlow avec les bonnes configurations
+    import tensorflow as tf
+    tf.get_logger().setLevel('ERROR')
+
+    # Désactiver les warnings autograph
+    import logging
+    logging.getLogger('tensorflow').setLevel(logging.ERROR)
+
     from alphaquarto.ai.network import AlphaZeroNetwork, StateEncoder
 
-    # Créer le réseau local (sur CPU)
-    network = AlphaZeroNetwork(
+    # Créer le réseau (une seule fois!)
+    _worker_network = AlphaZeroNetwork(
         num_filters=network_config['num_filters'],
         num_res_blocks=network_config['num_res_blocks'],
         l2_reg=network_config.get('l2_reg', 1e-4),
         learning_rate=network_config.get('learning_rate', 0.001)
     )
 
-    # Charger les poids
+    # Charger les poids si disponibles
     if weights_path and Path(weights_path).exists():
-        network.load_weights(weights_path)
+        # Utiliser skip_mismatch=True pour éviter les warnings Adam optimizer
+        _worker_network.model.load_weights(weights_path, skip_mismatch=True)
+
+    _worker_encoder = StateEncoder()
+    _worker_mcts_config = mcts_config
+
+
+def _play_single_game(game_id: int) -> Dict[str, Any]:
+    """
+    Joue une seule partie de self-play (fonction worker).
+
+    Utilise le réseau global initialisé par _init_worker.
+    Cette approche évite de recréer le réseau pour chaque partie.
+
+    Args:
+        game_id: Identifiant de la partie
+
+    Returns:
+        Dictionnaire avec les données de la partie
+    """
+    global _worker_network, _worker_encoder, _worker_mcts_config
+
+    from alphaquarto.game.quarto import Quarto
+    from alphaquarto.game.constants import NUM_PIECES
+    from alphaquarto.ai.mcts import MCTS
 
     # Configuration MCTS
-    num_simulations = mcts_config.get('num_simulations', 100)
-    temperature_threshold = mcts_config.get('temperature_threshold', 10)
-    dirichlet_alpha = mcts_config.get('dirichlet_alpha', 0.3)
-    dirichlet_epsilon = mcts_config.get('dirichlet_epsilon', 0.25)
-
-    encoder = StateEncoder()
+    num_simulations = _worker_mcts_config.get('num_simulations', 100)
+    temperature_threshold = _worker_mcts_config.get('temperature_threshold', 10)
+    dirichlet_alpha = _worker_mcts_config.get('dirichlet_alpha', 0.3)
+    dirichlet_epsilon = _worker_mcts_config.get('dirichlet_epsilon', 0.25)
 
     # Jouer la partie
     start_time = time.time()
@@ -86,7 +118,7 @@ def _play_single_game(args: Tuple) -> Dict[str, Any]:
     mcts = MCTS(
         num_simulations=num_simulations,
         c_puct=1.41,
-        network=network,
+        network=_worker_network,
         use_dirichlet=True,
         dirichlet_alpha=dirichlet_alpha,
         dirichlet_epsilon=dirichlet_epsilon
@@ -105,7 +137,7 @@ def _play_single_game(args: Tuple) -> Dict[str, Any]:
         temperature = 1.0 if move_count <= temperature_threshold else 0.1
 
         # Encoder l'état
-        state = encoder.encode(game)
+        state = _worker_encoder.encode(game)
         current_player = game.current_player
 
         # MCTS pour le placement
@@ -169,8 +201,10 @@ class ParallelSelfPlay:
     """
     Génère des parties de self-play en parallèle.
 
-    Utilise un pool de workers pour jouer plusieurs parties simultanément.
-    Chaque worker a sa propre copie du réseau pour éviter les conflits.
+    Architecture optimisée:
+    - Chaque worker charge le réseau UNE SEULE FOIS au démarrage
+    - Les parties suivantes réutilisent ce réseau persistant
+    - Workers utilisent CPU, GPU réservé au processus principal pour l'entraînement
     """
 
     def __init__(
@@ -245,24 +279,18 @@ class ParallelSelfPlay:
         network_config = self._get_network_config()
         mcts_config = self._get_mcts_config()
 
-        # Préparer les arguments pour chaque partie
-        args_list = [
-            (self.weights_path, network_config, mcts_config, i)
-            for i in range(num_games)
-        ]
-
         start_time = time.time()
         results = []
 
-        # Utiliser un pool de processus
-        # Note: on utilise maxtasksperchild pour éviter les fuites mémoire
-        with mp.Pool(
+        # Utiliser un pool de processus avec initialisation personnalisée
+        # Le réseau est chargé UNE SEULE FOIS par worker au démarrage du pool
+        with Pool(
             processes=self.num_workers,
             initializer=_init_worker,
-            maxtasksperchild=10
+            initargs=(self.weights_path, network_config, mcts_config)
         ) as pool:
             # imap_unordered pour obtenir les résultats au fur et à mesure
-            for i, result in enumerate(pool.imap_unordered(_play_single_game, args_list)):
+            for i, result in enumerate(pool.imap_unordered(_play_single_game, range(num_games))):
                 results.append(result)
                 if verbose and (i + 1) % max(1, num_games // 5) == 0:
                     elapsed = time.time() - start_time

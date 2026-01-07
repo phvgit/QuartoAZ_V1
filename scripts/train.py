@@ -13,11 +13,23 @@ import argparse
 import sys
 import os
 
+# =============================================================================
+# Configuration TensorFlow AVANT tout import
+# Ceci supprime les warnings et messages inutiles
+# =============================================================================
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'  # Supprime INFO et WARNING
+os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'  # Désactive les optimisations oneDNN (évite warnings)
+
 # Ajouter le répertoire parent au path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from alphaquarto.ai.network import AlphaZeroNetwork, create_network, configure_gpu, get_gpu_info
 from alphaquarto.ai.trainer import AlphaZeroTrainer, Evaluator
+
+# Supprimer les warnings TensorFlow restants
+import logging
+logging.getLogger('tensorflow').setLevel(logging.ERROR)
+logging.getLogger('absl').setLevel(logging.ERROR)
 
 
 def train(args):
