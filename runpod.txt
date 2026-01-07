@@ -54,3 +54,4 @@ Location: /usr/local/lib/python3.11/dist-packages
 Requires: absl-py, astunparse, flatbuffers, gast, google-pasta, grpcio, h5py, keras, libclang, ml-dtypes, numpy, opt-einsum, packaging, protobuf, setuptools, six, tensorboard, tensorflow-estimator, tensorflow-io-gcs-filesystem, termcolor, typing-extensions, wrapt
 Required-by: tf_keras
 root@abd5f804c365:/#
+xi7xbGbqSHD4iMp&
