@@ -15,9 +15,13 @@ import time
 import tempfile
 import os
 
-# Configuration pour Windows - doit être avant les imports TensorFlow
-if os.name == 'nt':
+# Configuration multiprocessing - 'spawn' requis pour compatibilité CUDA/TensorFlow
+# Sur Linux, 'fork' (défaut) cause des erreurs CUDA_ERROR_NOT_INITIALIZED
+# car le contexte CUDA du processus parent ne peut pas être hérité
+try:
     mp.set_start_method('spawn', force=True)
+except RuntimeError:
+    pass  # Déjà configuré
 
 
 def _init_worker():
