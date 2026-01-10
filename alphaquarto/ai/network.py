@@ -413,9 +413,13 @@ class AlphaZeroNetwork:
             name='AlphaZeroQuarto'
         )
 
-        # Compiler
+        # Compiler avec gradient clipping pour éviter les explosions
+        optimizer = keras.optimizers.Adam(
+            learning_rate=self.learning_rate,
+            clipnorm=1.0  # Limite la norme des gradients à 1.0
+        )
         model.compile(
-            optimizer=keras.optimizers.Adam(learning_rate=self.learning_rate),
+            optimizer=optimizer,
             loss={
                 'policy_output': 'categorical_crossentropy',
                 'piece_output': 'categorical_crossentropy',

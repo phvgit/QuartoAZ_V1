@@ -240,8 +240,8 @@ Exemples:
     # Paramètres du réseau
     parser.add_argument('--network-size', choices=['small', 'medium', 'large'],
                        default='medium', help='Taille du réseau (défaut: medium)')
-    parser.add_argument('--learning-rate', type=float, default=0.001,
-                       help='Taux d\'apprentissage (défaut: 0.001)')
+    parser.add_argument('--learning-rate', type=float, default=0.0001,
+                       help='Taux d\'apprentissage (défaut: 0.0001, réduit pour stabilité)')
 
     # Configuration GPU
     parser.add_argument('--gpu', action='store_true', default=True,
@@ -249,7 +249,7 @@ Exemples:
     parser.add_argument('--no-gpu', action='store_false', dest='gpu',
                        help='Forcer l\'utilisation du CPU uniquement')
     parser.add_argument('--mixed-precision', action='store_true',
-                       help='Activer la précision mixte float16 (accélère sur GPU RTX/Ada)')
+                       help='Activer la précision mixte float16 (ATTENTION: peut causer instabilité, déconseillé)')
 
     # Replay buffer
     parser.add_argument('--buffer-size', type=int, default=100000,
