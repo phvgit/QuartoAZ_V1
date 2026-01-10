@@ -74,7 +74,7 @@ def _init_worker(weights_path: str, network_config: Dict[str, Any], mcts_config:
         num_filters=network_config['num_filters'],
         num_res_blocks=network_config['num_res_blocks'],
         l2_reg=network_config.get('l2_reg', 1e-4),
-        learning_rate=network_config.get('learning_rate', 0.001)
+        learning_rate=network_config.get('learning_rate', 0.0001)
     )
 
     # Charger les poids si disponibles

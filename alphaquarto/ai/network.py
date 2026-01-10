@@ -296,7 +296,7 @@ class AlphaZeroNetwork:
         num_filters: int = 64,
         num_res_blocks: int = 6,
         l2_reg: float = 1e-4,
-        learning_rate: float = 0.001
+        learning_rate: float = 0.0001
     ):
         """
         Initialise le réseau AlphaZero.
@@ -305,7 +305,7 @@ class AlphaZeroNetwork:
             num_filters: Nombre de filtres par couche conv
             num_res_blocks: Nombre de blocs résiduels
             l2_reg: Coefficient de régularisation L2
-            learning_rate: Taux d'apprentissage
+            learning_rate: Taux d'apprentissage (0.0001 par défaut pour stabilité)
         """
         self.num_filters = num_filters
         self.num_res_blocks = num_res_blocks
@@ -701,14 +701,14 @@ class AlphaZeroNetwork:
 
 def create_network(
     size: str = 'medium',
-    learning_rate: float = 0.001
+    learning_rate: float = 0.0001
 ) -> AlphaZeroNetwork:
     """
     Crée un réseau avec une configuration prédéfinie.
 
     Args:
         size: 'small', 'medium', ou 'large'
-        learning_rate: Taux d'apprentissage
+        learning_rate: Taux d'apprentissage (0.0001 par défaut pour stabilité)
 
     Returns:
         Instance d'AlphaZeroNetwork configurée
