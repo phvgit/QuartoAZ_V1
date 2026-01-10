@@ -1,7 +1,7 @@
 {
   "iteration": 8,
-  "total_games": 710,
-  "buffer_size": 90,
+  "total_games": 800,
+  "buffer_size": 8980,
   "network_config": {
     "num_filters": 64,
     "num_res_blocks": 6,

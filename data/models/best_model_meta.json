@@ -1,6 +1,6 @@
 {
-  "iteration": 10,
-  "total_games": 730,
+  "iteration": 95,
+  "total_games": 9500,
   "network_config": {
     "num_filters": 64,
     "num_res_blocks": 6,

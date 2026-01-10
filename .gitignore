@@ -5,3 +5,4 @@ __pycache__/
 .idea/
 .env
 venv/
+data/checkpoints/replay_buffer.pkl

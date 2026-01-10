@@ -1,0 +1,12 @@
+{
+  "iteration": 62,
+  "total_games": 6200,
+  "buffer_size": 70470,
+  "network_config": {
+    "num_filters": 64,
+    "num_res_blocks": 6,
+    "l2_reg": 0.0001,
+    "learning_rate": 0.001,
+    "input_channels": 21
+  }
+}
