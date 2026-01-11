@@ -167,15 +167,14 @@ class TestMCTS:
         mcts = MCTS(num_simulations=50)
         assert mcts.num_simulations == 50
         assert mcts.c_puct == 1.41
-        assert mcts.network is None
 
-    def test_mcts_initialization_with_network(self):
-        """Test création avec réseau factice"""
-        def fake_network(state):
-            return np.ones(16) / 16, 0.5
-
-        mcts = MCTS(network=fake_network)
-        assert mcts.network is not None
+    def test_mcts_initialization_with_config(self):
+        """Test création avec configuration"""
+        from alphaquarto.utils.config import MCTSConfig
+        config = MCTSConfig(num_simulations=100, c_puct=2.0)
+        mcts = MCTS(config=config)
+        assert mcts.num_simulations == 100
+        assert mcts.c_puct == 2.0
 
     def test_search_requires_piece(self):
         """search lève une erreur si pas de pièce en main"""
@@ -401,26 +400,25 @@ class TestMCTSIntegration:
         # Le jeu doit être terminé
         assert game.game_over or len(game.get_legal_moves()) == 0
 
-    def test_mcts_with_custom_network(self):
-        """MCTS fonctionne avec un réseau personnalisé"""
-        def custom_network(state):
-            # Réseau qui préfère le coin
-            policy = np.zeros(16)
-            policy[0] = 0.5
-            policy[3] = 0.2
-            policy[12] = 0.2
-            policy[15] = 0.1
-            return policy, 0.0
+    def test_mcts_with_real_network(self):
+        """MCTS fonctionne avec un vrai réseau PyTorch"""
+        from alphaquarto.ai.network import AlphaZeroNetwork
+        from alphaquarto.utils.config import NetworkConfig
 
-        mcts = MCTS(num_simulations=20, network=custom_network, use_dirichlet=False)
+        config = NetworkConfig(num_filters=32, num_res_blocks=2)
+        network = AlphaZeroNetwork(config)
+        network.eval()
+
+        mcts = MCTS(num_simulations=20, network=network, use_dirichlet=False)
         game = Quarto()
         game.choose_piece(1)
 
         move_probs, _ = mcts.search(game, temperature=1.0)
 
-        # Le réseau devrait influencer les probabilités
-        # Le coin (0) devrait être favorisé
-        assert move_probs[0] > 0
+        # Les probabilités doivent être valides
+        assert len(move_probs) == NUM_SQUARES
+        assert np.isclose(np.sum(move_probs), 1.0)
+        assert np.all(move_probs >= 0)
 
 
 # =============================================================================

@@ -3,6 +3,8 @@
 """
 Script d'entraînement AlphaZero pour Quarto.
 
+Architecture: PyTorch + Batched GPU Inference
+
 Usage:
     python scripts/train.py --iterations 100 --games-per-iter 50
     python scripts/train.py --quick  # Mode rapide pour test
@@ -14,24 +16,80 @@ import sys
 import os
 import warnings
 
-# =============================================================================
-# Suppression de TOUS les warnings et messages avant tout import
-# =============================================================================
-warnings.filterwarnings('ignore', category=FutureWarning)  # Keras/numpy warnings
+# Supprimer les warnings non-critiques
+warnings.filterwarnings('ignore', category=FutureWarning)
 warnings.filterwarnings('ignore', category=DeprecationWarning)
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # Supprime INFO, WARNING, ERROR (C++)
-os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'  # Désactive les optimisations oneDNN
 
 # Ajouter le répertoire parent au path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from alphaquarto.ai.network import AlphaZeroNetwork, create_network, configure_gpu, get_gpu_info
-from alphaquarto.ai.trainer import AlphaZeroTrainer, Evaluator
+import torch
+import numpy as np
 
-# Supprimer les warnings TensorFlow restants
-import logging
-logging.getLogger('tensorflow').setLevel(logging.ERROR)
-logging.getLogger('absl').setLevel(logging.ERROR)
+from alphaquarto.ai.network import AlphaZeroNetwork, configure_gpu
+from alphaquarto.ai.trainer import AlphaZeroTrainer, Evaluator
+from alphaquarto.utils.config import (
+    Config, NetworkConfig, MCTSConfig, InferenceConfig, TrainingConfig
+)
+
+
+def get_device_info():
+    """Affiche les informations sur le device disponible."""
+    if torch.cuda.is_available():
+        device_name = torch.cuda.get_device_name(0)
+        memory = torch.cuda.get_device_properties(0).total_memory / 1e9
+        print(f"  GPU: {device_name} ({memory:.1f} GB)")
+        return "cuda"
+    else:
+        print("  Device: CPU (GPU non disponible)")
+        return "cpu"
+
+
+def build_config(args) -> Config:
+    """Construit la configuration à partir des arguments CLI."""
+    # Configuration réseau selon la taille
+    network_sizes = {
+        'small': {'num_filters': 32, 'num_res_blocks': 3},
+        'medium': {'num_filters': 64, 'num_res_blocks': 6},
+        'large': {'num_filters': 128, 'num_res_blocks': 10}
+    }
+    net_params = network_sizes.get(args.network_size, network_sizes['medium'])
+
+    # Device
+    device = "cuda" if args.gpu and torch.cuda.is_available() else "cpu"
+
+    return Config(
+        network=NetworkConfig(
+            num_filters=net_params['num_filters'],
+            num_res_blocks=net_params['num_res_blocks'],
+            learning_rate=args.learning_rate,
+            l2_reg=1e-4
+        ),
+        mcts=MCTSConfig(
+            num_simulations=args.mcts_sims,
+            c_puct=1.5,
+            dirichlet_alpha=0.8,
+            dirichlet_epsilon=0.25,
+            temperature_threshold=10
+        ),
+        inference=InferenceConfig(
+            max_batch_size=64,
+            batch_timeout_ms=10.0,
+            device=device
+        ),
+        training=TrainingConfig(
+            iterations=args.iterations,
+            games_per_iteration=args.games_per_iter,
+            epochs_per_iteration=args.epochs,
+            batch_size=args.batch_size,
+            num_workers=args.workers,
+            buffer_size=args.buffer_size,
+            min_buffer_size=args.batch_size * 4,
+            checkpoint_dir=args.checkpoint_dir,
+            model_dir=args.model_dir,
+            save_frequency=args.save_frequency
+        )
+    )
 
 
 def train(args):
@@ -40,35 +98,21 @@ def train(args):
     print("INITIALISATION")
     print(f"{'='*60}")
 
-    # Configuration GPU
+    # Configuration matérielle
     print("\nConfiguration matérielle...")
-    gpu_config = configure_gpu(
-        use_gpu=args.gpu,
-        memory_growth=True,
-        mixed_precision=args.mixed_precision,
-        verbose=True
-    )
+    device = get_device_info()
 
-    # Créer le réseau
-    print(f"\nCréation du réseau ({args.network_size})...")
-    network = create_network(
-        size=args.network_size,
-        learning_rate=args.learning_rate
-    )
-    print(f"  Paramètres: {network.count_parameters():,}")
+    # Construire la configuration
+    config = build_config(args)
+    print(f"\nConfiguration réseau ({args.network_size})...")
 
-    # Créer le trainer
+    # Créer le trainer (qui crée le réseau)
     print("\nInitialisation du trainer...")
+    trainer = AlphaZeroTrainer(config)
+    print(f"  Paramètres: {trainer.network.count_parameters():,}")
+
     if args.workers > 1:
         print(f"  Mode PARALLÈLE activé: {args.workers} workers")
-    trainer = AlphaZeroTrainer(
-        network=network,
-        mcts_sims=args.mcts_sims,
-        buffer_size=args.buffer_size,
-        checkpoint_dir=args.checkpoint_dir,
-        model_dir=args.model_dir,
-        num_workers=args.workers
-    )
 
     # Charger un checkpoint existant si spécifié
     if args.resume_from:
@@ -76,21 +120,11 @@ def train(args):
         trainer.load_checkpoint(args.resume_from)
         print(f"  Reprise à l'itération {trainer.iteration}")
 
-    # Charger le replay buffer si existant
-    if args.load_buffer:
-        print("\nChargement du replay buffer...")
-        trainer.load_replay_buffer()
-        print(f"  Buffer chargé: {len(trainer.replay_buffer)} exemples")
-
     # Lancer l'entraînement
     print("\nDémarrage de l'entraînement...")
     try:
         trainer.train(
             num_iterations=args.iterations,
-            games_per_iteration=args.games_per_iter,
-            epochs_per_iteration=args.epochs,
-            batch_size=args.batch_size,
-            save_frequency=args.save_frequency,
             verbose=True
         )
     except KeyboardInterrupt:
@@ -98,16 +132,9 @@ def train(args):
         print("Sauvegarde du modèle actuel...")
         trainer.save_best_model()
         trainer.save_training_stats()
-        if args.save_buffer:
-            trainer.save_replay_buffer()
         print(f"Modèle sauvé à l'itération {trainer.iteration}")
         print("Vous pouvez reprendre avec: --resume-from", trainer.iteration)
         return 0
-
-    # Sauvegarder le replay buffer
-    if args.save_buffer:
-        print("\nSauvegarde du replay buffer...")
-        trainer.save_replay_buffer()
 
     return 0
 
@@ -118,24 +145,31 @@ def evaluate(args):
     print("ÉVALUATION DU MODÈLE")
     print(f"{'='*60}")
 
+    # Configuration
+    config = build_config(args)
+    device = torch.device(config.inference.device)
+
     # Charger le réseau
     print(f"\nCréation du réseau ({args.network_size})...")
-    network = create_network(size=args.network_size)
+    network = AlphaZeroNetwork(config.network)
+    network.to(device)
+    network.eval()
 
     # Charger les poids
-    model_path = os.path.join(args.model_dir, "best_model.weights.h5")
+    model_path = os.path.join(args.model_dir, "best_model.pt")
     if os.path.exists(model_path):
         print(f"Chargement du modèle: {model_path}")
-        network.load_weights(model_path)
+        network.load_state_dict(
+            torch.load(model_path, map_location=device)
+        )
     else:
         print("Aucun modèle entraîné trouvé. Utilisation du réseau aléatoire.")
 
     # Évaluer
-    evaluator = Evaluator(num_simulations=args.mcts_sims)
+    evaluator = Evaluator(network=network, config=config.mcts)
 
     print(f"\nÉvaluation contre joueur aléatoire ({args.eval_games} parties)...")
     results = evaluator.evaluate_vs_random(
-        network,
         num_games=args.eval_games,
         verbose=args.verbose
     )
@@ -156,51 +190,53 @@ def quick_test(args):
     print("TEST RAPIDE")
     print(f"{'='*60}")
 
-    # Créer un petit réseau
-    print("\nCréation d'un petit réseau...")
-    network = AlphaZeroNetwork(num_filters=32, num_res_blocks=2)
-    print(f"  Paramètres: {network.count_parameters():,}")
+    # Configuration minimale
+    config = Config.quick_test()
 
     # Créer le trainer
-    trainer = AlphaZeroTrainer(
-        network=network,
-        mcts_sims=20,  # Peu de simulations pour aller vite
-        buffer_size=10000
-    )
+    print("\nCréation d'un petit réseau...")
+    trainer = AlphaZeroTrainer(config)
+    print(f"  Paramètres: {trainer.network.count_parameters():,}")
+    print(f"  Device: {trainer.device}")
 
     # Une itération rapide
-    print("\nItération de test (3 parties, 2 époques)...")
-    stats = trainer.train_iteration(
-        num_games=3,
-        epochs=2,
-        batch_size=8,
-        verbose=True
-    )
+    print("\nItération de test (3 parties, 2 workers)...")
+
+    try:
+        trainer.train(num_iterations=1, verbose=True)
+    except Exception as e:
+        print(f"\nErreur: {e}")
+        import traceback
+        traceback.print_exc()
+        return 1
 
     print(f"\n{'='*60}")
     print("TEST RÉUSSI")
     print(f"{'='*60}")
-    print(f"  Parties jouées: {stats['total_games']}")
-    print(f"  Exemples collectés: {stats['buffer_size']}")
-    print(f"  Loss: {stats['training'].get('loss', 'N/A')}")
+    print(f"  Parties jouées: {trainer.total_games}")
+    print(f"  Buffer: {len(trainer.replay_buffer)} exemples")
+    if trainer.training_stats:
+        stats = trainer.training_stats[-1]
+        if 'training' in stats and stats['training']:
+            print(f"  Loss: {stats['training'].get('loss', 'N/A'):.4f}")
 
     return 0
 
 
 def main():
     parser = argparse.ArgumentParser(
-        description='Entraînement AlphaZero pour Quarto',
+        description='Entraînement AlphaZero pour Quarto (PyTorch)',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Exemples:
   # Entraînement standard
   python scripts/train.py --iterations 100 --games-per-iter 50
 
-  # Entraînement PARALLÈLE (recommandé - 4x plus rapide)
+  # Entraînement PARALLÈLE avec GPU (recommandé)
   python scripts/train.py --iterations 100 --games-per-iter 50 --workers 4
 
-  # Entraînement avec GPU et précision mixte (machines puissantes)
-  python scripts/train.py --iterations 100 --games-per-iter 100 --workers 20 --mixed-precision
+  # Entraînement intensif (machines puissantes, A100)
+  python scripts/train.py --iterations 100 --games-per-iter 100 --workers 20
 
   # Test rapide
   python scripts/train.py --quick
@@ -208,7 +244,7 @@ Exemples:
   # Évaluation du modèle
   python scripts/train.py --evaluate
 
-  # Reprendre un entraînement avec parallélisation
+  # Reprendre un entraînement
   python scripts/train.py --resume-from 7 --iterations 50 --workers 4
 
   # Forcer CPU uniquement (debug ou comparaison)
@@ -234,30 +270,24 @@ Exemples:
                        help='Taille des batches (défaut: 32)')
     parser.add_argument('--mcts-sims', type=int, default=100,
                        help='Simulations MCTS par coup (défaut: 100)')
-    parser.add_argument('--workers', '-w', type=int, default=1,
-                       help='Nombre de workers pour le self-play parallèle (défaut: 1, max recommandé: nb CPUs - 1)')
+    parser.add_argument('--workers', '-w', type=int, default=4,
+                       help='Nombre de workers pour le self-play parallèle (défaut: 4)')
 
     # Paramètres du réseau
     parser.add_argument('--network-size', choices=['small', 'medium', 'large'],
                        default='medium', help='Taille du réseau (défaut: medium)')
-    parser.add_argument('--learning-rate', type=float, default=0.0001,
-                       help='Taux d\'apprentissage (défaut: 0.0001, réduit pour stabilité)')
+    parser.add_argument('--learning-rate', type=float, default=0.001,
+                       help='Taux d\'apprentissage (défaut: 0.001)')
 
     # Configuration GPU
     parser.add_argument('--gpu', action='store_true', default=True,
                        help='Utiliser le GPU si disponible (défaut: True)')
     parser.add_argument('--no-gpu', action='store_false', dest='gpu',
                        help='Forcer l\'utilisation du CPU uniquement')
-    parser.add_argument('--mixed-precision', action='store_true',
-                       help='Activer la précision mixte float16 (ATTENTION: peut causer instabilité, déconseillé)')
 
     # Replay buffer
     parser.add_argument('--buffer-size', type=int, default=100000,
                        help='Taille du replay buffer (défaut: 100000)')
-    parser.add_argument('--load-buffer', action='store_true',
-                       help='Charger le replay buffer existant')
-    parser.add_argument('--save-buffer', action='store_true',
-                       help='Sauvegarder le replay buffer')
 
     # Checkpoints
     parser.add_argument('--checkpoint-dir', type=str, default='data/checkpoints',

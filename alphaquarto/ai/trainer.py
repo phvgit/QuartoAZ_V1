@@ -1,318 +1,94 @@
 # -*- coding: utf-8 -*-
 """
-Entraîneur AlphaZero pour Quarto.
+Entraîneur AlphaZero pour Quarto avec batched GPU inference.
 
-Implémente le cycle complet d'entraînement:
-1. Self-play: Génération de parties avec MCTS guidé par le réseau
-2. Replay buffer: Stockage des données d'entraînement
-3. Training: Entraînement du réseau sur les données collectées
-4. Evaluation: Comparaison du nouveau réseau avec l'ancien
+Ce module orchestre l'entraînement complet:
+- Serveur d'inférence GPU pour le batching
+- Workers de self-play parallèles
+- Replay buffer et entraînement du réseau
+- Sauvegarde des checkpoints
+
+Architecture:
+    Main Process
+    ├── InferenceServer (thread GPU)
+    ├── Training Loop (CPU)
+    └── Workers (processes CPU) x N
 """
 
-import numpy as np
-from collections import deque
-from dataclasses import dataclass, field
-from typing import List, Tuple, Optional, Dict, Any
-from pathlib import Path
+import os
 import json
 import time
-import pickle
+import queue
+import multiprocessing as mp
+from multiprocessing import Process, Queue
+from collections import deque
+from pathlib import Path
+from typing import Dict, List, Optional, Any
+from dataclasses import dataclass, field, asdict
+
+import numpy as np
+import torch
+import torch.optim as optim
 
 from alphaquarto.game.quarto import Quarto
 from alphaquarto.game.constants import NUM_SQUARES, NUM_PIECES
+from alphaquarto.ai.network import AlphaZeroNetwork, StateEncoder, configure_gpu
 from alphaquarto.ai.mcts import MCTS
-from alphaquarto.ai.network import AlphaZeroNetwork, StateEncoder
+from alphaquarto.ai.inference_server import InferenceServer
+from alphaquarto.ai.selfplay_worker import (
+    worker_process, GameResult, TrainingExample
+)
+from alphaquarto.utils.config import (
+    Config, NetworkConfig, MCTSConfig, InferenceConfig, TrainingConfig
+)
 
 
 # =============================================================================
-# Structures de données
+# Replay Buffer
 # =============================================================================
-
-@dataclass
-class TrainingExample:
-    """
-    Exemple d'entraînement issu du self-play.
-
-    Attributes:
-        state: État encodé du jeu (4, 4, 21)
-        policy_target: Distribution MCTS sur les cases (16,)
-        piece_target: Distribution sur les pièces à donner (16,)
-        value_target: Résultat final du jeu (-1, 0, ou 1)
-    """
-    state: np.ndarray
-    policy_target: np.ndarray
-    piece_target: np.ndarray
-    value_target: float
-
-
-@dataclass
-class GameRecord:
-    """
-    Enregistrement d'une partie de self-play.
-
-    Attributes:
-        examples: Liste des exemples d'entraînement
-        winner: Gagnant de la partie (0, 1, ou None pour match nul)
-        num_moves: Nombre de coups joués
-        duration: Durée de la partie en secondes
-    """
-    examples: List[TrainingExample] = field(default_factory=list)
-    winner: Optional[int] = None
-    num_moves: int = 0
-    duration: float = 0.0
-
 
 class ReplayBuffer:
     """
     Buffer circulaire pour stocker les exemples d'entraînement.
 
-    Maintient un historique des N derniers exemples pour l'entraînement.
-    Permet un échantillonnage aléatoire pour créer des mini-batches.
-
-    Attributes:
-        max_size: Taille maximale du buffer
-        buffer: Deque contenant les exemples
+    Stocke des triplets (state, policy_target, piece_target, value_target).
     """
 
-    def __init__(self, max_size: int = 100000):
-        """
-        Initialise le replay buffer.
-
-        Args:
-            max_size: Nombre maximum d'exemples à stocker
-        """
+    def __init__(self, max_size: int = 100_000):
         self.max_size = max_size
-        self.buffer: deque = deque(maxlen=max_size)
+        self.buffer = deque(maxlen=max_size)
 
     def add(self, example: TrainingExample):
         """Ajoute un exemple au buffer."""
         self.buffer.append(example)
 
-    def add_game(self, game_record: GameRecord):
-        """Ajoute tous les exemples d'une partie."""
-        for example in game_record.examples:
-            self.add(example)
+    def add_batch(self, examples: List[TrainingExample]):
+        """Ajoute plusieurs exemples."""
+        for ex in examples:
+            self.buffer.append(ex)
 
-    def sample(self, batch_size: int) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    def sample(self, batch_size: int) -> tuple:
         """
         Échantillonne un batch aléatoire.
 
-        Args:
-            batch_size: Taille du batch
-
         Returns:
-            Tuple (states, policy_targets, piece_targets, value_targets)
+            Tuple (states, policies, pieces, values) en numpy arrays
         """
-        if len(self.buffer) < batch_size:
-            batch_size = len(self.buffer)
-
-        indices = np.random.choice(len(self.buffer), batch_size, replace=False)
+        indices = np.random.choice(len(self.buffer), size=min(batch_size, len(self.buffer)), replace=False)
         samples = [self.buffer[i] for i in indices]
 
         states = np.array([s.state for s in samples])
-        policy_targets = np.array([s.policy_target for s in samples])
-        piece_targets = np.array([s.piece_target for s in samples])
-        value_targets = np.array([s.value_target for s in samples])
+        policies = np.array([s.policy_target for s in samples])
+        pieces = np.array([s.piece_target for s in samples])
+        values = np.array([s.value_target for s in samples])
 
-        return states, policy_targets, piece_targets, value_targets
+        return states, policies, pieces, values
 
-    def __len__(self) -> int:
+    def __len__(self):
         return len(self.buffer)
 
     def clear(self):
-        """Vide le buffer."""
         self.buffer.clear()
-
-    def save(self, path: str):
-        """Sauvegarde le buffer sur disque."""
-        Path(path).parent.mkdir(parents=True, exist_ok=True)
-        with open(path, 'wb') as f:
-            pickle.dump(list(self.buffer), f)
-
-    def load(self, path: str):
-        """Charge le buffer depuis le disque."""
-        if Path(path).exists():
-            with open(path, 'rb') as f:
-                data = pickle.load(f)
-                self.buffer = deque(data, maxlen=self.max_size)
-
-
-# =============================================================================
-# Self-Play
-# =============================================================================
-
-class SelfPlay:
-    """
-    Génère des parties de self-play pour l'entraînement.
-
-    Utilise MCTS guidé par le réseau de neurones pour jouer des parties
-    contre lui-même et collecter des données d'entraînement.
-    """
-
-    def __init__(
-        self,
-        network: AlphaZeroNetwork,
-        num_simulations: int = 100,
-        c_puct: float = 1.41,
-        temperature_threshold: int = 10,
-        dirichlet_alpha: float = 0.3,
-        dirichlet_epsilon: float = 0.25
-    ):
-        """
-        Initialise le générateur de self-play.
-
-        Args:
-            network: Réseau de neurones pour guider MCTS
-            num_simulations: Nombre de simulations MCTS par coup
-            c_puct: Constante d'exploration UCB
-            temperature_threshold: Nombre de coups avant de passer en mode glouton
-            dirichlet_alpha: Paramètre du bruit Dirichlet
-            dirichlet_epsilon: Poids du bruit Dirichlet
-        """
-        self.network = network
-        self.num_simulations = num_simulations
-        self.c_puct = c_puct
-        self.temperature_threshold = temperature_threshold
-        self.dirichlet_alpha = dirichlet_alpha
-        self.dirichlet_epsilon = dirichlet_epsilon
-        self.encoder = StateEncoder()
-
-    def play_game(self, verbose: bool = False) -> GameRecord:
-        """
-        Joue une partie complète de self-play.
-
-        Args:
-            verbose: Afficher les informations de la partie
-
-        Returns:
-            GameRecord contenant les exemples d'entraînement
-        """
-        start_time = time.time()
-        game = Quarto()
-        record = GameRecord()
-        trajectory = []  # [(state, policy, piece_probs, player)]
-
-        # Créer MCTS avec le réseau
-        mcts = MCTS(
-            num_simulations=self.num_simulations,
-            c_puct=self.c_puct,
-            network=self.network,
-            use_dirichlet=True,
-            dirichlet_alpha=self.dirichlet_alpha,
-            dirichlet_epsilon=self.dirichlet_epsilon
-        )
-
-        move_count = 0
-
-        # Premier joueur choisit une pièce pour l'adversaire
-        if game.get_available_pieces():
-            piece_probs = mcts.search_piece(game, temperature=1.0)
-            piece = self._sample_action(piece_probs) + 1
-            game.choose_piece(piece)
-
-        while not game.game_over:
-            move_count += 1
-
-            # Température: exploration au début, glouton à la fin
-            temperature = 1.0 if move_count <= self.temperature_threshold else 0.1
-
-            # Encoder l'état actuel
-            state = self.encoder.encode(game)
-            current_player = game.current_player
-
-            # Recherche MCTS pour le placement
-            move_probs, _ = mcts.search(game, temperature=temperature)
-
-            # Choisir et jouer le coup
-            move = self._sample_action(move_probs)
-            game.play_move(move)
-
-            # Recherche MCTS pour le choix de pièce (si la partie continue)
-            if not game.game_over and game.get_available_pieces():
-                piece_probs = mcts.search_piece(game, temperature=temperature)
-                piece = self._sample_action(piece_probs) + 1
-                game.choose_piece(piece)
-            else:
-                piece_probs = np.zeros(NUM_PIECES)
-
-            # Stocker dans la trajectoire
-            trajectory.append((state, move_probs, piece_probs, current_player))
-
-            if verbose:
-                print(f"  Coup {move_count}: Joueur {current_player} place en {move}")
-
-        # Déterminer le résultat
-        record.winner = game.winner
-        record.num_moves = move_count
-        record.duration = time.time() - start_time
-
-        # Assigner les valeurs cibles basées sur le résultat
-        for state, policy, piece_probs, player in trajectory:
-            if game.winner is None:
-                # Match nul
-                value = 0.0
-            elif game.winner == player:
-                # Ce joueur a gagné
-                value = 1.0
-            else:
-                # Ce joueur a perdu
-                value = -1.0
-
-            example = TrainingExample(
-                state=state,
-                policy_target=policy,
-                piece_target=piece_probs,
-                value_target=value
-            )
-            record.examples.append(example)
-
-        if verbose:
-            result = "Nul" if game.winner is None else f"Joueur {game.winner} gagne"
-            print(f"  Partie terminée: {result} en {move_count} coups ({record.duration:.2f}s)")
-
-        return record
-
-    def _sample_action(self, probs: np.ndarray) -> int:
-        """Échantillonne une action selon la distribution."""
-        if probs.sum() == 0:
-            # Distribution uniforme si pas de probabilités
-            valid = np.where(probs >= 0)[0]
-            return np.random.choice(valid) if len(valid) > 0 else 0
-
-        # Normaliser si nécessaire
-        probs = probs / probs.sum()
-        return np.random.choice(len(probs), p=probs)
-
-    def generate_games(
-        self,
-        num_games: int,
-        verbose: bool = False,
-        progress_callback: Optional[callable] = None
-    ) -> List[GameRecord]:
-        """
-        Génère plusieurs parties de self-play.
-
-        Args:
-            num_games: Nombre de parties à générer
-            verbose: Afficher les informations
-            progress_callback: Fonction appelée après chaque partie (game_idx, record)
-
-        Returns:
-            Liste des GameRecords
-        """
-        records = []
-
-        for i in range(num_games):
-            if verbose:
-                print(f"Partie {i + 1}/{num_games}")
-
-            record = self.play_game(verbose=verbose)
-            records.append(record)
-
-            if progress_callback:
-                progress_callback(i, record)
-
-        return records
 
 
 # =============================================================================
@@ -321,641 +97,463 @@ class SelfPlay:
 
 class AlphaZeroTrainer:
     """
-    Entraîneur complet AlphaZero.
+    Entraîneur AlphaZero avec batched GPU inference.
 
-    Orchestre le cycle d'entraînement:
-    1. Génération de parties de self-play
-    2. Stockage dans le replay buffer
-    3. Entraînement du réseau
-    4. Évaluation et sauvegarde des checkpoints
-
-    Supporte le mode parallèle pour accélérer le self-play.
+    Orchestre:
+    - Le serveur d'inférence (thread GPU)
+    - Les workers de self-play (processus CPU)
+    - L'entraînement du réseau
+    - Les checkpoints
     """
 
-    def __init__(
-        self,
-        network: AlphaZeroNetwork,
-        mcts_sims: int = 100,
-        buffer_size: int = 100000,
-        checkpoint_dir: str = "data/checkpoints",
-        model_dir: str = "data/models",
-        num_workers: int = 1
-    ):
+    def __init__(self, config: Config):
         """
-        Initialise le trainer.
+        Initialise l'entraîneur.
 
         Args:
-            network: Réseau de neurones à entraîner
-            mcts_sims: Nombre de simulations MCTS
-            buffer_size: Taille du replay buffer
-            checkpoint_dir: Répertoire pour les checkpoints
-            model_dir: Répertoire pour les modèles sauvegardés
-            num_workers: Nombre de workers pour le self-play parallèle (1 = séquentiel)
+            config: Configuration complète (network, mcts, inference, training)
         """
-        self.network = network
-        self.mcts_sims = mcts_sims
-        self.replay_buffer = ReplayBuffer(max_size=buffer_size)
-        self.checkpoint_dir = Path(checkpoint_dir)
-        self.model_dir = Path(model_dir)
-        self.num_workers = num_workers
+        self.config = config
 
-        # Créer les répertoires
-        self.checkpoint_dir.mkdir(parents=True, exist_ok=True)
-        self.model_dir.mkdir(parents=True, exist_ok=True)
+        # Device
+        self.device = torch.device(
+            config.inference.device if torch.cuda.is_available() else "cpu"
+        )
 
-        # Statistiques d'entraînement
-        self.training_stats: List[Dict[str, Any]] = []
+        # Créer le réseau
+        self.network = AlphaZeroNetwork(config.network)
+        self.network.to(self.device)
+
+        # Optimizer
+        self.optimizer = optim.Adam(
+            self.network.parameters(),
+            lr=config.network.learning_rate,
+            weight_decay=config.network.l2_reg
+        )
+
+        # Replay buffer
+        self.replay_buffer = ReplayBuffer(config.training.buffer_size)
+
+        # État de l'entraînement
         self.iteration = 0
         self.total_games = 0
 
-        # Self-play (séquentiel)
-        self.self_play = SelfPlay(
-            network=network,
-            num_simulations=mcts_sims
-        )
+        # Statistiques
+        self.training_stats: List[Dict] = []
 
-        # Self-play parallèle (si num_workers > 1)
-        self.parallel_self_play = None
-        if num_workers > 1:
-            from alphaquarto.ai.parallel_selfplay import ParallelSelfPlay
-            self.parallel_self_play = ParallelSelfPlay(
-                network=network,
-                num_workers=num_workers,
-                num_simulations=mcts_sims
-            )
+        # Créer les répertoires
+        Path(config.training.checkpoint_dir).mkdir(parents=True, exist_ok=True)
+        Path(config.training.model_dir).mkdir(parents=True, exist_ok=True)
 
-    def play_game(self) -> GameRecord:
-        """Joue une partie de self-play."""
-        return self.self_play.play_game()
-
-    def generate_self_play_data(
-        self,
-        num_games: int,
-        verbose: bool = False
-    ) -> Dict[str, Any]:
-        """
-        Génère des données de self-play.
-
-        Utilise le mode parallèle si num_workers > 1.
-
-        Args:
-            num_games: Nombre de parties à générer
-            verbose: Afficher les informations
-
-        Returns:
-            Statistiques de génération
-        """
-        # Mode parallèle
-        if self.parallel_self_play is not None and self.num_workers > 1:
-            return self._generate_parallel(num_games, verbose)
-
-        # Mode séquentiel (original)
-        if verbose:
-            print(f"\n=== Génération de {num_games} parties de self-play ===")
-
-        start_time = time.time()
-        wins = {0: 0, 1: 0, None: 0}
-        total_moves = 0
-        total_examples = 0
-
-        for i in range(num_games):
-            record = self.self_play.play_game(verbose=False)
-            self.replay_buffer.add_game(record)
-
-            wins[record.winner] = wins.get(record.winner, 0) + 1
-            total_moves += record.num_moves
-            total_examples += len(record.examples)
-            self.total_games += 1
-
-            if verbose and (i + 1) % max(1, num_games // 10) == 0:
-                print(f"  Parties: {i + 1}/{num_games}, "
-                      f"Buffer: {len(self.replay_buffer)}, "
-                      f"Exemples: {total_examples}")
-
-        duration = time.time() - start_time
-
-        stats = {
-            'num_games': num_games,
-            'wins_player_0': wins[0],
-            'wins_player_1': wins[1],
-            'draws': wins[None],
-            'avg_moves': total_moves / num_games if num_games > 0 else 0,
-            'total_examples': total_examples,
-            'buffer_size': len(self.replay_buffer),
-            'duration': duration,
-            'games_per_second': num_games / duration if duration > 0 else 0
-        }
-
-        if verbose:
-            print(f"  Terminé en {duration:.1f}s ({stats['games_per_second']:.2f} parties/s)")
-            print(f"  Victoires: J0={wins[0]}, J1={wins[1]}, Nuls={wins[None]}")
-
-        return stats
-
-    def _generate_parallel(
-        self,
-        num_games: int,
-        verbose: bool = False
-    ) -> Dict[str, Any]:
-        """
-        Génère des données en mode parallèle.
-
-        Args:
-            num_games: Nombre de parties
-            verbose: Afficher la progression
-
-        Returns:
-            Statistiques de génération
-        """
-        from alphaquarto.ai.parallel_selfplay import convert_results_to_records
-
-        if verbose:
-            print(f"\n=== Génération PARALLÈLE de {num_games} parties ({self.num_workers} workers) ===")
-
-        start_time = time.time()
-
-        # Générer les parties en parallèle
-        results = self.parallel_self_play.generate_games(num_games, verbose=verbose)
-
-        # Convertir en GameRecords et ajouter au buffer
-        records = convert_results_to_records(results)
-
-        wins = {0: 0, 1: 0, None: 0}
-        total_moves = 0
-        total_examples = 0
-
-        for record in records:
-            self.replay_buffer.add_game(record)
-            wins[record.winner] = wins.get(record.winner, 0) + 1
-            total_moves += record.num_moves
-            total_examples += len(record.examples)
-            self.total_games += 1
-
-        duration = time.time() - start_time
-
-        stats = {
-            'num_games': num_games,
-            'wins_player_0': wins[0],
-            'wins_player_1': wins[1],
-            'draws': wins[None],
-            'avg_moves': total_moves / num_games if num_games > 0 else 0,
-            'total_examples': total_examples,
-            'buffer_size': len(self.replay_buffer),
-            'duration': duration,
-            'games_per_second': num_games / duration if duration > 0 else 0,
-            'num_workers': self.num_workers
-        }
-
-        if verbose:
-            print(f"  Terminé en {duration:.1f}s ({stats['games_per_second']:.2f} parties/s)")
-            print(f"  Victoires: J0={wins[0]}, J1={wins[1]}, Nuls={wins[None]}")
-
-        return stats
-
-    def train_on_buffer(
-        self,
-        epochs: int = 1,
-        batch_size: int = 32,
-        min_buffer_size: int = 1000,
-        verbose: bool = False
-    ) -> Dict[str, float]:
-        """
-        Entraîne le réseau sur les données du replay buffer.
-
-        Args:
-            epochs: Nombre d'époques d'entraînement
-            batch_size: Taille des mini-batches
-            min_buffer_size: Taille minimale du buffer pour commencer
-            verbose: Afficher les informations
-
-        Returns:
-            Métriques d'entraînement moyennes
-        """
-        if len(self.replay_buffer) < min_buffer_size:
-            if verbose:
-                print(f"  Buffer trop petit ({len(self.replay_buffer)}/{min_buffer_size})")
-            return {'loss': 0.0}
-
-        if verbose:
-            print(f"\n=== Entraînement ({epochs} époques, batch={batch_size}) ===")
-
-        all_metrics = []
-
-        for epoch in range(epochs):
-            # Échantillonner tout le buffer pour une époque
-            num_batches = len(self.replay_buffer) // batch_size
-
-            epoch_metrics = []
-            for _ in range(num_batches):
-                states, policies, pieces, values = self.replay_buffer.sample(batch_size)
-                metrics = self.network.train_on_batch(states, policies, pieces, values)
-                epoch_metrics.append(metrics)
-
-            # Moyenner les métriques de l'époque
-            avg_metrics = {}
-            for key in epoch_metrics[0].keys():
-                avg_metrics[key] = np.mean([m[key] for m in epoch_metrics])
-            all_metrics.append(avg_metrics)
-
-            if verbose:
-                print(f"  Époque {epoch + 1}/{epochs}: "
-                      f"loss={avg_metrics['loss']:.4f}, "
-                      f"policy_acc={avg_metrics.get('policy_accuracy', 0):.3f}, "
-                      f"value_mae={avg_metrics.get('value_mae', 0):.3f}")
-
-        # Moyenner sur toutes les époques
-        final_metrics = {}
-        for key in all_metrics[0].keys():
-            final_metrics[key] = np.mean([m[key] for m in all_metrics])
-
-        return final_metrics
-
-    def train_iteration(
-        self,
-        num_games: int = 100,
-        epochs: int = 10,
-        batch_size: int = 32,
-        verbose: bool = True
-    ) -> Dict[str, Any]:
-        """
-        Effectue une itération complète d'entraînement.
-
-        Une itération comprend:
-        1. Génération de parties de self-play
-        2. Entraînement sur le replay buffer
-        3. Sauvegarde du checkpoint
-
-        Args:
-            num_games: Nombre de parties de self-play
-            epochs: Nombre d'époques d'entraînement
-            batch_size: Taille des batches
-            verbose: Afficher les informations
-
-        Returns:
-            Statistiques de l'itération
-        """
-        self.iteration += 1
-
-        if verbose:
-            print(f"\n{'='*60}")
-            print(f"ITERATION {self.iteration}")
-            print(f"{'='*60}")
-
-        # Phase 1: Self-play
-        selfplay_stats = self.generate_self_play_data(num_games, verbose=verbose)
-
-        # Phase 2: Entraînement
-        training_metrics = self.train_on_buffer(
-            epochs=epochs,
-            batch_size=batch_size,
-            verbose=verbose
-        )
-
-        # Sauvegarder le checkpoint
-        self.save_checkpoint()
-
-        # Statistiques de l'itération
-        iteration_stats = {
-            'iteration': self.iteration,
-            'selfplay': selfplay_stats,
-            'training': training_metrics,
-            'total_games': self.total_games,
-            'buffer_size': len(self.replay_buffer)
-        }
-        self.training_stats.append(iteration_stats)
-
-        if verbose:
-            print(f"\n  Itération {self.iteration} terminée")
-            print(f"  Total parties: {self.total_games}, Buffer: {len(self.replay_buffer)}")
-
-        return iteration_stats
-
-    def train(
-        self,
-        num_iterations: int = 100,
-        games_per_iteration: int = 100,
-        epochs_per_iteration: int = 10,
-        batch_size: int = 32,
-        save_frequency: int = 10,
-        verbose: bool = True
-    ) -> List[Dict[str, Any]]:
+    def train(self, num_iterations: Optional[int] = None, verbose: bool = True):
         """
         Lance l'entraînement complet.
 
         Args:
-            num_iterations: Nombre d'itérations d'entraînement
-            games_per_iteration: Parties de self-play par itération
-            epochs_per_iteration: Époques d'entraînement par itération
-            batch_size: Taille des batches
-            save_frequency: Fréquence de sauvegarde du meilleur modèle
-            verbose: Afficher les informations
-
-        Returns:
-            Liste des statistiques par itération
+            num_iterations: Nombre d'itérations (None = utiliser config)
+            verbose: Afficher les progrès
         """
-        if verbose:
-            print(f"\n{'#'*60}")
-            print(f"# ENTRAÎNEMENT ALPHAZERO POUR QUARTO")
-            print(f"# Itérations: {num_iterations}")
-            print(f"# Parties/itération: {games_per_iteration}")
-            print(f"# Époques/itération: {epochs_per_iteration}")
-            print(f"# MCTS simulations: {self.mcts_sims}")
-            print(f"{'#'*60}")
+        if num_iterations is None:
+            num_iterations = self.config.training.iterations
 
-        start_time = time.time()
+        print(f"\n{'='*60}")
+        print("ENTRAÎNEMENT ALPHAZERO - QUARTO")
+        print(f"{'='*60}")
+        print(f"Device: {self.device}")
+        print(f"Itérations: {num_iterations}")
+        print(f"Parties/itération: {self.config.training.games_per_iteration}")
+        print(f"Workers: {self.config.training.num_workers}")
+        print(f"Simulations MCTS: {self.config.mcts.num_simulations}")
+        print(f"{'='*60}\n")
 
         for i in range(num_iterations):
-            self.train_iteration(
-                num_games=games_per_iteration,
-                epochs=epochs_per_iteration,
-                batch_size=batch_size,
-                verbose=verbose
-            )
+            self.iteration += 1
+            iter_start = time.time()
 
-            # Sauvegarder le meilleur modèle périodiquement
-            if (i + 1) % save_frequency == 0:
-                self.save_best_model()
+            if verbose:
+                print(f"\n--- Itération {self.iteration} ---")
 
-        total_time = time.time() - start_time
+            # Phase 1: Self-play
+            selfplay_stats = self._run_self_play_phase(verbose)
 
-        if verbose:
-            print(f"\n{'#'*60}")
-            print(f"# ENTRAÎNEMENT TERMINÉ")
-            print(f"# Durée totale: {total_time/60:.1f} minutes")
-            print(f"# Parties jouées: {self.total_games}")
-            print(f"# Itérations: {self.iteration}")
-            print(f"{'#'*60}")
+            # Phase 2: Training
+            training_stats = self._run_training_phase(verbose)
 
-        # Sauvegarder le modèle final
+            # Statistiques de l'itération
+            iter_time = time.time() - iter_start
+            stats = {
+                'iteration': self.iteration,
+                'total_games': self.total_games,
+                'buffer_size': len(self.replay_buffer),
+                'selfplay': selfplay_stats,
+                'training': training_stats,
+                'duration': iter_time
+            }
+            self.training_stats.append(stats)
+
+            if verbose:
+                print(f"  Temps: {iter_time:.1f}s")
+                if training_stats:
+                    print(f"  Loss: {training_stats.get('loss', 'N/A'):.4f}")
+
+            # Phase 3: Checkpoint
+            if self.iteration % self.config.training.save_frequency == 0:
+                self._save_checkpoint()
+
+        # Sauvegarde finale
         self.save_best_model()
         self.save_training_stats()
+        print(f"\n{'='*60}")
+        print("ENTRAÎNEMENT TERMINÉ")
+        print(f"{'='*60}")
 
-        return self.training_stats
+    def _run_self_play_phase(self, verbose: bool = True) -> Dict:
+        """
+        Exécute la phase de self-play avec workers parallèles.
+
+        Returns:
+            Statistiques de la phase
+        """
+        start_time = time.time()
+        num_workers = self.config.training.num_workers
+        games_per_iteration = self.config.training.games_per_iteration
+        games_per_worker = games_per_iteration // num_workers
+        remaining_games = games_per_iteration % num_workers
+
+        if verbose:
+            print(f"  Self-play: {games_per_iteration} parties ({num_workers} workers)...")
+
+        # Créer les queues multiprocessing
+        ctx = mp.get_context('spawn')
+        request_queue = ctx.Queue(maxsize=num_workers * 100)
+        result_queues = {i: ctx.Queue(maxsize=100) for i in range(num_workers)}
+        game_output_queue = ctx.Queue()
+
+        # Démarrer le serveur d'inférence
+        inference_server = InferenceServer(
+            network=self.network,
+            config=self.config.inference,
+            request_queue=request_queue,
+            result_queues=result_queues
+        )
+        inference_server.start()
+
+        # Démarrer les workers
+        workers = []
+        for worker_id in range(num_workers):
+            num_games = games_per_worker + (1 if worker_id < remaining_games else 0)
+            if num_games > 0:
+                p = ctx.Process(
+                    target=worker_process,
+                    args=(
+                        worker_id,
+                        request_queue,
+                        result_queues[worker_id],
+                        game_output_queue,
+                        self.config.mcts,
+                        num_games,
+                        False
+                    )
+                )
+                p.start()
+                workers.append(p)
+
+        # Collecter les résultats
+        games_collected = 0
+        wins_p0, wins_p1, draws = 0, 0, 0
+        total_moves = 0
+        errors = 0
+
+        expected_games = sum(games_per_worker + (1 if i < remaining_games else 0) for i in range(num_workers))
+
+        while games_collected < expected_games:
+            try:
+                data = game_output_queue.get(timeout=120.0)
+
+                if 'error' in data:
+                    errors += 1
+                    continue
+
+                result: GameResult = data['result']
+                self.replay_buffer.add_batch(result.examples)
+                self.total_games += 1
+                games_collected += 1
+                total_moves += result.num_moves
+
+                if result.winner == 0:
+                    wins_p0 += 1
+                elif result.winner == 1:
+                    wins_p1 += 1
+                else:
+                    draws += 1
+
+            except queue.Empty:
+                print(f"  Warning: Timeout en attente de partie {games_collected + 1}")
+                break
+
+        # Arrêter les workers et le serveur
+        for p in workers:
+            p.join(timeout=10.0)
+            if p.is_alive():
+                p.terminate()
+
+        inference_server.stop()
+
+        elapsed = time.time() - start_time
+        games_per_sec = games_collected / elapsed if elapsed > 0 else 0
+
+        stats = {
+            'games': games_collected,
+            'wins_player_0': wins_p0,
+            'wins_player_1': wins_p1,
+            'draws': draws,
+            'avg_moves': total_moves / games_collected if games_collected > 0 else 0,
+            'duration': elapsed,
+            'games_per_second': games_per_sec,
+            'errors': errors
+        }
+
+        if verbose:
+            print(f"    {games_collected} parties en {elapsed:.1f}s ({games_per_sec:.2f} p/s)")
+            print(f"    Résultats: P0={wins_p0}, P1={wins_p1}, Nuls={draws}")
+
+        return stats
+
+    def _run_training_phase(self, verbose: bool = True) -> Dict:
+        """
+        Exécute la phase d'entraînement du réseau.
+
+        Returns:
+            Statistiques d'entraînement
+        """
+        if len(self.replay_buffer) < self.config.training.min_buffer_size:
+            if verbose:
+                print(f"  Training: Buffer trop petit ({len(self.replay_buffer)}), skip")
+            return {}
+
+        if verbose:
+            print(f"  Training: {self.config.training.epochs_per_iteration} epochs...")
+
+        self.network.train()
+
+        total_loss = 0.0
+        total_policy_loss = 0.0
+        total_piece_loss = 0.0
+        total_value_loss = 0.0
+        num_batches = 0
+
+        for epoch in range(self.config.training.epochs_per_iteration):
+            epoch_loss = self._train_epoch()
+            total_loss += epoch_loss['loss']
+            total_policy_loss += epoch_loss['policy_loss']
+            total_piece_loss += epoch_loss['piece_loss']
+            total_value_loss += epoch_loss['value_loss']
+            num_batches += epoch_loss['num_batches']
+
+        self.network.eval()
+
+        n_epochs = self.config.training.epochs_per_iteration
+        stats = {
+            'loss': total_loss / n_epochs,
+            'policy_loss': total_policy_loss / n_epochs,
+            'piece_loss': total_piece_loss / n_epochs,
+            'value_loss': total_value_loss / n_epochs,
+            'num_batches': num_batches
+        }
+
+        return stats
+
+    def _train_epoch(self) -> Dict:
+        """Entraîne une époque sur le replay buffer."""
+        batch_size = self.config.training.batch_size
+        num_batches = max(1, len(self.replay_buffer) // batch_size)
+
+        total_loss = 0.0
+        total_policy_loss = 0.0
+        total_piece_loss = 0.0
+        total_value_loss = 0.0
+
+        for _ in range(num_batches):
+            states, policies, pieces, values = self.replay_buffer.sample(batch_size)
+
+            # Convertir en tenseurs
+            states_t = torch.from_numpy(states).to(self.device)
+            policies_t = torch.from_numpy(policies).to(self.device)
+            pieces_t = torch.from_numpy(pieces).to(self.device)
+            values_t = torch.from_numpy(values).float().to(self.device).unsqueeze(1)
+
+            # Forward
+            pred_policy, pred_piece, pred_value = self.network(states_t)
+
+            # Losses
+            policy_loss = -torch.mean(
+                torch.sum(policies_t * torch.log(pred_policy + 1e-8), dim=1)
+            )
+            piece_loss = -torch.mean(
+                torch.sum(pieces_t * torch.log(pred_piece + 1e-8), dim=1)
+            )
+            value_loss = torch.mean((pred_value - values_t) ** 2)
+
+            loss = policy_loss + piece_loss + value_loss
+
+            # Backward
+            self.optimizer.zero_grad()
+            loss.backward()
+            torch.nn.utils.clip_grad_norm_(self.network.parameters(), 1.0)
+            self.optimizer.step()
+
+            total_loss += loss.item()
+            total_policy_loss += policy_loss.item()
+            total_piece_loss += piece_loss.item()
+            total_value_loss += value_loss.item()
+
+        return {
+            'loss': total_loss / num_batches,
+            'policy_loss': total_policy_loss / num_batches,
+            'piece_loss': total_piece_loss / num_batches,
+            'value_loss': total_value_loss / num_batches,
+            'num_batches': num_batches
+        }
 
     # =========================================================================
-    # Sauvegarde et chargement
+    # Checkpoints et sauvegarde
     # =========================================================================
 
-    def save_checkpoint(self):
-        """Sauvegarde un checkpoint de l'entraînement."""
-        checkpoint_path = self.checkpoint_dir / f"checkpoint_iter_{self.iteration}.weights.h5"
-        self.network.save_weights(str(checkpoint_path))
+    def _save_checkpoint(self):
+        """Sauvegarde un checkpoint de l'itération courante."""
+        checkpoint_dir = Path(self.config.training.checkpoint_dir)
 
-        # Sauvegarder les métadonnées
-        meta_path = self.checkpoint_dir / f"checkpoint_iter_{self.iteration}_meta.json"
+        # Poids
+        weights_path = checkpoint_dir / f"checkpoint_iter_{self.iteration}.pt"
+        torch.save(self.network.state_dict(), weights_path)
+
+        # Métadonnées
         meta = {
             'iteration': self.iteration,
             'total_games': self.total_games,
             'buffer_size': len(self.replay_buffer),
-            'network_config': self.network.get_config()
+            'network_config': asdict(self.config.network)
         }
+        meta_path = checkpoint_dir / f"checkpoint_iter_{self.iteration}_meta.json"
         with open(meta_path, 'w') as f:
             json.dump(meta, f, indent=2)
 
     def save_best_model(self):
         """Sauvegarde le meilleur modèle."""
-        model_path = self.model_dir / "best_model.weights.h5"
-        self.network.save_weights(str(model_path))
+        model_dir = Path(self.config.training.model_dir)
+
+        # Poids
+        weights_path = model_dir / "best_model.pt"
+        torch.save(self.network.state_dict(), weights_path)
 
         # Métadonnées
-        meta_path = self.model_dir / "best_model_meta.json"
         meta = {
             'iteration': self.iteration,
             'total_games': self.total_games,
-            'network_config': self.network.get_config()
+            'buffer_size': len(self.replay_buffer),
+            'network_config': asdict(self.config.network)
         }
+        meta_path = model_dir / "best_model_meta.json"
         with open(meta_path, 'w') as f:
             json.dump(meta, f, indent=2)
 
+        print(f"  Modèle sauvé: {weights_path}")
+
     def save_training_stats(self):
         """Sauvegarde les statistiques d'entraînement."""
-        stats_path = self.model_dir / "training_stats.json"
-
-        # Convertir les numpy types en Python natifs
-        def convert(obj):
-            if isinstance(obj, np.floating):
-                return float(obj)
-            elif isinstance(obj, np.integer):
-                return int(obj)
-            elif isinstance(obj, dict):
-                return {k: convert(v) for k, v in obj.items()}
-            elif isinstance(obj, list):
-                return [convert(i) for i in obj]
-            return obj
-
+        stats_path = Path(self.config.training.model_dir) / "training_stats.json"
         with open(stats_path, 'w') as f:
-            json.dump(convert(self.training_stats), f, indent=2)
-
-    def save_replay_buffer(self, path: Optional[str] = None):
-        """Sauvegarde le replay buffer."""
-        if path is None:
-            path = str(self.checkpoint_dir / "replay_buffer.pkl")
-        self.replay_buffer.save(path)
-
-    def load_replay_buffer(self, path: Optional[str] = None):
-        """Charge le replay buffer."""
-        if path is None:
-            path = str(self.checkpoint_dir / "replay_buffer.pkl")
-        self.replay_buffer.load(path)
+            json.dump(self.training_stats, f, indent=2)
 
     def load_checkpoint(self, iteration: int):
-        """Charge un checkpoint spécifique."""
-        checkpoint_path = self.checkpoint_dir / f"checkpoint_iter_{iteration}.weights.h5"
-        if checkpoint_path.exists():
-            self.network.load_weights(str(checkpoint_path))
-            self.iteration = iteration
+        """
+        Charge un checkpoint.
 
-            # Charger les métadonnées
-            meta_path = self.checkpoint_dir / f"checkpoint_iter_{iteration}_meta.json"
-            if meta_path.exists():
-                with open(meta_path, 'r') as f:
-                    meta = json.load(f)
-                    self.total_games = meta.get('total_games', 0)
+        Args:
+            iteration: Numéro de l'itération à charger
+        """
+        checkpoint_dir = Path(self.config.training.checkpoint_dir)
+
+        weights_path = checkpoint_dir / f"checkpoint_iter_{iteration}.pt"
+        if weights_path.exists():
+            self.network.load_state_dict(
+                torch.load(weights_path, map_location=self.device)
+            )
+            self.iteration = iteration
+            print(f"  Checkpoint chargé: itération {iteration}")
+
+        meta_path = checkpoint_dir / f"checkpoint_iter_{iteration}_meta.json"
+        if meta_path.exists():
+            with open(meta_path, 'r') as f:
+                meta = json.load(f)
+                self.total_games = meta.get('total_games', 0)
+
+    def load_best_model(self):
+        """Charge le meilleur modèle."""
+        model_dir = Path(self.config.training.model_dir)
+        weights_path = model_dir / "best_model.pt"
+
+        if weights_path.exists():
+            self.network.load_state_dict(
+                torch.load(weights_path, map_location=self.device)
+            )
+            print(f"  Modèle chargé: {weights_path}")
 
 
 # =============================================================================
-# Évaluation
+# Évaluateur
 # =============================================================================
 
 class Evaluator:
-    """
-    Évalue les performances du réseau.
+    """Évalue le réseau contre différents adversaires."""
 
-    Compare deux réseaux en les faisant jouer l'un contre l'autre
-    ou évalue un réseau contre un joueur de référence.
-    """
+    def __init__(self, network: AlphaZeroNetwork, config: MCTSConfig):
+        self.network = network
+        self.config = config
 
-    def __init__(self, num_simulations: int = 50):
-        """
-        Initialise l'évaluateur.
+    def evaluate_vs_random(self, num_games: int = 50, verbose: bool = True) -> Dict:
+        """Évalue contre un joueur aléatoire."""
+        mcts = MCTS(config=self.config, network=self.network)
 
-        Args:
-            num_simulations: Simulations MCTS pour l'évaluation
-        """
-        self.num_simulations = num_simulations
-
-    def compare_networks(
-        self,
-        network1: AlphaZeroNetwork,
-        network2: AlphaZeroNetwork,
-        num_games: int = 20,
-        verbose: bool = False
-    ) -> Dict[str, Any]:
-        """
-        Compare deux réseaux en les faisant jouer l'un contre l'autre.
-
-        Args:
-            network1: Premier réseau
-            network2: Deuxième réseau
-            num_games: Nombre de parties (chaque réseau joue les deux côtés)
-            verbose: Afficher les informations
-
-        Returns:
-            Statistiques de comparaison
-        """
-        wins = {1: 0, 2: 0, 'draw': 0}
-
-        mcts1 = MCTS(num_simulations=self.num_simulations, network=network1, use_dirichlet=False)
-        mcts2 = MCTS(num_simulations=self.num_simulations, network=network2, use_dirichlet=False)
+        wins, losses, draws = 0, 0, 0
 
         for game_idx in range(num_games):
-            # Alterner qui commence
-            if game_idx % 2 == 0:
-                first_mcts, second_mcts = mcts1, mcts2
-                first_id, second_id = 1, 2
-            else:
-                first_mcts, second_mcts = mcts2, mcts1
-                first_id, second_id = 2, 1
-
             game = Quarto()
+            network_is_player = game_idx % 2
 
-            # Premier joueur choisit une pièce
-            if game.get_available_pieces():
-                piece_probs = first_mcts.search_piece(game, temperature=0)
+            # Premier choix de pièce
+            if network_is_player == 0:
+                piece_probs = mcts.search_piece(game, temperature=0)
                 piece = int(np.argmax(piece_probs)) + 1
-                game.choose_piece(piece)
-
-            current_mcts = first_mcts
-            current_id = first_id
-
-            while not game.game_over:
-                # Jouer le coup
-                move_probs, _ = current_mcts.search(game, temperature=0)
-                move = int(np.argmax(move_probs))
-                game.play_move(move)
-
-                if game.game_over:
-                    break
-
-                # Choisir une pièce pour l'adversaire
-                if game.get_available_pieces():
-                    piece_probs = current_mcts.search_piece(game, temperature=0)
-                    piece = int(np.argmax(piece_probs)) + 1
-                    game.choose_piece(piece)
-
-                # Alterner
-                current_mcts = second_mcts if current_mcts == first_mcts else first_mcts
-                current_id = second_id if current_id == first_id else first_id
-
-            # Résultat
-            if game.winner is None:
-                wins['draw'] += 1
-            elif game.winner == 0:
-                wins[first_id] += 1
             else:
-                wins[second_id] += 1
-
-            if verbose:
-                result = "Nul" if game.winner is None else f"Réseau {first_id if game.winner == 0 else second_id}"
-                print(f"  Partie {game_idx + 1}: {result}")
-
-        total = num_games
-        return {
-            'network1_wins': wins[1],
-            'network2_wins': wins[2],
-            'draws': wins['draw'],
-            'network1_winrate': wins[1] / total,
-            'network2_winrate': wins[2] / total,
-            'draw_rate': wins['draw'] / total
-        }
-
-    def evaluate_vs_random(
-        self,
-        network: AlphaZeroNetwork,
-        num_games: int = 50,
-        verbose: bool = False
-    ) -> Dict[str, Any]:
-        """
-        Évalue le réseau contre un joueur aléatoire.
-
-        Args:
-            network: Réseau à évaluer
-            num_games: Nombre de parties
-            verbose: Afficher les informations
-
-        Returns:
-            Statistiques d'évaluation
-        """
-        wins = {'network': 0, 'random': 0, 'draw': 0}
-
-        mcts = MCTS(num_simulations=self.num_simulations, network=network, use_dirichlet=False)
-
-        for game_idx in range(num_games):
-            game = Quarto()
-            network_is_first = game_idx % 2 == 0
-
-            # Initialiser avec une pièce
-            available = game.get_available_pieces()
-            if available:
-                if network_is_first:
-                    piece_probs = mcts.search_piece(game, temperature=0)
-                    piece = int(np.argmax(piece_probs)) + 1
-                else:
-                    piece = np.random.choice(available)
-                game.choose_piece(piece)
-
-            is_network_turn = network_is_first
+                piece = np.random.choice(game.get_available_pieces())
+            game.choose_piece(piece)
 
             while not game.game_over:
-                if is_network_turn:
-                    # Réseau joue
-                    move_probs, _ = mcts.search(game, temperature=0)
-                    move = int(np.argmax(move_probs))
+                if game.current_player == network_is_player:
+                    move = mcts.get_best_move(game)
                 else:
-                    # Random joue
-                    legal = game.get_legal_moves()
-                    move = np.random.choice(legal)
-
+                    move = np.random.choice(game.get_legal_moves())
                 game.play_move(move)
 
-                if game.game_over:
-                    break
-
-                # Choisir pièce
-                available = game.get_available_pieces()
-                if available:
-                    if is_network_turn:
-                        piece_probs = mcts.search_piece(game, temperature=0)
-                        piece = int(np.argmax(piece_probs)) + 1
+                if not game.game_over and game.get_available_pieces():
+                    if game.current_player == network_is_player:
+                        piece = mcts.get_best_piece(game)
                     else:
-                        piece = np.random.choice(available)
+                        piece = np.random.choice(game.get_available_pieces())
                     game.choose_piece(piece)
 
-                is_network_turn = not is_network_turn
-
-            # Résultat
-            if game.winner is None:
-                wins['draw'] += 1
-            elif (game.winner == 0) == network_is_first:
-                wins['network'] += 1
+            if game.winner == network_is_player:
+                wins += 1
+            elif game.winner is None:
+                draws += 1
             else:
-                wins['random'] += 1
+                losses += 1
 
-        total = num_games
         return {
-            'network_wins': wins['network'],
-            'random_wins': wins['random'],
-            'draws': wins['draw'],
-            'network_winrate': wins['network'] / total,
-            'random_winrate': wins['random'] / total
+            'network_wins': wins,
+            'random_wins': losses,
+            'draws': draws,
+            'network_winrate': wins / num_games,
+            'random_winrate': losses / num_games
         }

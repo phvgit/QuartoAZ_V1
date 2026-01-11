@@ -7,12 +7,18 @@ Implémentation suivant l'approche AlphaZero:
 - Pas de rollouts aléatoires (contrairement au MCTS classique)
 - Exploration guidée par UCB (Upper Confidence Bound)
 - Détection intelligente des pièces dangereuses (qui permettent un Quarto)
+
+Cette version utilise un InferenceClient pour communiquer avec
+un serveur d'inférence centralisé (batch GPU).
 """
 
 import numpy as np
-from typing import Optional, Tuple, Callable, List
+from typing import Optional, Tuple, List, Union
+
 from alphaquarto.ai.types import MCTSNode
+from alphaquarto.ai.network import StateEncoder
 from alphaquarto.game.constants import NUM_SQUARES, NUM_PIECES
+from alphaquarto.utils.config import MCTSConfig
 
 
 class MCTS:
@@ -24,19 +30,18 @@ class MCTS:
     2. Sélection de pièce (quelle pièce donner à l'adversaire)
 
     Attributes:
-        num_simulations: Nombre de simulations par recherche
-        c_puct: Constante d'exploration pour UCB
-        network: Réseau de neurones pour évaluation (optionnel)
-        use_dirichlet: Ajouter du bruit Dirichlet à la racine
-        dirichlet_alpha: Paramètre alpha pour le bruit Dirichlet
-        dirichlet_epsilon: Poids du bruit Dirichlet
+        config: Configuration MCTS (num_simulations, c_puct, etc.)
+        inference_client: Client pour demander des inférences au serveur
     """
 
     def __init__(
         self,
+        config: Optional[MCTSConfig] = None,
+        inference_client: Optional['InferenceClient'] = None,
+        # Rétrocompatibilité avec l'ancienne API
         num_simulations: int = 100,
         c_puct: float = 1.41,
-        network: Optional[Callable] = None,
+        network: Optional[callable] = None,
         use_dirichlet: bool = True,
         dirichlet_alpha: float = 0.3,
         dirichlet_epsilon: float = 0.25,
@@ -45,19 +50,39 @@ class MCTS:
         Initialise le MCTS.
 
         Args:
-            num_simulations: Nombre de simulations par recherche
-            c_puct: Constante d'exploration pour UCB
-            network: Fonction (state) -> (policy, value) ou None pour random
-            use_dirichlet: Ajouter du bruit à la racine pour exploration
+            config: Configuration MCTS. Si fourni, remplace les autres paramètres.
+            inference_client: Client pour le serveur d'inférence batch.
+            num_simulations: Nombre de simulations (si pas de config)
+            c_puct: Constante d'exploration (si pas de config)
+            network: Réseau direct (rétrocompatibilité, déconseillé)
+            use_dirichlet: Ajouter du bruit à la racine
             dirichlet_alpha: Paramètre du bruit Dirichlet
-            dirichlet_epsilon: Poids du bruit (0 = pas de bruit, 1 = tout bruit)
+            dirichlet_epsilon: Poids du bruit
         """
-        self.num_simulations = num_simulations
-        self.c_puct = c_puct
-        self.network = network
-        self.use_dirichlet = use_dirichlet
-        self.dirichlet_alpha = dirichlet_alpha
-        self.dirichlet_epsilon = dirichlet_epsilon
+        # Utiliser config si fourni, sinon créer depuis paramètres
+        if config is not None:
+            self.config = config
+        else:
+            self.config = MCTSConfig(
+                num_simulations=num_simulations,
+                c_puct=c_puct,
+                use_dirichlet=use_dirichlet,
+                dirichlet_alpha=dirichlet_alpha,
+                dirichlet_epsilon=dirichlet_epsilon,
+            )
+
+        # Client d'inférence (nouveau système batch)
+        self.inference_client = inference_client
+
+        # Réseau direct (rétrocompatibilité)
+        self._legacy_network = network
+
+        # Raccourcis vers config
+        self.num_simulations = self.config.num_simulations
+        self.c_puct = self.config.c_puct
+        self.use_dirichlet = self.config.use_dirichlet
+        self.dirichlet_alpha = self.config.dirichlet_alpha
+        self.dirichlet_epsilon = self.config.dirichlet_epsilon
 
     # =========================================================================
     # Méthodes de détection de coups gagnants / pièces dangereuses
@@ -78,7 +103,6 @@ class MCTS:
 
         legal_moves = game.get_legal_moves()
         for move in legal_moves:
-            # Simuler le coup
             test_game = game.clone()
             test_game.play_move(move)
             if test_game.game_over and test_game.winner is not None:
@@ -98,8 +122,6 @@ class MCTS:
         """
         test_game = game.clone()
         test_game.choose_piece(piece_id)
-
-        # Vérifier si l'adversaire a un coup gagnant
         return self._find_winning_move(test_game) is not None
 
     def _get_safe_pieces(self, game) -> Tuple[List[int], List[int]]:
@@ -222,22 +244,20 @@ class MCTS:
 
         # Si des pièces sûres existent, privilégier fortement ces pièces
         if safe_pieces:
-            # Créer des priors qui favorisent les pièces sûres
             piece_priors = np.zeros(NUM_PIECES)
             for piece in safe_pieces:
                 piece_priors[piece - 1] = 1.0
             for piece in dangerous_pieces:
-                piece_priors[piece - 1] = 0.01  # Très faible mais non nul
+                piece_priors[piece - 1] = 0.01
             piece_priors /= piece_priors.sum()
         else:
-            # Toutes les pièces sont dangereuses - distribution uniforme
             piece_priors = np.zeros(NUM_PIECES)
             for piece in available_pieces:
                 piece_priors[piece - 1] = 1.0 / len(available_pieces)
 
         root = MCTSNode()
 
-        # Ajouter du bruit Dirichlet (seulement sur les pièces sûres si possible)
+        # Ajouter du bruit Dirichlet
         if self.use_dirichlet:
             target_pieces = safe_pieces if safe_pieces else available_pieces
             if len(target_pieces) > 0:
@@ -245,7 +265,6 @@ class MCTS:
                 noise_full = np.zeros(NUM_PIECES)
                 for i, piece in enumerate(target_pieces):
                     noise_full[piece - 1] = noise[i]
-                # Normaliser le bruit sur toutes les pièces disponibles
                 noise_full = self._mask_illegal_pieces(noise_full, available_pieces)
                 piece_priors = (1 - self.dirichlet_epsilon) * piece_priors + self.dirichlet_epsilon * noise_full
 
@@ -280,10 +299,6 @@ class MCTS:
         """
         Effectue une simulation depuis le noeud donné.
 
-        L'adversaire joue de manière intelligente:
-        - S'il a un coup gagnant, il le joue
-        - Sinon, il joue aléatoirement
-
         Args:
             game: Clone du jeu pour simulation
             node: Noeud de départ
@@ -304,7 +319,6 @@ class MCTS:
                 if not game.game_over:
                     available = game.get_available_pieces()
                     if available:
-                        # Choisir une pièce intelligemment (éviter de donner un Quarto)
                         piece = self._choose_piece_for_simulation(game, available)
                         game.choose_piece(piece)
 
@@ -335,9 +349,6 @@ class MCTS:
         """
         Simulation pour la sélection de pièce.
 
-        IMPORTANT: L'adversaire joue de manière optimale - s'il a un coup
-        gagnant, il le joue systématiquement.
-
         Args:
             game: Clone du jeu
             node: Noeud racine
@@ -358,19 +369,15 @@ class MCTS:
                 game.choose_piece(piece_id)
 
                 if not game.game_over:
-                    # L'adversaire joue - VÉRIFIER S'IL A UN COUP GAGNANT
                     winning_move = self._find_winning_move(game)
                     if winning_move is not None:
-                        # L'adversaire joue le coup gagnant!
                         game.play_move(winning_move)
                     else:
-                        # Pas de coup gagnant - jouer aléatoirement
                         legal_moves = game.get_legal_moves()
                         if legal_moves:
                             move = np.random.choice(legal_moves)
                             game.play_move(move)
 
-                    # Après le coup de l'adversaire, choisir une pièce pour nous
                     if not game.game_over:
                         remaining = game.get_available_pieces()
                         if remaining:
@@ -380,8 +387,6 @@ class MCTS:
         # Évaluation
         if game.game_over:
             if game.winner is not None:
-                # Du point de vue de celui qui a choisi la pièce:
-                # Si l'adversaire gagne, c'est mauvais pour nous
                 value = -1.0
             else:
                 value = 0.0
@@ -398,7 +403,7 @@ class MCTS:
 
     def _choose_piece_for_simulation(self, game, available_pieces: list) -> int:
         """
-        Choisit une pièce pour la simulation, en évitant les pièces dangereuses si possible.
+        Choisit une pièce pour la simulation, en évitant les pièces dangereuses.
 
         Args:
             game: État actuel du jeu
@@ -407,12 +412,11 @@ class MCTS:
         Returns:
             ID de la pièce choisie
         """
-        safe_pieces, dangerous_pieces = self._get_safe_pieces(game)
+        safe_pieces, _ = self._get_safe_pieces(game)
 
         if safe_pieces:
             return np.random.choice(safe_pieces)
         else:
-            # Toutes les pièces sont dangereuses
             return np.random.choice(available_pieces)
 
     # =========================================================================
@@ -421,7 +425,7 @@ class MCTS:
 
     def _evaluate(self, game) -> Tuple[np.ndarray, float]:
         """
-        Évalue un état de jeu.
+        Évalue un état de jeu via le client d'inférence ou le réseau direct.
 
         Args:
             game: Instance du jeu
@@ -429,20 +433,25 @@ class MCTS:
         Returns:
             Tuple (policy, value) où policy est sur les cases
         """
-        if self.network is not None:
-            state = game.get_state()
-            policy, value = self.network(state)
+        # Priorité 1: Client d'inférence (nouveau système batch)
+        if self.inference_client is not None:
+            state = StateEncoder.encode(game)
+            policy, piece_probs, value = self.inference_client.predict(state)
             return policy, value
-        else:
-            policy = np.ones(NUM_SQUARES) / NUM_SQUARES
-            value = self._smart_rollout(game.clone())
+
+        # Priorité 2: Réseau direct (rétrocompatibilité)
+        if self._legacy_network is not None:
+            policy, piece_probs, value = self._legacy_network.predict(game)
             return policy, value
+
+        # Fallback: Priors uniformes + rollout intelligent
+        policy = np.ones(NUM_SQUARES) / NUM_SQUARES
+        value = self._smart_rollout(game.clone())
+        return policy, value
 
     def _evaluate_pieces(self, game) -> np.ndarray:
         """
         Obtient les priors pour la sélection de pièce.
-
-        Pénalise les pièces qui permettent un Quarto à l'adversaire.
 
         Args:
             game: Instance du jeu
@@ -458,14 +467,11 @@ class MCTS:
 
         priors = np.zeros(NUM_PIECES)
         if safe_pieces:
-            # Pièces sûres ont un prior élevé
             for piece in safe_pieces:
                 priors[piece - 1] = 1.0
-            # Pièces dangereuses ont un prior très faible
             for piece in dangerous_pieces:
                 priors[piece - 1] = 0.01
         else:
-            # Toutes dangereuses - uniforme
             for piece in available:
                 priors[piece - 1] = 1.0
 
@@ -477,11 +483,6 @@ class MCTS:
     def _smart_rollout(self, game, max_moves: int = 50) -> float:
         """
         Effectue un rollout intelligent jusqu'à la fin du jeu.
-
-        Les joueurs:
-        - Jouent les coups gagnants s'ils existent
-        - Évitent de donner des pièces gagnantes si possible
-        - Sinon jouent aléatoirement
 
         Args:
             game: Clone du jeu
@@ -496,7 +497,6 @@ class MCTS:
             if game.game_over:
                 break
 
-            # Choisir une pièce si nécessaire
             if game.current_piece is None:
                 available = game.get_available_pieces()
                 if available:
@@ -505,12 +505,10 @@ class MCTS:
                 else:
                     break
 
-            # Vérifier s'il y a un coup gagnant
             winning_move = self._find_winning_move(game)
             if winning_move is not None:
                 game.play_move(winning_move)
             else:
-                # Jouer aléatoirement
                 legal_moves = game.get_legal_moves()
                 if legal_moves:
                     move = np.random.choice(legal_moves)
@@ -563,8 +561,6 @@ class MCTS:
         available = game.get_available_pieces()
         if not available:
             return np.zeros(NUM_PIECES)
-
-        # Utiliser l'évaluation intelligente des pièces
         return self._evaluate_pieces(game)
 
     # =========================================================================
@@ -575,15 +571,12 @@ class MCTS:
         """
         Retourne le meilleur coup.
 
-        Vérifie d'abord s'il y a un coup gagnant immédiat.
-
         Args:
             game: Instance du jeu avec pièce en main
 
         Returns:
             Index de la case (0-15)
         """
-        # Vérifier coup gagnant immédiat
         winning_move = self._find_winning_move(game)
         if winning_move is not None:
             return winning_move
@@ -595,8 +588,6 @@ class MCTS:
         """
         Retourne la meilleure pièce à donner.
 
-        Évite les pièces qui permettent un Quarto à l'adversaire.
-
         Args:
             game: Instance du jeu après avoir placé une pièce
 
@@ -607,15 +598,11 @@ class MCTS:
         if not available:
             raise ValueError("Aucune pièce disponible")
 
-        # D'abord, vérifier s'il y a des pièces sûres
-        safe_pieces, dangerous_pieces = self._get_safe_pieces(game)
+        safe_pieces, _ = self._get_safe_pieces(game)
 
         if safe_pieces:
-            # Si peu de pièces sûres, faire une recherche MCTS parmi elles
             if len(safe_pieces) <= 3:
-                # Recherche complète pour choisir la meilleure pièce sûre
                 piece_probs = self.search_piece(game, temperature=0)
-                # Ne considérer que les pièces sûres
                 for i in range(NUM_PIECES):
                     if (i + 1) not in safe_pieces:
                         piece_probs[i] = 0
@@ -627,6 +614,4 @@ class MCTS:
                 piece_probs = self.search_piece(game, temperature=0)
                 return int(np.argmax(piece_probs)) + 1
         else:
-            # Toutes les pièces sont dangereuses - l'adversaire gagnera
-            # Retourner n'importe quelle pièce
             return np.random.choice(available)

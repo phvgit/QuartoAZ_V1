@@ -1,13 +1,13 @@
 {
-  "iteration": 2,
-  "total_games": 200,
-  "buffer_size": 2296,
+  "iteration": 1,
+  "total_games": 4,
+  "buffer_size": 42,
   "network_config": {
-    "num_filters": 64,
-    "num_res_blocks": 6,
+    "num_filters": 32,
+    "num_res_blocks": 2,
+    "input_channels": 21,
+    "board_size": 4,
     "l2_reg": 0.0001,
-    "learning_rate": 0.0001,
-    "input_channels": 21
-  },
-  "note": "Restaur\u00e9 depuis checkpoint iteration 2"
+    "learning_rate": 0.001
+  }
 }

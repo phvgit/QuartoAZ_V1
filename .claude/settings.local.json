@@ -13,7 +13,8 @@
       "Bash(rm:*)",
       "Bash(rmdir:*)",
       "Bash(findstr:*)",
-      "Bash(echo:*)"
+      "Bash(echo:*)",
+      "Bash(pip install:*)"
     ]
   }
 }
