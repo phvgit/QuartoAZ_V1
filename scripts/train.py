@@ -90,7 +90,8 @@ def build_config(args) -> Config:
             min_buffer_size=args.batch_size * 4,
             checkpoint_dir=args.checkpoint_dir,
             model_dir=args.model_dir,
-            save_frequency=args.save_frequency
+            save_frequency=args.save_frequency,
+            clear_buffer_after_training=args.clear_buffer
         )
     )
 
@@ -274,8 +275,8 @@ Exemples:
                        help='Nombre d\'itérations d\'entraînement (défaut: 100)')
     parser.add_argument('--games-per-iter', type=int, default=200,
                        help='Parties de self-play par itération (défaut: 200)')
-    parser.add_argument('--epochs', type=int, default=10,
-                       help='Époques d\'entraînement par itération (défaut: 10)')
+    parser.add_argument('--epochs', type=int, default=2,
+                       help='Époques d\'entraînement par itération (défaut: 2, évite l\'overfitting)')
     parser.add_argument('--batch-size', type=int, default=32,
                        help='Taille des batches (défaut: 32)')
     parser.add_argument('--mcts-sims', type=int, default=100,
@@ -300,8 +301,10 @@ Exemples:
                        help='Forcer l\'utilisation du CPU uniquement')
 
     # Replay buffer
-    parser.add_argument('--buffer-size', type=int, default=500000,
-                       help='Taille du replay buffer (défaut: 500000)')
+    parser.add_argument('--buffer-size', type=int, default=50000,
+                       help='Taille du replay buffer (défaut: 50000, réduit pour éviter le distribution shift)')
+    parser.add_argument('--clear-buffer', action='store_true', default=False,
+                       help='Vider le buffer après chaque training (force données fraîches)')
 
     # Checkpoints
     parser.add_argument('--checkpoint-dir', type=str, default='data/checkpoints',

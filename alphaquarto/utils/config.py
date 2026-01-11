@@ -83,15 +83,19 @@ class TrainingConfig:
 
     # Boucle principale
     iterations: int = 100
-    games_per_iteration: int = 200  # Augmenté pour plus de diversité
-    epochs_per_iteration: int = 10
+    games_per_iteration: int = 200
+    epochs_per_iteration: int = 2  # Réduit de 10 à 2 pour éviter l'overfitting
 
     # Batch size pour entraînement
     batch_size: int = 64
 
-    # Replay buffer (augmenté pour éviter l'overfitting)
-    buffer_size: int = 500_000
+    # Replay buffer
+    # Taille réduite pour éviter le distribution shift (données obsolètes)
+    buffer_size: int = 50_000  # ~15-20 itérations de données
     min_buffer_size: int = 500  # Minimum avant de commencer l'entraînement
+
+    # Rafraîchissement du buffer (évite les données obsolètes)
+    clear_buffer_after_training: bool = False  # Si True, vide le buffer après chaque training
 
     # Parallélisation
     num_workers: int = 8

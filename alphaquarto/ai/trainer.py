@@ -398,6 +398,12 @@ class AlphaZeroTrainer:
             'num_batches': num_batches
         }
 
+        # Optionnellement vider le buffer pour éviter le distribution shift
+        if self.config.training.clear_buffer_after_training:
+            self.replay_buffer.clear()
+            if verbose:
+                print("    Buffer vidé (clear_buffer_after_training=True)")
+
         return stats
 
     def _train_epoch(self) -> Dict:

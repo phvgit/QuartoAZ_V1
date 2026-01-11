@@ -346,13 +346,21 @@ class AlphaZeroTrainerLocal:
         self.network.eval()
 
         n = self.config.training.epochs_per_iteration
-        return {
+        stats = {
             'loss': total_loss / n,
             'policy_loss': total_policy_loss / n,
             'piece_loss': total_piece_loss / n,
             'value_loss': total_value_loss / n,
             'num_batches': num_batches
         }
+
+        # Optionnellement vider le buffer pour éviter le distribution shift
+        if self.config.training.clear_buffer_after_training:
+            self.replay_buffer.clear()
+            if verbose:
+                print("    Buffer vidé (clear_buffer_after_training=True)")
+
+        return stats
 
     def _train_epoch(self) -> Dict:
         """Entraîne une époque."""
