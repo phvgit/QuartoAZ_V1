@@ -22,8 +22,8 @@ class NetworkConfig:
     # Régularisation
     l2_reg: float = 1e-4
 
-    # Optimisation
-    learning_rate: float = 0.001
+    # Optimisation (0.0003 avec cosine decay pour éviter l'overfitting)
+    learning_rate: float = 0.0003
 
     @classmethod
     def small(cls) -> 'NetworkConfig':
@@ -83,14 +83,14 @@ class TrainingConfig:
 
     # Boucle principale
     iterations: int = 100
-    games_per_iteration: int = 100
+    games_per_iteration: int = 200  # Augmenté pour plus de diversité
     epochs_per_iteration: int = 10
 
     # Batch size pour entraînement
     batch_size: int = 64
 
-    # Replay buffer
-    buffer_size: int = 100_000
+    # Replay buffer (augmenté pour éviter l'overfitting)
+    buffer_size: int = 500_000
     min_buffer_size: int = 500  # Minimum avant de commencer l'entraînement
 
     # Parallélisation

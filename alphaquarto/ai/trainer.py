@@ -29,6 +29,7 @@ from dataclasses import dataclass, field, asdict
 import numpy as np
 import torch
 import torch.optim as optim
+from torch.optim.lr_scheduler import CosineAnnealingLR
 
 from alphaquarto.game.quarto import Quarto
 from alphaquarto.game.constants import NUM_SQUARES, NUM_PIECES
@@ -131,12 +132,21 @@ class AlphaZeroTrainer:
             weight_decay=config.network.l2_reg
         )
 
+        # Learning rate scheduler (cosine annealing)
+        # T_max sera défini au début de train() quand on connaît num_iterations
+        self.scheduler = None
+        self.use_lr_scheduler = True
+
         # Replay buffer
         self.replay_buffer = ReplayBuffer(config.training.buffer_size)
 
         # État de l'entraînement
         self.iteration = 0
         self.total_games = 0
+
+        # Best model tracking
+        self.best_loss = float('inf')
+        self.best_iteration = 0
 
         # Statistiques
         self.training_stats: List[Dict] = []
@@ -156,6 +166,15 @@ class AlphaZeroTrainer:
         if num_iterations is None:
             num_iterations = self.config.training.iterations
 
+        # Initialiser le scheduler LR avec cosine annealing
+        if self.use_lr_scheduler and self.scheduler is None:
+            # LR décroît de learning_rate à ~0 sur num_iterations
+            self.scheduler = CosineAnnealingLR(
+                self.optimizer,
+                T_max=num_iterations,
+                eta_min=self.config.network.learning_rate * 0.01  # 1% du LR initial
+            )
+
         print(f"\n{'='*60}")
         print("ENTRAÎNEMENT ALPHAZERO - QUARTO")
         print(f"{'='*60}")
@@ -164,6 +183,8 @@ class AlphaZeroTrainer:
         print(f"Parties/itération: {self.config.training.games_per_iteration}")
         print(f"Workers: {self.config.training.num_workers}")
         print(f"Simulations MCTS: {self.config.mcts.num_simulations}")
+        print(f"Buffer size: {self.config.training.buffer_size:,}")
+        print(f"LR scheduler: Cosine Annealing ({self.config.network.learning_rate:.6f} → {self.config.network.learning_rate * 0.01:.6f})")
         print(f"{'='*60}\n")
 
         for i in range(num_iterations):
@@ -191,10 +212,25 @@ class AlphaZeroTrainer:
             }
             self.training_stats.append(stats)
 
+            # Step learning rate scheduler
+            if self.scheduler is not None:
+                self.scheduler.step()
+                current_lr = self.scheduler.get_last_lr()[0]
+            else:
+                current_lr = self.config.network.learning_rate
+
             if verbose:
                 print(f"  Temps: {iter_time:.1f}s")
                 if training_stats:
-                    print(f"  Loss: {training_stats.get('loss', 'N/A'):.4f}")
+                    loss = training_stats.get('loss', float('inf'))
+                    print(f"  Loss: {loss:.4f} (LR: {current_lr:.6f})")
+
+                    # Track and save best model
+                    if loss < self.best_loss:
+                        self.best_loss = loss
+                        self.best_iteration = self.iteration
+                        self._save_best_model_checkpoint()
+                        print(f"  ★ Nouveau meilleur modèle! (loss: {loss:.4f})")
 
             # Phase 3: Checkpoint
             if self.iteration % self.config.training.save_frequency == 0:
@@ -205,6 +241,7 @@ class AlphaZeroTrainer:
         self.save_training_stats()
         print(f"\n{'='*60}")
         print("ENTRAÎNEMENT TERMINÉ")
+        print(f"Best model: iteration {self.best_iteration} (loss: {self.best_loss:.4f})")
         print(f"{'='*60}")
 
     def _run_self_play_phase(self, verbose: bool = True) -> Dict:
@@ -435,6 +472,26 @@ class AlphaZeroTrainer:
             'network_config': asdict(self.config.network)
         }
         meta_path = checkpoint_dir / f"checkpoint_iter_{self.iteration}_meta.json"
+        with open(meta_path, 'w') as f:
+            json.dump(meta, f, indent=2)
+
+    def _save_best_model_checkpoint(self):
+        """Sauvegarde le meilleur modèle (quand la loss diminue)."""
+        model_dir = Path(self.config.training.model_dir)
+
+        # Poids
+        weights_path = model_dir / "best_model.pt"
+        torch.save(self.network.state_dict(), weights_path)
+
+        # Métadonnées
+        meta = {
+            'iteration': self.iteration,
+            'total_games': self.total_games,
+            'buffer_size': len(self.replay_buffer),
+            'best_loss': self.best_loss,
+            'network_config': asdict(self.config.network)
+        }
+        meta_path = model_dir / "best_model_meta.json"
         with open(meta_path, 'w') as f:
             json.dump(meta, f, indent=2)
 

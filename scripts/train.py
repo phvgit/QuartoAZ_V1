@@ -272,8 +272,8 @@ Exemples:
     # Paramètres d'entraînement
     parser.add_argument('--iterations', type=int, default=100,
                        help='Nombre d\'itérations d\'entraînement (défaut: 100)')
-    parser.add_argument('--games-per-iter', type=int, default=50,
-                       help='Parties de self-play par itération (défaut: 50)')
+    parser.add_argument('--games-per-iter', type=int, default=200,
+                       help='Parties de self-play par itération (défaut: 200)')
     parser.add_argument('--epochs', type=int, default=10,
                        help='Époques d\'entraînement par itération (défaut: 10)')
     parser.add_argument('--batch-size', type=int, default=32,
@@ -290,8 +290,8 @@ Exemples:
     # Paramètres du réseau
     parser.add_argument('--network-size', choices=['small', 'medium', 'large'],
                        default='medium', help='Taille du réseau (défaut: medium)')
-    parser.add_argument('--learning-rate', type=float, default=0.001,
-                       help='Taux d\'apprentissage (défaut: 0.001)')
+    parser.add_argument('--learning-rate', type=float, default=0.0003,
+                       help='Taux d\'apprentissage initial (défaut: 0.0003, avec cosine decay)')
 
     # Configuration GPU
     parser.add_argument('--gpu', action='store_true', default=True,
@@ -300,8 +300,8 @@ Exemples:
                        help='Forcer l\'utilisation du CPU uniquement')
 
     # Replay buffer
-    parser.add_argument('--buffer-size', type=int, default=100000,
-                       help='Taille du replay buffer (défaut: 100000)')
+    parser.add_argument('--buffer-size', type=int, default=500000,
+                       help='Taille du replay buffer (défaut: 500000)')
 
     # Checkpoints
     parser.add_argument('--checkpoint-dir', type=str, default='data/checkpoints',
