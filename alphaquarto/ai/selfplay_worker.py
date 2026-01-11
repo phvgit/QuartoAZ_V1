@@ -9,6 +9,8 @@ Ce module implémente les workers légers qui:
 
 Les workers sont conçus pour être légers (pas de réseau local)
 et communiquer via des queues multiprocessing.
+
+Utilise le MCTS C++ si disponible pour de meilleures performances.
 """
 
 import time
@@ -22,6 +24,13 @@ from alphaquarto.ai.mcts import MCTS
 from alphaquarto.ai.network import StateEncoder
 from alphaquarto.ai.inference_client import InferenceClient
 from alphaquarto.utils.config import MCTSConfig
+
+# Try to import fast C++ MCTS
+try:
+    from alphaquarto.ai.mcts_fast import FastMCTS, MCTS_CPP_AVAILABLE
+except ImportError:
+    MCTS_CPP_AVAILABLE = False
+    FastMCTS = None
 
 
 # =============================================================================
@@ -82,8 +91,13 @@ def worker_process(
         timeout=5.0  # Timeout plus long pour les workers
     )
 
-    # Créer le MCTS avec le client
-    mcts = MCTS(config=mcts_config, inference_client=client)
+    # Créer le MCTS - utiliser C++ si disponible
+    if MCTS_CPP_AVAILABLE and FastMCTS is not None:
+        mcts = FastMCTS(config=mcts_config, inference_client=client)
+        if verbose:
+            print(f"[Worker {worker_id}] Using C++ MCTS")
+    else:
+        mcts = MCTS(config=mcts_config, inference_client=client)
 
     if verbose:
         print(f"[Worker {worker_id}] Démarré, {num_games} parties à jouer")
