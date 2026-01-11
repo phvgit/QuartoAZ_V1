@@ -2,24 +2,24 @@
   {
     "iteration": 1,
     "total_games": 4,
-    "buffer_size": 42,
+    "buffer_size": 36,
     "selfplay": {
       "games": 4,
-      "wins_player_0": 0,
-      "wins_player_1": 3,
-      "draws": 1,
-      "avg_moves": 10.5,
-      "duration": 24.105710983276367,
-      "games_per_second": 0.1659357818889909,
+      "wins_player_0": 2,
+      "wins_player_1": 2,
+      "draws": 0,
+      "avg_moves": 9.0,
+      "duration": 30.651676416397095,
+      "games_per_second": 0.13049857194304068,
       "errors": 0
     },
     "training": {
-      "loss": 6.015435816318125,
-      "policy_loss": 2.815388213896635,
-      "piece_loss": 2.621711721188275,
-      "value_loss": 0.5783358812332153,
+      "loss": 6.047240110735099,
+      "policy_loss": 2.5671972578598394,
+      "piece_loss": 2.558484830376175,
+      "value_loss": 0.9215580224990845,
       "num_batches": 2
     },
-    "duration": 24.290077209472656
+    "duration": 30.918771266937256
   }
 ]

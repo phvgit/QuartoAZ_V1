@@ -3,7 +3,9 @@
 """
 Script d'entraînement AlphaZero pour Quarto.
 
-Architecture: PyTorch + Batched GPU Inference
+Deux architectures disponibles:
+- LOCAL (défaut): Réseau local par worker, 3-5x plus rapide
+- SERVER: InferenceServer centralisé (ancienne architecture)
 
 Usage:
     python scripts/train.py --iterations 100 --games-per-iter 50
@@ -26,8 +28,9 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import torch
 import numpy as np
 
-from alphaquarto.ai.network import AlphaZeroNetwork, configure_gpu
+from alphaquarto.ai.network import AlphaZeroNetwork
 from alphaquarto.ai.trainer import AlphaZeroTrainer, Evaluator
+from alphaquarto.ai.trainer_local import AlphaZeroTrainerLocal
 from alphaquarto.utils.config import (
     Config, NetworkConfig, MCTSConfig, InferenceConfig, TrainingConfig
 )
@@ -106,13 +109,19 @@ def train(args):
     config = build_config(args)
     print(f"\nConfiguration réseau ({args.network_size})...")
 
-    # Créer le trainer (qui crée le réseau)
+    # Créer le trainer selon l'architecture choisie
     print("\nInitialisation du trainer...")
-    trainer = AlphaZeroTrainer(config)
+    if args.arch == 'local':
+        print("  Architecture: LOCAL (réseau par worker, rapide)")
+        trainer = AlphaZeroTrainerLocal(config)
+    else:
+        print("  Architecture: SERVER (InferenceServer centralisé)")
+        trainer = AlphaZeroTrainer(config)
+
     print(f"  Paramètres: {trainer.network.count_parameters():,}")
 
     if args.workers > 1:
-        print(f"  Mode PARALLÈLE activé: {args.workers} workers")
+        print(f"  Workers: {args.workers}")
 
     # Charger un checkpoint existant si spécifié
     if args.resume_from:
@@ -193,14 +202,15 @@ def quick_test(args):
     # Configuration minimale
     config = Config.quick_test()
 
-    # Créer le trainer
+    # Créer le trainer avec architecture locale (rapide)
     print("\nCréation d'un petit réseau...")
-    trainer = AlphaZeroTrainer(config)
+    print(f"  Architecture: LOCAL (réseau par worker)")
+    trainer = AlphaZeroTrainerLocal(config)
     print(f"  Paramètres: {trainer.network.count_parameters():,}")
     print(f"  Device: {trainer.device}")
 
     # Une itération rapide
-    print("\nItération de test (3 parties, 2 workers)...")
+    print("\nItération de test (4 parties, 2 workers)...")
 
     try:
         trainer.train(num_iterations=1, verbose=True)
@@ -272,6 +282,10 @@ Exemples:
                        help='Simulations MCTS par coup (défaut: 100)')
     parser.add_argument('--workers', '-w', type=int, default=4,
                        help='Nombre de workers pour le self-play parallèle (défaut: 4)')
+
+    # Architecture
+    parser.add_argument('--arch', choices=['local', 'server'], default='local',
+                       help='Architecture: local (rapide, défaut) ou server (InferenceServer)')
 
     # Paramètres du réseau
     parser.add_argument('--network-size', choices=['small', 'medium', 'large'],
