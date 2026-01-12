@@ -84,7 +84,11 @@ class TrainingConfig:
     # Boucle principale
     iterations: int = 100
     games_per_iteration: int = 200
-    epochs_per_iteration: int = 2  # Réduit de 10 à 2 pour éviter l'overfitting
+    epochs_per_iteration: int = 4  # Compromis entre 2 et 10, protégé par early stopping
+
+    # Early stopping (basé sur cycles de warm restart)
+    early_stopping_patience: int = 2  # Arrêt si pas d'amélioration pendant N cycles
+    warm_restart_period: int = 25  # T_0 pour CosineAnnealingWarmRestarts (4 cycles sur 100 iters)
 
     # Batch size pour entraînement
     batch_size: int = 64

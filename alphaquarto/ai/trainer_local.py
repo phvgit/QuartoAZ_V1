@@ -29,7 +29,9 @@ from dataclasses import asdict
 import numpy as np
 import torch
 import torch.optim as optim
-from torch.optim.lr_scheduler import CosineAnnealingLR
+from torch.optim.lr_scheduler import CosineAnnealingWarmRestarts
+import locale
+from datetime import datetime
 
 from alphaquarto.game.quarto import Quarto
 from alphaquarto.ai.network import AlphaZeroNetwork, StateEncoder
@@ -124,6 +126,15 @@ class AlphaZeroTrainerLocal:
         self.best_loss = float('inf')
         self.best_iteration = 0
 
+        # Early stopping (basé sur cycles de warm restart)
+        self.iters_since_best = 0
+        self.cycle_length = config.training.warm_restart_period
+        self.patience_cycles = config.training.early_stopping_patience
+
+        # Temps cumulé
+        self.cumulative_time = 0.0
+        self.training_start_time = None
+
         # Répertoires
         Path(config.training.checkpoint_dir).mkdir(parents=True, exist_ok=True)
         Path(config.training.model_dir).mkdir(parents=True, exist_ok=True)
@@ -133,22 +144,53 @@ class AlphaZeroTrainerLocal:
             config.training.checkpoint_dir, "_shared_weights.pt"
         )
 
+    def _format_timestamp(self) -> str:
+        """Formate la date/heure au format européen."""
+        try:
+            locale.setlocale(locale.LC_TIME, 'fr_FR.UTF-8')
+        except locale.Error:
+            try:
+                locale.setlocale(locale.LC_TIME, 'French_France.1252')
+            except locale.Error:
+                pass  # Fallback sur la locale par défaut
+        now = datetime.now()
+        return now.strftime("%A %d %B %Y %H:%M:%S")
+
+    def _format_duration(self, seconds: float) -> str:
+        """Formate une durée en heures:minutes:secondes."""
+        hours = int(seconds // 3600)
+        minutes = int((seconds % 3600) // 60)
+        secs = int(seconds % 60)
+        if hours > 0:
+            return f"{hours}h {minutes:02d}m {secs:02d}s"
+        elif minutes > 0:
+            return f"{minutes}m {secs:02d}s"
+        else:
+            return f"{secs}s"
+
     def train(self, num_iterations: Optional[int] = None, verbose: bool = True):
         """Lance l'entraînement complet."""
         if num_iterations is None:
             num_iterations = self.config.training.iterations
 
-        # Initialiser le scheduler LR avec cosine annealing
+        # Initialiser le scheduler LR avec Cosine Annealing Warm Restarts
         if self.use_lr_scheduler and self.scheduler is None:
-            self.scheduler = CosineAnnealingLR(
+            self.scheduler = CosineAnnealingWarmRestarts(
                 self.optimizer,
-                T_max=num_iterations,
-                eta_min=self.config.network.learning_rate * 0.01
+                T_0=self.config.training.warm_restart_period,  # Période d'un cycle
+                T_mult=1,  # Période constante
+                eta_min=self.config.network.learning_rate * 0.1  # 10% du LR initial
             )
+
+        # Timestamp de début
+        self.training_start_time = time.time()
+        lr_min = self.config.network.learning_rate * 0.1
+        num_cycles = num_iterations // self.cycle_length
 
         print(f"\n{'='*60}")
         print("ENTRAÎNEMENT ALPHAZERO - ARCHITECTURE LOCALE")
         print(f"{'='*60}")
+        print(f"Démarrage: {self._format_timestamp()}")
         print(f"Device training: {self.device}")
         print(f"Device workers: CPU (réseau local)")
         print(f"Itérations: {num_iterations}")
@@ -156,15 +198,20 @@ class AlphaZeroTrainerLocal:
         print(f"Workers: {self.config.training.num_workers}")
         print(f"Simulations MCTS: {self.config.mcts.num_simulations}")
         print(f"Buffer size: {self.config.training.buffer_size:,}")
-        print(f"LR scheduler: Cosine Annealing ({self.config.network.learning_rate:.6f} → {self.config.network.learning_rate * 0.01:.6f})")
+        print(f"Epochs/itération: {self.config.training.epochs_per_iteration}")
+        print(f"LR scheduler: Cosine Warm Restarts (T_0={self.cycle_length}, {num_cycles} cycles)")
+        print(f"  LR: {self.config.network.learning_rate:.6f} → {lr_min:.6f}")
+        print(f"Early stopping: patience={self.patience_cycles} cycles ({self.patience_cycles * self.cycle_length} iters)")
         print(f"{'='*60}\n")
 
+        early_stopped = False
         for i in range(num_iterations):
             self.iteration += 1
             iter_start = time.time()
 
             if verbose:
                 print(f"\n--- Itération {self.iteration} ---")
+                print(f"  Début: {self._format_timestamp()}")
 
             # Phase 1: Self-play (workers avec réseau local)
             selfplay_stats = self._run_self_play_phase(verbose)
@@ -172,15 +219,19 @@ class AlphaZeroTrainerLocal:
             # Phase 2: Training (GPU)
             training_stats = self._run_training_phase(verbose)
 
-            # Stats
+            # Temps de l'itération
             iter_time = time.time() - iter_start
+            self.cumulative_time += iter_time
+
+            # Stats
             stats = {
                 'iteration': self.iteration,
                 'total_games': self.total_games,
                 'buffer_size': len(self.replay_buffer),
                 'selfplay': selfplay_stats,
                 'training': training_stats,
-                'duration': iter_time
+                'duration': iter_time,
+                'cumulative_time': self.cumulative_time
             }
             self.training_stats.append(stats)
 
@@ -192,7 +243,6 @@ class AlphaZeroTrainerLocal:
                 current_lr = self.config.network.learning_rate
 
             if verbose:
-                print(f"  Temps total: {iter_time:.1f}s")
                 if training_stats:
                     loss = training_stats.get('loss', float('inf'))
                     print(f"  Loss: {loss:.4f} (LR: {current_lr:.6f})")
@@ -201,18 +251,41 @@ class AlphaZeroTrainerLocal:
                     if loss < self.best_loss:
                         self.best_loss = loss
                         self.best_iteration = self.iteration
+                        self.iters_since_best = 0
                         self._save_best_model_checkpoint()
                         print(f"  ★ Nouveau meilleur modèle! (loss: {loss:.4f})")
+                    else:
+                        self.iters_since_best += 1
+
+                print(f"  Fin: {self._format_timestamp()}")
+                print(f"  Durée itération: {self._format_duration(iter_time)}")
+                print(f"  Temps cumulé: {self._format_duration(self.cumulative_time)}")
 
             # Checkpoint
             if self.iteration % self.config.training.save_frequency == 0:
                 self._save_checkpoint()
 
+            # Early stopping: vérifier après chaque cycle complet
+            if self.iters_since_best >= self.patience_cycles * self.cycle_length:
+                print(f"\n*** EARLY STOPPING ***")
+                print(f"  Pas d'amélioration depuis {self.iters_since_best} itérations")
+                print(f"  ({self.patience_cycles} cycles complets)")
+                print(f"  Meilleur modèle: itération {self.best_iteration} (loss: {self.best_loss:.4f})")
+                early_stopped = True
+                break
+
+        # Temps total
+        total_time = time.time() - self.training_start_time
+
         self.save_best_model()
         self.save_training_stats()
         print(f"\n{'='*60}")
         print("ENTRAÎNEMENT TERMINÉ")
+        if early_stopped:
+            print(f"Arrêt anticipé à l'itération {self.iteration}/{num_iterations}")
         print(f"Best model: iteration {self.best_iteration} (loss: {self.best_loss:.4f})")
+        print(f"Fin: {self._format_timestamp()}")
+        print(f"Temps total: {self._format_duration(total_time)}")
         print(f"{'='*60}")
 
     def _run_self_play_phase(self, verbose: bool = True) -> Dict:

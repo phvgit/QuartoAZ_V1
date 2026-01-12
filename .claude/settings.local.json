@@ -16,5 +16,17 @@
       "Bash(echo:*)",
       "Bash(pip install:*)"
     ]
+  },
+  "hooks": {
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python .claude/hooks/export-conversation.py"
+          }
+        ]
+      }
+    ]
   }
 }
