@@ -35,28 +35,24 @@ Cette partie se décompose en 3 éléments :
 
 1. > training.log
 Redirection de la sortie standard (stdout)
-
 Le symbole > redirige tout ce qui s'afficherait normalement à l'écran vers un fichier
 Ici, toutes les sorties "normales" du programme iront dans training.log
 2. 2>&1
 Redirection de la sortie d'erreur (stderr)
-
 Pour comprendre, il faut savoir que Linux utilise des "descripteurs de fichiers" :
-
-1 = stdout (sortie normale)
-2 = stderr (sortie d'erreur)
+  1 = stdout (sortie normale)
+  2 = stderr (sortie d'erreur)
 Donc 2>&1 signifie : "envoie le flux 2 (erreurs) vers le même endroit que le flux 1 (normal)"
-
 Résultat : les messages normaux ET les erreurs vont tous dans training.log
-
 3. & (à la fin)
-Exécution en arrière-plan
-
+Exécution en arrière-plan:
 Lance le processus en "background"
 On récupére immédiatement le contrôle du terminal
 Le programme continue de tourner même si on tape d'autres commandes
-Combiné avec nohup
-nohup (no hang up) fait en sorte que le processus continue même si on ferme le terminal. C'est idéal pour un entraînement long sur un serveur distant.
+
+Combiné avec nohup:
+nohup (no hang up) fait en sorte que le processus continue même si on ferme le terminal. 
+Idéal pour un entraînement long sur un serveur distant.
 
 Résumé visuel:
 nohup python scripts/train.py ... > training.log 2>&1 &
@@ -72,11 +68,9 @@ LR scheduler   : CosineAnnealingWarmRestarts(T_0=25, eta_min=0.00003)
 Early stopping : Arrêt après 2 cycles (50 itérations) sans amélioration
 LR min         : 0.00003 (10× plus haut qu'avant)
 
-Suivi de l'entraînement
-
+Suivi de l'entraînement:
 # Voir les logs en temps réel
 tail -f training.log
-
 # Voir les dernières lignes
 tail -100 training.log
 
