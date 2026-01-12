@@ -1,11 +1,21 @@
-Commandes pour le pod RunPod:
+Procédure sur nouveau pod :
+ssh ... (voir Display dans l'interface du pod)
+# 1. Cloner le repo
+cd /workspace
+git clone https://<mon_token>@github.com/phvgit/QuartoAZ_V1.git
+(<mon_token> dans notes sécurisées)
+# 2. Installer les dépendances
+pip install torch numpy
+# 3. Vérifier que le modèle est là
+ls -la data/models/
+# 4. Reprendre l'entraînement
 
+Commandes pour le pod RunPod:
 ssh ... (voir Display dans l'interface du pod)
 cd /workspace/QuartoAZ_V1
-git pull origin master
+git pull origin master (si modifs dans le code)
 
 Puis lancer l'entraînement :
-
 nohup python scripts/train.py \
     --arch server \
     --iterations 100 \
@@ -30,9 +40,18 @@ Paramètre	Valeur     : Raison
 --buffer-size 50000	 : 50000	Comme avant
 --batch-size 64	     : 64	Comme avant
 
+
+Reprendre un training commencé:
+nohup python scripts/train.py 
+--from-best --start-iter 100 
+--iterations 200 
+--games-per-iter 200 
+--workers 12 
+> training.log 2>&1 &
+
+
 Explication de > training.log 2>&1 &
 Cette partie se décompose en 3 éléments :
-
 1. > training.log
 Redirection de la sortie standard (stdout)
 Le symbole > redirige tout ce qui s'afficherait normalement à l'écran vers un fichier
@@ -93,6 +112,8 @@ Early stopping: patience=2 cycles (50 iters)
 ============================================================
 
 
+
+
 Les principales commandes pour « lire » un fichier texte en ligne de commande sous Linux sont :
 
 cat fichier.txt : affiche tout le contenu d’un coup dans le terminal, pratique pour les petits fichiers.
@@ -104,12 +125,10 @@ head fichier.txt : affiche les premières lignes (par défaut 10, ou head -n 50 
 ​tail fichier.txt : affiche les dernières lignes, très utilisé pour suivre des logs (ex : tail -f /var/log/syslog).
 ​
 Exemples rapides :
-
 Lire un petit fichier de config : 
 cat /etc/hostname.
 ​Parcourir un long log : 
 less /var/log/syslog.
-​
 Voir les 20 dernières lignes d’un log : 
 tail -n 20 /var/log/syslog
 
@@ -118,33 +137,25 @@ Lister les processus:
 
 # Lister tous les processus
 ps aux
-
 # Lister les processus de l'utilisateur courant
 ps ux
-
 # Affichage en arbre (hiérarchie parent/enfant)
 ps auxf
-
 # Chercher un processus par nom
 ps aux | grep nom_processus
 pgrep nom_processus
 pgrep -a nom_processus   # avec la ligne de commande complète
 Surveiller en temps réel
-
 # Moniteur interactif classique
 top
-
 # Version améliorée (si installé)
 htop
-
 # Suivre un processus spécifique par PID
 top -p 1234
 Terminer un processus
-
 # Terminer proprement (SIGTERM)
 kill PID
 kill -15 PID
-
 # Forcer l'arrêt (SIGKILL)
 kill -9 PID
 
@@ -172,14 +183,14 @@ kill -STOP PID
 kill -CONT PID
 
 
-
-Récupération des fichiers du training : File Browser de RunPod
+Récupération des fichiers du training : 
+Aller dans File Browser de RunPod
 Dans le terminal web du pod, exécutez :
 cd /workspace/QuartoAZ_V1
 tar -czvf training_results.tar.gz training.log data/models/
-Puis :
-Dans l'interface RunPod, cliquez sur votre pod
-Cliquez sur "Connect" → "HTTP Service [8888]" ou l'icône dossier (File Browser/JupyterLab)
+Puis dans l'interface RunPod, cliquer sur le pod
+Cliquer sur "Connect" → "HTTP Service [8888]"
+ou l'icône dossier (File Browser/JupyterLab)
 Naviguez vers /workspace/QuartoAZ_V1/
 Téléchargez training_results.tar.gz via le navigateur
 

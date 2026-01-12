@@ -80,30 +80,58 @@ def worker_process_local(
         num_games: Nombre de parties à jouer
         verbose: Afficher des informations de debug
     """
-    if verbose:
-        print(f"[Worker {worker_id}] Initialisation du réseau local...")
+    # Message de diagnostic (toujours affiché pour debug)
+    print(f"[Worker {worker_id}] Démarrage...", flush=True)
 
-    # Créer le réseau LOCAL sur CPU
-    network = AlphaZeroNetwork(network_config)
-    network.to('cpu')
-    network.eval()
+    try:
+        if verbose:
+            print(f"[Worker {worker_id}] Initialisation du réseau local...")
+
+        # Créer le réseau LOCAL sur CPU
+        network = AlphaZeroNetwork(network_config)
+        network.to('cpu')
+        network.eval()
+    except Exception as e:
+        print(f"[Worker {worker_id}] Erreur initialisation réseau: {e}")
+        game_output_queue.put({
+            'worker_id': worker_id,
+            'game_idx': -1,
+            'error': f"Erreur initialisation: {e}"
+        })
+        return
 
     # Charger les poids si disponibles
     if weights_path and os.path.exists(weights_path):
         try:
-            state_dict = torch.load(weights_path, map_location='cpu', weights_only=True)
+            state_dict = torch.load(weights_path, map_location='cpu')
             network.load_state_dict(state_dict)
             if verbose:
                 print(f"[Worker {worker_id}] Poids chargés depuis {weights_path}")
         except Exception as e:
-            if verbose:
-                print(f"[Worker {worker_id}] Erreur chargement poids: {e}")
+            print(f"[Worker {worker_id}] Erreur chargement poids: {e}")
+            # Envoyer l'erreur à la queue et terminer
+            game_output_queue.put({
+                'worker_id': worker_id,
+                'game_idx': -1,
+                'error': f"Erreur chargement poids: {e}"
+            })
+            return
+    else:
+        print(f"[Worker {worker_id}] Warning: fichier poids non trouvé: {weights_path}")
 
     # Créer le MCTS avec le réseau local (pas d'inference_client)
-    mcts = MCTS(config=mcts_config, network=network)
+    try:
+        mcts = MCTS(config=mcts_config, network=network)
+    except Exception as e:
+        print(f"[Worker {worker_id}] Erreur création MCTS: {e}")
+        game_output_queue.put({
+            'worker_id': worker_id,
+            'game_idx': -1,
+            'error': f"Erreur MCTS: {e}"
+        })
+        return
 
-    if verbose:
-        print(f"[Worker {worker_id}] Prêt, {num_games} parties à jouer")
+    print(f"[Worker {worker_id}] Prêt, {num_games} parties à jouer", flush=True)
 
     games_played = 0
     total_time = 0.0
@@ -122,6 +150,10 @@ def worker_process_local(
                 'game_idx': game_idx,
                 'result': game_result
             })
+
+            # Premier message après la première partie réussie
+            if game_idx == 0:
+                print(f"[Worker {worker_id}] Première partie terminée ({elapsed:.1f}s)", flush=True)
 
             if verbose and (game_idx + 1) % 5 == 0:
                 avg_time = total_time / games_played
