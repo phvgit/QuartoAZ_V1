@@ -99,6 +99,27 @@ Early stopping: patience=2 cycles (50 iters)
 ============================================================
 
 
+Les principales commandes pour « lire » un fichier texte en ligne de commande sous Linux sont :
+
+cat fichier.txt : affiche tout le contenu d’un coup dans le terminal, pratique pour les petits fichiers.
+​less fichier.txt : permet de défiler dans le fichier (↑ ↓, PgUp/PgDn, q pour quitter), idéal pour les gros fichiers.
+​more fichier.txt : similaire à less mais un peu plus basique, affiche page par page.
+​
+Autres commandes utiles pour la lecture :
+head fichier.txt : affiche les premières lignes (par défaut 10, ou head -n 50 fichier.txt).
+​tail fichier.txt : affiche les dernières lignes, très utilisé pour suivre des logs (ex : tail -f /var/log/syslog).
+​
+Exemples rapides :
+
+Lire un petit fichier de config : 
+cat /etc/hostname.
+​Parcourir un long log : 
+less /var/log/syslog.
+​
+Voir les 20 dernières lignes d’un log : 
+tail -n 20 /var/log/syslog
+
+
 Lister les processus:
 
 # Lister tous les processus
