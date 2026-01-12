@@ -170,3 +170,26 @@ kill $(pgrep -f "mon_script.py")
 # Suspendre puis reprendre
 kill -STOP PID
 kill -CONT PID
+
+
+
+Récupération des fichiers du training : File Browser de RunPod
+Dans le terminal web du pod, exécutez :
+cd /workspace/QuartoAZ_V1
+tar -czvf training_results.tar.gz training.log data/models/
+Puis :
+Dans l'interface RunPod, cliquez sur votre pod
+Cliquez sur "Connect" → "HTTP Service [8888]" ou l'icône dossier (File Browser/JupyterLab)
+Naviguez vers /workspace/QuartoAZ_V1/
+Téléchargez training_results.tar.gz via le navigateur
+
+
+Extraire l'archive et déplacez les fichiers vers le projet.
+Dans PowerShell :
+# Aller dans Downloads
+cd ~/Downloads
+# Extraire l'archive
+tar -xzvf training_results.tar.gz
+# Copier les fichiers vers votre projet
+copy training.log "C:\Users\FreeAdm\OneDrive - Région Île-de-France\Documents\Sources_Dev\Python\QuartoAZ_V1\"
+copy -Recurse data\models\* "C:\Users\FreeAdm\OneDrive - Région Île-de-France\Documents\Sources_Dev\Python\QuartoAZ_V1\data\models\"

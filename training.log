@@ -5,2887 +5,1175 @@ INITIALISATION
 ============================================================
 
 Configuration matérielle...
-  GPU détecté: /physical_device:GPU:0
-  Memory growth: Activé
-  Mixed precision (float16): Activé
-  Nom complet: NVIDIA GeForce RTX 4090
+  GPU: NVIDIA RTX PRO 6000 Blackwell Server Edition (102.0 GB)
 
-Création du réseau (medium)...
-  Paramètres: 460,341
+Configuration réseau (medium)...
 
 Initialisation du trainer...
-  Mode PARALLÈLE activé: 14 workers
-
-Chargement du checkpoint 5...
-  Reprise à l'itération 0
+  Architecture: SERVER (InferenceServer centralisé)
+  Paramètres: 458,667
+  Workers: 12
 
 Démarrage de l'entraînement...
 
-############################################################
-# ENTRAÎNEMENT ALPHAZERO POUR QUARTO
-# Itérations: 95
-# Parties/itération: 100
-# Époques/itération: 10
-# MCTS simulations: 100
-############################################################
-
-============================================================
-ITERATION 1
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
-I0000 00:00:1767826419.182023 3754598 device_compiler.h:186] Compiled cluster using XLA!  This line is logged at most once for the lifetime of the process.
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.11/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 921.2s (0.11 parties/s)
-  Terminé en 921.2s (0.11 parties/s)
-  Victoires: J0=53, J1=40, Nuls=7
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=6.4089, policy_acc=0.083, value_mae=0.899
-  Époque 2/10: loss=6.2109, policy_acc=0.106, value_mae=0.903
-  Époque 3/10: loss=6.0757, policy_acc=0.138, value_mae=0.899
-  Époque 4/10: loss=6.0180, policy_acc=0.154, value_mae=0.866
-  Époque 5/10: loss=5.7653, policy_acc=0.179, value_mae=0.789
-  Époque 6/10: loss=5.5959, policy_acc=0.212, value_mae=0.734
-  Époque 7/10: loss=5.4542, policy_acc=0.247, value_mae=0.659
-  Époque 8/10: loss=5.3304, policy_acc=0.246, value_mae=0.595
-  Époque 9/10: loss=5.2106, policy_acc=0.277, value_mae=0.562
-  Époque 10/10: loss=5.1318, policy_acc=0.291, value_mae=0.501
-
-  Itération 1 terminée
-  Total parties: 100, Buffer: 1123
-
-============================================================
-ITERATION 2
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.09/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.10/s)
-    Terminé en 952.7s (0.10 parties/s)
-  Terminé en 952.8s (0.10 parties/s)
-  Victoires: J0=39, J1=48, Nuls=13
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=5.8368, policy_acc=0.180, value_mae=0.731
-  Époque 2/10: loss=5.7861, policy_acc=0.188, value_mae=0.716
-  Époque 3/10: loss=5.6993, policy_acc=0.191, value_mae=0.695
-  Époque 4/10: loss=5.7023, policy_acc=0.199, value_mae=0.699
-  Époque 5/10: loss=5.5082, policy_acc=0.219, value_mae=0.611
-  Époque 6/10: loss=5.5577, policy_acc=0.227, value_mae=0.625
-  Époque 7/10: loss=5.5425, policy_acc=0.239, value_mae=0.608
-  Époque 8/10: loss=5.5037, policy_acc=0.228, value_mae=0.588
-  Époque 9/10: loss=5.5087, policy_acc=0.246, value_mae=0.577
-  Époque 10/10: loss=5.3952, policy_acc=0.249, value_mae=0.555
-
-  Itération 2 terminée
-  Total parties: 200, Buffer: 2296
-
-============================================================
-ITERATION 3
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.09/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.11/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 896.5s (0.11 parties/s)
-  Terminé en 896.6s (0.11 parties/s)
-  Victoires: J0=49, J1=45, Nuls=6
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=6.0208, policy_acc=0.165, value_mae=0.757
-  Époque 2/10: loss=6.0247, policy_acc=0.166, value_mae=0.762
-  Époque 3/10: loss=6.0287, policy_acc=0.169, value_mae=0.749
-  Époque 4/10: loss=5.9709, policy_acc=0.167, value_mae=0.733
-  Époque 5/10: loss=5.9928, policy_acc=0.168, value_mae=0.733
-  Époque 6/10: loss=5.9382, policy_acc=0.177, value_mae=0.718
-  Époque 7/10: loss=5.9591, policy_acc=0.181, value_mae=0.721
-  Époque 8/10: loss=5.9827, policy_acc=0.191, value_mae=0.710
-  Époque 9/10: loss=6.0551, policy_acc=0.183, value_mae=0.714
-  Époque 10/10: loss=6.1730, policy_acc=0.162, value_mae=0.746
-
-  Itération 3 terminée
-  Total parties: 300, Buffer: 3359
-
-============================================================
-ITERATION 4
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.09/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 918.3s (0.11 parties/s)
-  Terminé en 918.4s (0.11 parties/s)
-  Victoires: J0=49, J1=41, Nuls=10
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=6.2769, policy_acc=0.162, value_mae=0.791
-  Époque 2/10: loss=6.3169, policy_acc=0.149, value_mae=0.793
-  Époque 3/10: loss=6.3562, policy_acc=0.144, value_mae=0.805
-  Époque 4/10: loss=6.3931, policy_acc=0.154, value_mae=0.796
-  Époque 5/10: loss=6.4714, policy_acc=0.147, value_mae=0.808
-  Époque 6/10: loss=6.4612, policy_acc=0.148, value_mae=0.812
-  Époque 7/10: loss=6.4845, policy_acc=0.152, value_mae=0.805
-  Époque 8/10: loss=6.5111, policy_acc=0.156, value_mae=0.794
-  Époque 9/10: loss=6.5543, policy_acc=0.131, value_mae=0.799
-  Époque 10/10: loss=6.5934, policy_acc=0.147, value_mae=0.796
-
-  Itération 4 terminée
-  Total parties: 400, Buffer: 4468
-
-============================================================
-ITERATION 5
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 896.8s (0.11 parties/s)
-  Terminé en 896.9s (0.11 parties/s)
-  Victoires: J0=36, J1=55, Nuls=9
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=6.7087, policy_acc=0.136, value_mae=0.829
-  Époque 2/10: loss=6.7579, policy_acc=0.124, value_mae=0.829
-  Époque 3/10: loss=6.7879, policy_acc=0.123, value_mae=0.818
-  Époque 4/10: loss=6.8708, policy_acc=0.118, value_mae=0.821
-  Époque 5/10: loss=6.9249, policy_acc=0.119, value_mae=0.817
-  Époque 6/10: loss=7.0054, policy_acc=0.120, value_mae=0.820
-  Époque 7/10: loss=7.0002, policy_acc=0.118, value_mae=0.817
-  Époque 8/10: loss=7.0951, policy_acc=0.112, value_mae=0.820
-  Époque 9/10: loss=7.1244, policy_acc=0.125, value_mae=0.821
-  Époque 10/10: loss=7.1676, policy_acc=0.120, value_mae=0.809
-
-  Itération 5 terminée
-  Total parties: 500, Buffer: 5576
-
-============================================================
-ITERATION 6
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 903.5s (0.11 parties/s)
-  Terminé en 903.6s (0.11 parties/s)
-  Victoires: J0=59, J1=38, Nuls=3
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=7.2679, policy_acc=0.119, value_mae=0.840
-  Époque 2/10: loss=7.3095, policy_acc=0.114, value_mae=0.836
-  Époque 3/10: loss=7.3873, policy_acc=0.121, value_mae=0.841
-  Époque 4/10: loss=7.4430, policy_acc=0.123, value_mae=0.829
-  Époque 5/10: loss=7.4855, policy_acc=0.126, value_mae=0.827
-  Époque 6/10: loss=7.5843, policy_acc=0.124, value_mae=0.833
-  Époque 7/10: loss=7.6058, policy_acc=0.130, value_mae=0.833
-  Époque 8/10: loss=7.7886, policy_acc=0.114, value_mae=0.832
-  Époque 9/10: loss=7.7593, policy_acc=0.113, value_mae=0.822
-  Époque 10/10: loss=7.8000, policy_acc=0.123, value_mae=0.827
-
-  Itération 6 terminée
-  Total parties: 600, Buffer: 6681
-
-============================================================
-ITERATION 7
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.09/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.10/s)
-    Terminé en 977.0s (0.10 parties/s)
-  Terminé en 977.1s (0.10 parties/s)
-  Victoires: J0=46, J1=40, Nuls=14
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=7.9093, policy_acc=0.121, value_mae=0.832
-  Époque 2/10: loss=7.9975, policy_acc=0.113, value_mae=0.827
-  Époque 3/10: loss=8.1101, policy_acc=0.117, value_mae=0.827
-  Époque 4/10: loss=8.2047, policy_acc=0.125, value_mae=0.818
-  Époque 5/10: loss=8.2920, policy_acc=0.118, value_mae=0.826
-  Époque 6/10: loss=8.4213, policy_acc=0.122, value_mae=0.818
-  Époque 7/10: loss=8.4893, policy_acc=0.120, value_mae=0.820
-  Époque 8/10: loss=8.5971, policy_acc=0.118, value_mae=0.818
-  Époque 9/10: loss=8.5499, policy_acc=0.127, value_mae=0.812
-  Époque 10/10: loss=8.6744, policy_acc=0.133, value_mae=0.814
-
-  Itération 7 terminée
-  Total parties: 700, Buffer: 7895
-
-============================================================
-ITERATION 8
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 897.4s (0.11 parties/s)
-  Terminé en 897.5s (0.11 parties/s)
-  Victoires: J0=43, J1=50, Nuls=7
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=8.9470, policy_acc=0.115, value_mae=0.825
-  Époque 2/10: loss=8.9693, policy_acc=0.119, value_mae=0.834
-  Époque 3/10: loss=9.1274, policy_acc=0.111, value_mae=0.834
-  Époque 4/10: loss=9.3694, policy_acc=0.112, value_mae=0.830
-  Époque 5/10: loss=9.4866, policy_acc=0.118, value_mae=0.830
-  Époque 6/10: loss=9.6042, policy_acc=0.121, value_mae=0.818
-  Époque 7/10: loss=10.0700, policy_acc=0.111, value_mae=0.825
-  Époque 8/10: loss=9.7604, policy_acc=0.111, value_mae=0.833
-  Époque 9/10: loss=9.8553, policy_acc=0.115, value_mae=0.825
-  Époque 10/10: loss=10.0428, policy_acc=0.107, value_mae=0.815
-
-  Itération 8 terminée
-  Total parties: 800, Buffer: 8980
-
-============================================================
-ITERATION 9
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 910.7s (0.11 parties/s)
-  Terminé en 910.8s (0.11 parties/s)
-  Victoires: J0=53, J1=42, Nuls=5
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=10.1502, policy_acc=0.110, value_mae=0.836
-  Époque 2/10: loss=10.4092, policy_acc=0.110, value_mae=0.839
-  Époque 3/10: loss=10.4750, policy_acc=0.108, value_mae=0.831
-  Époque 4/10: loss=10.6202, policy_acc=0.114, value_mae=0.832
-  Époque 5/10: loss=10.7479, policy_acc=0.116, value_mae=0.826
-  Époque 6/10: loss=10.9734, policy_acc=0.105, value_mae=0.825
-  Époque 7/10: loss=11.2449, policy_acc=0.111, value_mae=0.831
-  Époque 8/10: loss=11.2172, policy_acc=0.103, value_mae=0.828
-  Époque 9/10: loss=11.3597, policy_acc=0.104, value_mae=0.824
-  Époque 10/10: loss=11.6427, policy_acc=0.108, value_mae=0.828
-
-  Itération 9 terminée
-  Total parties: 900, Buffer: 10093
-
-============================================================
-ITERATION 10
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 937.8s (0.11 parties/s)
-  Terminé en 937.9s (0.11 parties/s)
-  Victoires: J0=46, J1=46, Nuls=8
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=11.7706, policy_acc=0.108, value_mae=0.832
-  Époque 2/10: loss=11.9958, policy_acc=0.108, value_mae=0.833
-  Époque 3/10: loss=12.0712, policy_acc=0.107, value_mae=0.826
-  Époque 4/10: loss=12.3150, policy_acc=0.101, value_mae=0.825
-  Époque 5/10: loss=12.7324, policy_acc=0.100, value_mae=0.827
-  Époque 6/10: loss=12.8795, policy_acc=0.105, value_mae=0.828
-  Époque 7/10: loss=12.9063, policy_acc=0.102, value_mae=0.828
-  Époque 8/10: loss=13.3472, policy_acc=0.108, value_mae=0.830
-  Époque 9/10: loss=13.3327, policy_acc=0.105, value_mae=0.832
-  Époque 10/10: loss=13.5840, policy_acc=0.100, value_mae=0.826
-
-  Itération 10 terminée
-  Total parties: 1000, Buffer: 11221
-
-============================================================
-ITERATION 11
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.09/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 946.9s (0.11 parties/s)
-  Terminé en 947.0s (0.11 parties/s)
-  Victoires: J0=43, J1=43, Nuls=14
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=13.8529, policy_acc=0.100, value_mae=0.824
-  Époque 2/10: loss=14.0950, policy_acc=0.101, value_mae=0.829
-  Époque 3/10: loss=14.4146, policy_acc=0.105, value_mae=0.833
-  Époque 4/10: loss=14.8815, policy_acc=0.099, value_mae=0.822
-  Époque 5/10: loss=14.9802, policy_acc=0.099, value_mae=0.827
-  Époque 6/10: loss=15.1707, policy_acc=0.099, value_mae=0.821
-  Époque 7/10: loss=15.4620, policy_acc=0.102, value_mae=0.818
-  Époque 8/10: loss=15.6837, policy_acc=0.101, value_mae=0.812
-  Époque 9/10: loss=nan, policy_acc=0.105, value_mae=0.818
-  Époque 10/10: loss=nan, policy_acc=0.104, value_mae=0.824
-
-  Itération 11 terminée
-  Total parties: 1100, Buffer: 12404
-
-============================================================
-ITERATION 12
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.11/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 899.2s (0.11 parties/s)
-  Terminé en 899.3s (0.11 parties/s)
-  Victoires: J0=44, J1=45, Nuls=11
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.100, value_mae=0.824
-  Époque 2/10: loss=nan, policy_acc=0.105, value_mae=0.823
-  Époque 3/10: loss=nan, policy_acc=0.100, value_mae=0.821
-  Époque 4/10: loss=nan, policy_acc=0.099, value_mae=0.822
-  Époque 5/10: loss=nan, policy_acc=0.100, value_mae=0.816
-  Époque 6/10: loss=nan, policy_acc=0.098, value_mae=0.817
-  Époque 7/10: loss=nan, policy_acc=0.099, value_mae=0.824
-  Époque 8/10: loss=nan, policy_acc=0.100, value_mae=0.821
-  Époque 9/10: loss=nan, policy_acc=0.102, value_mae=0.813
-  Époque 10/10: loss=nan, policy_acc=0.102, value_mae=0.821
-
-  Itération 12 terminée
-  Total parties: 1200, Buffer: 13534
-
-============================================================
-ITERATION 13
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.07/s)
-    Parties: 40/100 (0.09/s)
-    Parties: 60/100 (0.09/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.10/s)
-    Terminé en 961.5s (0.10 parties/s)
-  Terminé en 961.6s (0.10 parties/s)
-  Victoires: J0=40, J1=48, Nuls=12
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.106, value_mae=0.824
-  Époque 2/10: loss=nan, policy_acc=0.105, value_mae=0.814
-  Époque 3/10: loss=nan, policy_acc=0.100, value_mae=0.822
-  Époque 4/10: loss=nan, policy_acc=0.106, value_mae=0.811
-  Époque 5/10: loss=nan, policy_acc=0.100, value_mae=0.816
-  Époque 6/10: loss=nan, policy_acc=0.101, value_mae=0.814
-  Époque 7/10: loss=nan, policy_acc=0.103, value_mae=0.819
-  Époque 8/10: loss=nan, policy_acc=0.101, value_mae=0.814
-  Époque 9/10: loss=nan, policy_acc=0.100, value_mae=0.813
-  Époque 10/10: loss=nan, policy_acc=0.107, value_mae=0.817
-
-  Itération 13 terminée
-  Total parties: 1300, Buffer: 14732
-
-============================================================
-ITERATION 14
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 931.2s (0.11 parties/s)
-  Terminé en 931.3s (0.11 parties/s)
-  Victoires: J0=52, J1=43, Nuls=5
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.100, value_mae=0.824
-  Époque 2/10: loss=nan, policy_acc=0.098, value_mae=0.824
-  Époque 3/10: loss=nan, policy_acc=0.101, value_mae=0.817
-  Époque 4/10: loss=nan, policy_acc=0.099, value_mae=0.813
-  Époque 5/10: loss=nan, policy_acc=0.102, value_mae=0.821
-  Époque 6/10: loss=nan, policy_acc=0.095, value_mae=0.823
-  Époque 7/10: loss=nan, policy_acc=0.099, value_mae=0.826
-  Époque 8/10: loss=nan, policy_acc=0.107, value_mae=0.828
-  Époque 9/10: loss=nan, policy_acc=0.103, value_mae=0.821
-  Époque 10/10: loss=nan, policy_acc=0.100, value_mae=0.817
-
-  Itération 14 terminée
-  Total parties: 1400, Buffer: 15848
-
-============================================================
-ITERATION 15
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.09/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 950.4s (0.11 parties/s)
-  Terminé en 950.5s (0.11 parties/s)
-  Victoires: J0=55, J1=42, Nuls=3
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.102, value_mae=0.829
-  Époque 2/10: loss=nan, policy_acc=0.104, value_mae=0.828
-  Époque 3/10: loss=nan, policy_acc=0.101, value_mae=0.829
-  Époque 4/10: loss=nan, policy_acc=0.099, value_mae=0.827
-  Époque 5/10: loss=nan, policy_acc=0.101, value_mae=0.830
-  Époque 6/10: loss=nan, policy_acc=0.104, value_mae=0.829
-  Époque 7/10: loss=nan, policy_acc=0.101, value_mae=0.827
-  Époque 8/10: loss=nan, policy_acc=0.102, value_mae=0.823
-  Époque 9/10: loss=nan, policy_acc=0.096, value_mae=0.830
-  Époque 10/10: loss=nan, policy_acc=0.102, value_mae=0.828
-
-  Itération 15 terminée
-  Total parties: 1500, Buffer: 16995
-
-============================================================
-ITERATION 16
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 941.9s (0.11 parties/s)
-  Terminé en 942.0s (0.11 parties/s)
-  Victoires: J0=46, J1=46, Nuls=8
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.092, value_mae=0.838
-  Époque 2/10: loss=nan, policy_acc=0.094, value_mae=0.833
-  Époque 3/10: loss=nan, policy_acc=0.099, value_mae=0.830
-  Époque 4/10: loss=nan, policy_acc=0.097, value_mae=0.832
-  Époque 5/10: loss=nan, policy_acc=0.095, value_mae=0.831
-  Époque 6/10: loss=nan, policy_acc=0.098, value_mae=0.835
-  Époque 7/10: loss=nan, policy_acc=0.098, value_mae=0.831
-  Époque 8/10: loss=nan, policy_acc=0.096, value_mae=0.835
-  Époque 9/10: loss=nan, policy_acc=0.099, value_mae=0.829
-  Époque 10/10: loss=nan, policy_acc=0.101, value_mae=0.833
-
-  Itération 16 terminée
-  Total parties: 1600, Buffer: 18129
-
-============================================================
-ITERATION 17
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.09/s)
-    Parties: 60/100 (0.09/s)
-    Parties: 80/100 (0.09/s)
-    Parties: 100/100 (0.10/s)
-    Terminé en 998.1s (0.10 parties/s)
-  Terminé en 998.2s (0.10 parties/s)
-  Victoires: J0=45, J1=46, Nuls=9
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.101, value_mae=0.833
-  Époque 2/10: loss=nan, policy_acc=0.100, value_mae=0.834
-  Époque 3/10: loss=nan, policy_acc=0.101, value_mae=0.831
-  Époque 4/10: loss=nan, policy_acc=0.096, value_mae=0.836
-  Époque 5/10: loss=nan, policy_acc=0.095, value_mae=0.836
-  Époque 6/10: loss=nan, policy_acc=0.100, value_mae=0.835
-  Époque 7/10: loss=nan, policy_acc=0.099, value_mae=0.831
-  Époque 8/10: loss=nan, policy_acc=0.100, value_mae=0.830
-  Époque 9/10: loss=nan, policy_acc=0.095, value_mae=0.827
-  Époque 10/10: loss=nan, policy_acc=0.101, value_mae=0.829
-
-  Itération 17 terminée
-  Total parties: 1700, Buffer: 19312
-
-============================================================
-ITERATION 18
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.09/s)
-    Parties: 60/100 (0.09/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.10/s)
-    Terminé en 965.8s (0.10 parties/s)
-  Terminé en 965.9s (0.10 parties/s)
-  Victoires: J0=52, J1=43, Nuls=5
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.096, value_mae=0.835
-  Époque 2/10: loss=nan, policy_acc=0.100, value_mae=0.835
-  Époque 3/10: loss=nan, policy_acc=0.096, value_mae=0.841
-  Époque 4/10: loss=nan, policy_acc=0.097, value_mae=0.838
-  Époque 5/10: loss=nan, policy_acc=0.095, value_mae=0.834
-  Époque 6/10: loss=nan, policy_acc=0.096, value_mae=0.838
-  Époque 7/10: loss=nan, policy_acc=0.100, value_mae=0.836
-  Époque 8/10: loss=nan, policy_acc=0.104, value_mae=0.833
-  Époque 9/10: loss=nan, policy_acc=0.102, value_mae=0.836
-  Époque 10/10: loss=nan, policy_acc=0.095, value_mae=0.837
-
-  Itération 18 terminée
-  Total parties: 1800, Buffer: 20440
-
-============================================================
-ITERATION 19
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.09/s)
-    Parties: 60/100 (0.09/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.10/s)
-    Terminé en 956.7s (0.10 parties/s)
-  Terminé en 956.8s (0.10 parties/s)
-  Victoires: J0=47, J1=41, Nuls=12
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.096, value_mae=0.840
-  Époque 2/10: loss=nan, policy_acc=0.099, value_mae=0.842
-  Époque 3/10: loss=nan, policy_acc=0.101, value_mae=0.843
-  Époque 4/10: loss=nan, policy_acc=0.098, value_mae=0.840
-  Époque 5/10: loss=nan, policy_acc=0.096, value_mae=0.840
-  Époque 6/10: loss=nan, policy_acc=0.095, value_mae=0.842
-  Époque 7/10: loss=nan, policy_acc=0.100, value_mae=0.839
-  Époque 8/10: loss=nan, policy_acc=0.097, value_mae=0.836
-  Époque 9/10: loss=nan, policy_acc=0.099, value_mae=0.839
-  Époque 10/10: loss=nan, policy_acc=0.101, value_mae=0.837
-
-  Itération 19 terminée
-  Total parties: 1900, Buffer: 21621
-
-============================================================
-ITERATION 20
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.09/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 923.7s (0.11 parties/s)
-  Terminé en 923.8s (0.11 parties/s)
-  Victoires: J0=42, J1=48, Nuls=10
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.104, value_mae=0.841
-  Époque 2/10: loss=nan, policy_acc=0.099, value_mae=0.840
-  Époque 3/10: loss=nan, policy_acc=0.098, value_mae=0.835
-  Époque 4/10: loss=nan, policy_acc=0.100, value_mae=0.836
-  Époque 5/10: loss=nan, policy_acc=0.094, value_mae=0.844
-  Époque 6/10: loss=nan, policy_acc=0.098, value_mae=0.841
-  Époque 7/10: loss=nan, policy_acc=0.097, value_mae=0.839
-  Époque 8/10: loss=nan, policy_acc=0.094, value_mae=0.838
-  Époque 9/10: loss=nan, policy_acc=0.099, value_mae=0.838
-  Époque 10/10: loss=nan, policy_acc=0.093, value_mae=0.839
-
-  Itération 20 terminée
-  Total parties: 2000, Buffer: 22765
-
-============================================================
-ITERATION 21
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.07/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 919.0s (0.11 parties/s)
-  Terminé en 919.1s (0.11 parties/s)
-  Victoires: J0=59, J1=36, Nuls=5
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.095, value_mae=0.841
-  Époque 2/10: loss=nan, policy_acc=0.097, value_mae=0.846
-  Époque 3/10: loss=nan, policy_acc=0.101, value_mae=0.841
-  Époque 4/10: loss=nan, policy_acc=0.100, value_mae=0.839
-  Époque 5/10: loss=nan, policy_acc=0.099, value_mae=0.841
-  Époque 6/10: loss=nan, policy_acc=0.096, value_mae=0.839
-  Époque 7/10: loss=nan, policy_acc=0.093, value_mae=0.845
-  Époque 8/10: loss=nan, policy_acc=0.094, value_mae=0.843
-  Époque 9/10: loss=nan, policy_acc=0.094, value_mae=0.839
-  Époque 10/10: loss=nan, policy_acc=0.094, value_mae=0.842
-
-  Itération 21 terminée
-  Total parties: 2100, Buffer: 23878
-
-============================================================
-ITERATION 22
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 932.2s (0.11 parties/s)
-  Terminé en 932.3s (0.11 parties/s)
-  Victoires: J0=48, J1=35, Nuls=17
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.095, value_mae=0.841
-  Époque 2/10: loss=nan, policy_acc=0.095, value_mae=0.837
-  Époque 3/10: loss=nan, policy_acc=0.094, value_mae=0.843
-  Époque 4/10: loss=nan, policy_acc=0.092, value_mae=0.839
-  Époque 5/10: loss=nan, policy_acc=0.098, value_mae=0.842
-  Époque 6/10: loss=nan, policy_acc=0.100, value_mae=0.840
-  Époque 7/10: loss=nan, policy_acc=0.096, value_mae=0.843
-  Époque 8/10: loss=nan, policy_acc=0.099, value_mae=0.838
-  Époque 9/10: loss=nan, policy_acc=0.099, value_mae=0.835
-  Époque 10/10: loss=nan, policy_acc=0.096, value_mae=0.843
-
-  Itération 22 terminée
-  Total parties: 2200, Buffer: 25042
-
-============================================================
-ITERATION 23
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.09/s)
-    Parties: 60/100 (0.09/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.10/s)
-    Terminé en 966.3s (0.10 parties/s)
-  Terminé en 966.4s (0.10 parties/s)
-  Victoires: J0=46, J1=41, Nuls=13
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.095, value_mae=0.841
-  Époque 2/10: loss=nan, policy_acc=0.097, value_mae=0.838
-  Époque 3/10: loss=nan, policy_acc=0.100, value_mae=0.839
-  Époque 4/10: loss=nan, policy_acc=0.096, value_mae=0.838
-  Époque 5/10: loss=nan, policy_acc=0.096, value_mae=0.838
-  Époque 6/10: loss=nan, policy_acc=0.095, value_mae=0.837
-  Époque 7/10: loss=nan, policy_acc=0.097, value_mae=0.837
-  Époque 8/10: loss=nan, policy_acc=0.101, value_mae=0.840
-  Époque 9/10: loss=nan, policy_acc=0.097, value_mae=0.840
-  Époque 10/10: loss=nan, policy_acc=0.097, value_mae=0.840
-
-  Itération 23 terminée
-  Total parties: 2300, Buffer: 26228
-
-============================================================
-ITERATION 24
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 934.0s (0.11 parties/s)
-  Terminé en 934.1s (0.11 parties/s)
-  Victoires: J0=53, J1=40, Nuls=7
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.095, value_mae=0.841
-  Époque 2/10: loss=nan, policy_acc=0.095, value_mae=0.840
-  Époque 3/10: loss=nan, policy_acc=0.094, value_mae=0.843
-  Époque 4/10: loss=nan, policy_acc=0.093, value_mae=0.843
-  Époque 5/10: loss=nan, policy_acc=0.093, value_mae=0.838
-  Époque 6/10: loss=nan, policy_acc=0.089, value_mae=0.838
-  Époque 7/10: loss=nan, policy_acc=0.095, value_mae=0.838
-  Époque 8/10: loss=nan, policy_acc=0.091, value_mae=0.841
-  Époque 9/10: loss=nan, policy_acc=0.090, value_mae=0.841
-  Époque 10/10: loss=nan, policy_acc=0.092, value_mae=0.840
-
-  Itération 24 terminée
-  Total parties: 2400, Buffer: 27371
-
-============================================================
-ITERATION 25
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.09/s)
-    Parties: 60/100 (0.09/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.10/s)
-    Terminé en 985.3s (0.10 parties/s)
-  Terminé en 985.4s (0.10 parties/s)
-  Victoires: J0=48, J1=40, Nuls=12
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.093, value_mae=0.842
-  Époque 2/10: loss=nan, policy_acc=0.094, value_mae=0.842
-  Époque 3/10: loss=nan, policy_acc=0.094, value_mae=0.841
-  Époque 4/10: loss=nan, policy_acc=0.098, value_mae=0.837
-  Époque 5/10: loss=nan, policy_acc=0.097, value_mae=0.845
-  Époque 6/10: loss=nan, policy_acc=0.097, value_mae=0.844
-  Époque 7/10: loss=nan, policy_acc=0.097, value_mae=0.844
-  Époque 8/10: loss=nan, policy_acc=0.093, value_mae=0.841
-  Époque 9/10: loss=nan, policy_acc=0.096, value_mae=0.843
-  Époque 10/10: loss=nan, policy_acc=0.097, value_mae=0.839
-
-  Itération 25 terminée
-  Total parties: 2500, Buffer: 28537
-
-============================================================
-ITERATION 26
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.07/s)
-    Parties: 40/100 (0.09/s)
-    Parties: 60/100 (0.09/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.10/s)
-    Terminé en 963.6s (0.10 parties/s)
-  Terminé en 963.7s (0.10 parties/s)
-  Victoires: J0=43, J1=44, Nuls=13
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.096, value_mae=0.837
-  Époque 2/10: loss=nan, policy_acc=0.096, value_mae=0.839
-  Époque 3/10: loss=nan, policy_acc=0.093, value_mae=0.841
-  Époque 4/10: loss=nan, policy_acc=0.096, value_mae=0.840
-  Époque 5/10: loss=nan, policy_acc=0.093, value_mae=0.842
-  Époque 6/10: loss=nan, policy_acc=0.093, value_mae=0.842
-  Époque 7/10: loss=nan, policy_acc=0.094, value_mae=0.842
-  Époque 8/10: loss=nan, policy_acc=0.094, value_mae=0.837
-  Époque 9/10: loss=nan, policy_acc=0.096, value_mae=0.842
-  Époque 10/10: loss=nan, policy_acc=0.095, value_mae=0.840
-
-  Itération 26 terminée
-  Total parties: 2600, Buffer: 29722
-
-============================================================
-ITERATION 27
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.09/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.10/s)
-    Terminé en 957.0s (0.10 parties/s)
-  Terminé en 957.1s (0.10 parties/s)
-  Victoires: J0=46, J1=44, Nuls=10
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.095, value_mae=0.843
-  Époque 2/10: loss=nan, policy_acc=0.098, value_mae=0.843
-  Époque 3/10: loss=nan, policy_acc=0.096, value_mae=0.842
-  Époque 4/10: loss=nan, policy_acc=0.096, value_mae=0.842
-  Époque 5/10: loss=nan, policy_acc=0.095, value_mae=0.845
-  Époque 6/10: loss=nan, policy_acc=0.092, value_mae=0.844
-  Époque 7/10: loss=nan, policy_acc=0.092, value_mae=0.845
-  Époque 8/10: loss=nan, policy_acc=0.094, value_mae=0.847
-  Époque 9/10: loss=nan, policy_acc=0.094, value_mae=0.850
-  Époque 10/10: loss=nan, policy_acc=0.094, value_mae=0.843
-
-  Itération 27 terminée
-  Total parties: 2700, Buffer: 30864
-
-============================================================
-ITERATION 28
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.09/s)
-    Parties: 60/100 (0.09/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.10/s)
-    Terminé en 954.1s (0.10 parties/s)
-  Terminé en 954.2s (0.10 parties/s)
-  Victoires: J0=57, J1=37, Nuls=6
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.091, value_mae=0.851
-  Époque 2/10: loss=nan, policy_acc=0.095, value_mae=0.849
-  Époque 3/10: loss=nan, policy_acc=0.093, value_mae=0.850
-  Époque 4/10: loss=nan, policy_acc=0.097, value_mae=0.848
-  Époque 5/10: loss=nan, policy_acc=0.095, value_mae=0.849
-  Époque 6/10: loss=nan, policy_acc=0.094, value_mae=0.852
-  Époque 7/10: loss=nan, policy_acc=0.096, value_mae=0.848
-  Époque 8/10: loss=nan, policy_acc=0.095, value_mae=0.846
-  Époque 9/10: loss=nan, policy_acc=0.096, value_mae=0.845
-  Époque 10/10: loss=nan, policy_acc=0.093, value_mae=0.844
-
-  Itération 28 terminée
-  Total parties: 2800, Buffer: 32003
-
-============================================================
-ITERATION 29
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 917.0s (0.11 parties/s)
-  Terminé en 917.1s (0.11 parties/s)
-  Victoires: J0=54, J1=40, Nuls=6
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.092, value_mae=0.850
-  Époque 2/10: loss=nan, policy_acc=0.096, value_mae=0.848
-  Époque 3/10: loss=nan, policy_acc=0.092, value_mae=0.845
-  Époque 4/10: loss=nan, policy_acc=0.093, value_mae=0.849
-  Époque 5/10: loss=nan, policy_acc=0.092, value_mae=0.847
-  Époque 6/10: loss=nan, policy_acc=0.092, value_mae=0.848
-  Époque 7/10: loss=nan, policy_acc=0.094, value_mae=0.848
-  Époque 8/10: loss=nan, policy_acc=0.091, value_mae=0.848
-  Époque 9/10: loss=nan, policy_acc=0.092, value_mae=0.850
-  Époque 10/10: loss=nan, policy_acc=0.092, value_mae=0.849
-
-  Itération 29 terminée
-  Total parties: 2900, Buffer: 33105
-
-============================================================
-ITERATION 30
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.09/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.10/s)
-    Terminé en 960.2s (0.10 parties/s)
-  Terminé en 960.3s (0.10 parties/s)
-  Victoires: J0=43, J1=51, Nuls=6
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.093, value_mae=0.853
-  Époque 2/10: loss=nan, policy_acc=0.093, value_mae=0.852
-  Époque 3/10: loss=nan, policy_acc=0.094, value_mae=0.850
-  Époque 4/10: loss=nan, policy_acc=0.094, value_mae=0.852
-  Époque 5/10: loss=nan, policy_acc=0.094, value_mae=0.850
-  Époque 6/10: loss=nan, policy_acc=0.093, value_mae=0.850
-  Époque 7/10: loss=nan, policy_acc=0.094, value_mae=0.850
-  Époque 8/10: loss=nan, policy_acc=0.096, value_mae=0.849
-  Époque 9/10: loss=nan, policy_acc=0.096, value_mae=0.852
-  Époque 10/10: loss=nan, policy_acc=0.095, value_mae=0.851
-
-  Itération 30 terminée
-  Total parties: 3000, Buffer: 34244
-
-============================================================
-ITERATION 31
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.09/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 907.9s (0.11 parties/s)
-  Terminé en 908.0s (0.11 parties/s)
-  Victoires: J0=43, J1=46, Nuls=11
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.097, value_mae=0.854
-  Époque 2/10: loss=nan, policy_acc=0.093, value_mae=0.853
-  Époque 3/10: loss=nan, policy_acc=0.093, value_mae=0.849
-  Époque 4/10: loss=nan, policy_acc=0.094, value_mae=0.853
-  Époque 5/10: loss=nan, policy_acc=0.094, value_mae=0.851
-  Époque 6/10: loss=nan, policy_acc=0.092, value_mae=0.850
-  Époque 7/10: loss=nan, policy_acc=0.093, value_mae=0.853
-  Époque 8/10: loss=nan, policy_acc=0.091, value_mae=0.853
-  Époque 9/10: loss=nan, policy_acc=0.092, value_mae=0.851
-  Époque 10/10: loss=nan, policy_acc=0.090, value_mae=0.854
-
-  Itération 31 terminée
-  Total parties: 3100, Buffer: 35363
-
-============================================================
-ITERATION 32
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 938.0s (0.11 parties/s)
-  Terminé en 938.1s (0.11 parties/s)
-  Victoires: J0=45, J1=40, Nuls=15
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.089, value_mae=0.848
-  Époque 2/10: loss=nan, policy_acc=0.087, value_mae=0.848
-  Époque 3/10: loss=nan, policy_acc=0.091, value_mae=0.853
-  Époque 4/10: loss=nan, policy_acc=0.092, value_mae=0.850
-  Époque 5/10: loss=nan, policy_acc=0.092, value_mae=0.849
-  Époque 6/10: loss=nan, policy_acc=0.091, value_mae=0.850
-  Époque 7/10: loss=nan, policy_acc=0.092, value_mae=0.849
-  Époque 8/10: loss=nan, policy_acc=0.091, value_mae=0.849
-  Époque 9/10: loss=nan, policy_acc=0.089, value_mae=0.846
-  Époque 10/10: loss=nan, policy_acc=0.089, value_mae=0.847
-
-  Itération 32 terminée
-  Total parties: 3200, Buffer: 36560
-
-============================================================
-ITERATION 33
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.09/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 931.5s (0.11 parties/s)
-  Terminé en 931.6s (0.11 parties/s)
-  Victoires: J0=49, J1=38, Nuls=13
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.092, value_mae=0.853
-  Époque 2/10: loss=nan, policy_acc=0.092, value_mae=0.850
-  Époque 3/10: loss=nan, policy_acc=0.090, value_mae=0.849
-  Époque 4/10: loss=nan, policy_acc=0.093, value_mae=0.852
-  Époque 5/10: loss=nan, policy_acc=0.090, value_mae=0.852
-  Époque 6/10: loss=nan, policy_acc=0.090, value_mae=0.852
-  Époque 7/10: loss=nan, policy_acc=0.094, value_mae=0.847
-  Époque 8/10: loss=nan, policy_acc=0.091, value_mae=0.853
-  Époque 9/10: loss=nan, policy_acc=0.092, value_mae=0.848
-  Époque 10/10: loss=nan, policy_acc=0.093, value_mae=0.847
-
-  Itération 33 terminée
-  Total parties: 3300, Buffer: 37693
-
-============================================================
-ITERATION 34
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.07/s)
-    Parties: 40/100 (0.09/s)
-    Parties: 60/100 (0.09/s)
-    Parties: 80/100 (0.09/s)
-    Parties: 100/100 (0.10/s)
-    Terminé en 1003.5s (0.10 parties/s)
-  Terminé en 1003.6s (0.10 parties/s)
-  Victoires: J0=55, J1=37, Nuls=8
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.089, value_mae=0.851
-  Époque 2/10: loss=nan, policy_acc=0.090, value_mae=0.850
-  Époque 3/10: loss=nan, policy_acc=0.093, value_mae=0.851
-  Époque 4/10: loss=nan, policy_acc=0.093, value_mae=0.854
-  Époque 5/10: loss=nan, policy_acc=0.090, value_mae=0.850
-  Époque 6/10: loss=nan, policy_acc=0.092, value_mae=0.849
-  Époque 7/10: loss=nan, policy_acc=0.091, value_mae=0.849
-  Époque 8/10: loss=nan, policy_acc=0.091, value_mae=0.852
-  Époque 9/10: loss=nan, policy_acc=0.093, value_mae=0.848
-  Époque 10/10: loss=nan, policy_acc=0.094, value_mae=0.852
-
-  Itération 34 terminée
-  Total parties: 3400, Buffer: 38854
-
-============================================================
-ITERATION 35
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 943.5s (0.11 parties/s)
-  Terminé en 943.6s (0.11 parties/s)
-  Victoires: J0=48, J1=43, Nuls=9
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.091, value_mae=0.851
-  Époque 2/10: loss=nan, policy_acc=0.093, value_mae=0.851
-  Époque 3/10: loss=nan, policy_acc=0.093, value_mae=0.850
-  Époque 4/10: loss=nan, policy_acc=0.091, value_mae=0.854
-  Époque 5/10: loss=nan, policy_acc=0.094, value_mae=0.853
-  Époque 6/10: loss=nan, policy_acc=0.091, value_mae=0.854
-  Époque 7/10: loss=nan, policy_acc=0.092, value_mae=0.852
-  Époque 8/10: loss=nan, policy_acc=0.091, value_mae=0.851
-  Époque 9/10: loss=nan, policy_acc=0.091, value_mae=0.850
-  Époque 10/10: loss=nan, policy_acc=0.091, value_mae=0.851
-
-  Itération 35 terminée
-  Total parties: 3500, Buffer: 40062
-
-============================================================
-ITERATION 36
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.09/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 934.6s (0.11 parties/s)
-  Terminé en 934.7s (0.11 parties/s)
-  Victoires: J0=44, J1=46, Nuls=10
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.092, value_mae=0.853
-  Époque 2/10: loss=nan, policy_acc=0.090, value_mae=0.856
-  Époque 3/10: loss=nan, policy_acc=0.092, value_mae=0.851
-  Époque 4/10: loss=nan, policy_acc=0.093, value_mae=0.851
-  Époque 5/10: loss=nan, policy_acc=0.090, value_mae=0.853
-  Époque 6/10: loss=nan, policy_acc=0.093, value_mae=0.852
-  Époque 7/10: loss=nan, policy_acc=0.094, value_mae=0.856
-  Époque 8/10: loss=nan, policy_acc=0.091, value_mae=0.853
-  Époque 9/10: loss=nan, policy_acc=0.090, value_mae=0.854
-  Époque 10/10: loss=nan, policy_acc=0.090, value_mae=0.856
-
-  Itération 36 terminée
-  Total parties: 3600, Buffer: 41230
-
-============================================================
-ITERATION 37
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.09/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 934.4s (0.11 parties/s)
-  Terminé en 934.5s (0.11 parties/s)
-  Victoires: J0=48, J1=43, Nuls=9
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.089, value_mae=0.854
-  Époque 2/10: loss=nan, policy_acc=0.092, value_mae=0.854
-  Époque 3/10: loss=nan, policy_acc=0.093, value_mae=0.853
-  Époque 4/10: loss=nan, policy_acc=0.089, value_mae=0.855
-  Époque 5/10: loss=nan, policy_acc=0.092, value_mae=0.856
-  Époque 6/10: loss=nan, policy_acc=0.092, value_mae=0.855
-  Époque 7/10: loss=nan, policy_acc=0.093, value_mae=0.855
-  Époque 8/10: loss=nan, policy_acc=0.094, value_mae=0.852
-  Époque 9/10: loss=nan, policy_acc=0.094, value_mae=0.853
-  Époque 10/10: loss=nan, policy_acc=0.090, value_mae=0.852
-
-  Itération 37 terminée
-  Total parties: 3700, Buffer: 42396
-
-============================================================
-ITERATION 38
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 924.3s (0.11 parties/s)
-  Terminé en 924.4s (0.11 parties/s)
-  Victoires: J0=37, J1=49, Nuls=14
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.093, value_mae=0.854
-  Époque 2/10: loss=nan, policy_acc=0.091, value_mae=0.849
-  Époque 3/10: loss=nan, policy_acc=0.093, value_mae=0.853
-  Époque 4/10: loss=nan, policy_acc=0.093, value_mae=0.853
-  Époque 5/10: loss=nan, policy_acc=0.092, value_mae=0.851
-  Époque 6/10: loss=nan, policy_acc=0.091, value_mae=0.850
-  Époque 7/10: loss=nan, policy_acc=0.093, value_mae=0.849
-  Époque 8/10: loss=nan, policy_acc=0.094, value_mae=0.852
-  Époque 9/10: loss=nan, policy_acc=0.093, value_mae=0.847
-  Époque 10/10: loss=nan, policy_acc=0.091, value_mae=0.851
-
-  Itération 38 terminée
-  Total parties: 3800, Buffer: 43543
-
-============================================================
-ITERATION 39
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 934.2s (0.11 parties/s)
-  Terminé en 934.3s (0.11 parties/s)
-  Victoires: J0=51, J1=44, Nuls=5
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.096, value_mae=0.856
-  Époque 2/10: loss=nan, policy_acc=0.091, value_mae=0.852
-  Époque 3/10: loss=nan, policy_acc=0.094, value_mae=0.855
-  Époque 4/10: loss=nan, policy_acc=0.093, value_mae=0.854
-  Époque 5/10: loss=nan, policy_acc=0.093, value_mae=0.849
-  Époque 6/10: loss=nan, policy_acc=0.092, value_mae=0.854
-  Époque 7/10: loss=nan, policy_acc=0.093, value_mae=0.855
-  Époque 8/10: loss=nan, policy_acc=0.092, value_mae=0.855
-  Époque 9/10: loss=nan, policy_acc=0.094, value_mae=0.856
-  Époque 10/10: loss=nan, policy_acc=0.095, value_mae=0.850
-
-  Itération 39 terminée
-  Total parties: 3900, Buffer: 44726
-
-============================================================
-ITERATION 40
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 917.6s (0.11 parties/s)
-  Terminé en 917.7s (0.11 parties/s)
-  Victoires: J0=43, J1=44, Nuls=13
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.094, value_mae=0.853
-  Époque 2/10: loss=nan, policy_acc=0.095, value_mae=0.855
-  Époque 3/10: loss=nan, policy_acc=0.094, value_mae=0.857
-  Époque 4/10: loss=nan, policy_acc=0.092, value_mae=0.854
-  Époque 5/10: loss=nan, policy_acc=0.093, value_mae=0.852
-  Époque 6/10: loss=nan, policy_acc=0.091, value_mae=0.855
-  Époque 7/10: loss=nan, policy_acc=0.092, value_mae=0.851
-  Époque 8/10: loss=nan, policy_acc=0.093, value_mae=0.853
-  Époque 9/10: loss=nan, policy_acc=0.093, value_mae=0.855
-  Époque 10/10: loss=nan, policy_acc=0.092, value_mae=0.854
-
-  Itération 40 terminée
-  Total parties: 4000, Buffer: 45895
-
-============================================================
-ITERATION 41
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 943.8s (0.11 parties/s)
-  Terminé en 943.9s (0.11 parties/s)
-  Victoires: J0=52, J1=40, Nuls=8
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.091, value_mae=0.856
-  Époque 2/10: loss=nan, policy_acc=0.094, value_mae=0.856
-  Époque 3/10: loss=nan, policy_acc=0.091, value_mae=0.856
-  Époque 4/10: loss=nan, policy_acc=0.093, value_mae=0.855
-  Époque 5/10: loss=nan, policy_acc=0.094, value_mae=0.853
-  Époque 6/10: loss=nan, policy_acc=0.092, value_mae=0.856
-  Époque 7/10: loss=nan, policy_acc=0.093, value_mae=0.856
-  Époque 8/10: loss=nan, policy_acc=0.092, value_mae=0.854
-  Époque 9/10: loss=nan, policy_acc=0.089, value_mae=0.854
-  Époque 10/10: loss=nan, policy_acc=0.093, value_mae=0.856
-
-  Itération 41 terminée
-  Total parties: 4100, Buffer: 47025
-
-============================================================
-ITERATION 42
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.07/s)
-    Parties: 40/100 (0.09/s)
-    Parties: 60/100 (0.09/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.10/s)
-    Terminé en 960.8s (0.10 parties/s)
-  Terminé en 960.9s (0.10 parties/s)
-  Victoires: J0=54, J1=34, Nuls=12
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.091, value_mae=0.856
-  Époque 2/10: loss=nan, policy_acc=0.093, value_mae=0.853
-  Époque 3/10: loss=nan, policy_acc=0.094, value_mae=0.856
-  Époque 4/10: loss=nan, policy_acc=0.093, value_mae=0.854
-  Époque 5/10: loss=nan, policy_acc=0.093, value_mae=0.853
-  Époque 6/10: loss=nan, policy_acc=0.091, value_mae=0.855
-  Époque 7/10: loss=nan, policy_acc=0.092, value_mae=0.856
-  Époque 8/10: loss=nan, policy_acc=0.091, value_mae=0.855
-  Époque 9/10: loss=nan, policy_acc=0.094, value_mae=0.855
-  Époque 10/10: loss=nan, policy_acc=0.092, value_mae=0.859
-
-  Itération 42 terminée
-  Total parties: 4200, Buffer: 48201
-
-============================================================
-ITERATION 43
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.09/s)
-    Parties: 60/100 (0.09/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.10/s)
-    Terminé en 983.8s (0.10 parties/s)
-  Terminé en 983.9s (0.10 parties/s)
-  Victoires: J0=53, J1=40, Nuls=7
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.094, value_mae=0.856
-  Époque 2/10: loss=nan, policy_acc=0.091, value_mae=0.857
-  Époque 3/10: loss=nan, policy_acc=0.092, value_mae=0.857
-  Époque 4/10: loss=nan, policy_acc=0.091, value_mae=0.856
-  Époque 5/10: loss=nan, policy_acc=0.090, value_mae=0.857
-  Époque 6/10: loss=nan, policy_acc=0.096, value_mae=0.856
-  Époque 7/10: loss=nan, policy_acc=0.091, value_mae=0.857
-  Époque 8/10: loss=nan, policy_acc=0.093, value_mae=0.853
-  Époque 9/10: loss=nan, policy_acc=0.091, value_mae=0.859
-  Époque 10/10: loss=nan, policy_acc=0.091, value_mae=0.856
-
-  Itération 43 terminée
-  Total parties: 4300, Buffer: 49340
-
-============================================================
-ITERATION 44
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.09/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 913.1s (0.11 parties/s)
-  Terminé en 913.2s (0.11 parties/s)
-  Victoires: J0=44, J1=49, Nuls=7
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.093, value_mae=0.860
-  Époque 2/10: loss=nan, policy_acc=0.090, value_mae=0.860
-  Époque 3/10: loss=nan, policy_acc=0.091, value_mae=0.856
-  Époque 4/10: loss=nan, policy_acc=0.092, value_mae=0.859
-  Époque 5/10: loss=nan, policy_acc=0.092, value_mae=0.857
-  Époque 6/10: loss=nan, policy_acc=0.091, value_mae=0.860
-  Époque 7/10: loss=nan, policy_acc=0.090, value_mae=0.858
-  Époque 8/10: loss=nan, policy_acc=0.092, value_mae=0.860
-  Époque 9/10: loss=nan, policy_acc=0.091, value_mae=0.860
-  Époque 10/10: loss=nan, policy_acc=0.093, value_mae=0.858
-
-  Itération 44 terminée
-  Total parties: 4400, Buffer: 50488
-
-============================================================
-ITERATION 45
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.11/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 891.9s (0.11 parties/s)
-  Terminé en 892.0s (0.11 parties/s)
-  Victoires: J0=44, J1=52, Nuls=4
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.089, value_mae=0.862
-  Époque 2/10: loss=nan, policy_acc=0.092, value_mae=0.860
-  Époque 3/10: loss=nan, policy_acc=0.092, value_mae=0.862
-  Époque 4/10: loss=nan, policy_acc=0.091, value_mae=0.861
-  Époque 5/10: loss=nan, policy_acc=0.089, value_mae=0.862
-  Époque 6/10: loss=nan, policy_acc=0.090, value_mae=0.861
-  Époque 7/10: loss=nan, policy_acc=0.089, value_mae=0.863
-  Époque 8/10: loss=nan, policy_acc=0.089, value_mae=0.864
-  Époque 9/10: loss=nan, policy_acc=0.090, value_mae=0.861
-  Époque 10/10: loss=nan, policy_acc=0.090, value_mae=0.865
-
-  Itération 45 terminée
-  Total parties: 4500, Buffer: 51556
-
-============================================================
-ITERATION 46
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 924.4s (0.11 parties/s)
-  Terminé en 924.5s (0.11 parties/s)
-  Victoires: J0=50, J1=39, Nuls=11
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.089, value_mae=0.859
-  Époque 2/10: loss=nan, policy_acc=0.091, value_mae=0.865
-  Époque 3/10: loss=nan, policy_acc=0.092, value_mae=0.864
-  Époque 4/10: loss=nan, policy_acc=0.090, value_mae=0.861
-  Époque 5/10: loss=nan, policy_acc=0.091, value_mae=0.861
-  Époque 6/10: loss=nan, policy_acc=0.092, value_mae=0.862
-  Époque 7/10: loss=nan, policy_acc=0.088, value_mae=0.861
-  Époque 8/10: loss=nan, policy_acc=0.089, value_mae=0.864
-  Époque 9/10: loss=nan, policy_acc=0.089, value_mae=0.864
-  Époque 10/10: loss=nan, policy_acc=0.092, value_mae=0.864
-
-  Itération 46 terminée
-  Total parties: 4600, Buffer: 52682
-
-============================================================
-ITERATION 47
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 912.7s (0.11 parties/s)
-  Terminé en 912.8s (0.11 parties/s)
-  Victoires: J0=47, J1=39, Nuls=14
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.089, value_mae=0.862
-  Époque 2/10: loss=nan, policy_acc=0.091, value_mae=0.863
-  Époque 3/10: loss=nan, policy_acc=0.092, value_mae=0.863
-  Époque 4/10: loss=nan, policy_acc=0.091, value_mae=0.864
-  Époque 5/10: loss=nan, policy_acc=0.091, value_mae=0.862
-  Époque 6/10: loss=nan, policy_acc=0.092, value_mae=0.862
-  Époque 7/10: loss=nan, policy_acc=0.090, value_mae=0.864
-  Époque 8/10: loss=nan, policy_acc=0.090, value_mae=0.865
-  Époque 9/10: loss=nan, policy_acc=0.089, value_mae=0.865
-  Époque 10/10: loss=nan, policy_acc=0.093, value_mae=0.862
-
-  Itération 47 terminée
-  Total parties: 4700, Buffer: 53821
-
 ============================================================
-ITERATION 48
+ENTRAÎNEMENT ALPHAZERO - QUARTO
+============================================================
+Démarrage: Monday 12 January 2026 02:34:40
+Device: cuda
+Itérations: 100
+Parties/itération: 200
+Workers: 12
+Simulations MCTS: 100
+Buffer size: 50,000
+Epochs/itération: 4
+LR scheduler: Cosine Warm Restarts (T_0=25, 4 cycles)
+  LR: 0.000300 → 0.000030
+Early stopping: patience=2 cycles (50 iters)
+============================================================
+
+
+--- Itération 1 ---
+  Début: Monday 12 January 2026 02:34:40
+  Self-play: 200 parties (12 workers)...
+    200 parties en 256.8s (0.78 p/s)
+    Résultats: P0=104, P1=86, Nuls=10
+  Training: 4 epochs...
+  Loss: 5.6605 (LR: 0.000299)
+  ★ Nouveau meilleur modèle! (loss: 5.6605)
+  Fin: Monday 12 January 2026 02:38:57
+  Durée itération: 4m 17s
+  Temps cumulé: 4m 17s
+
+--- Itération 2 ---
+  Début: Monday 12 January 2026 02:38:57
+  Self-play: 200 parties (12 workers)...
+    200 parties en 272.8s (0.73 p/s)
+    Résultats: P0=105, P1=88, Nuls=7
+  Training: 4 epochs...
+  Loss: 5.3003 (LR: 0.000296)
+  ★ Nouveau meilleur modèle! (loss: 5.3003)
+  Fin: Monday 12 January 2026 02:43:31
+  Durée itération: 4m 33s
+  Temps cumulé: 8m 51s
+
+--- Itération 3 ---
+  Début: Monday 12 January 2026 02:43:31
+  Self-play: 200 parties (12 workers)...
+    200 parties en 283.4s (0.71 p/s)
+    Résultats: P0=105, P1=77, Nuls=18
+  Training: 4 epochs...
+  Loss: 5.0830 (LR: 0.000291)
+  ★ Nouveau meilleur modèle! (loss: 5.0830)
+  Fin: Monday 12 January 2026 02:48:16
+  Durée itération: 4m 44s
+  Temps cumulé: 13m 36s
+
+--- Itération 4 ---
+  Début: Monday 12 January 2026 02:48:16
+  Self-play: 200 parties (12 workers)...
+    200 parties en 272.3s (0.73 p/s)
+    Résultats: P0=94, P1=89, Nuls=17
+  Training: 4 epochs...
+  Loss: 4.8940 (LR: 0.000283)
+  ★ Nouveau meilleur modèle! (loss: 4.8940)
+  Fin: Monday 12 January 2026 02:52:50
+  Durée itération: 4m 34s
+  Temps cumulé: 18m 10s
+
+--- Itération 5 ---
+  Début: Monday 12 January 2026 02:52:50
+  Self-play: 200 parties (12 workers)...
+    200 parties en 277.8s (0.72 p/s)
+    Résultats: P0=88, P1=94, Nuls=18
+  Training: 4 epochs...
+  Loss: 4.7200 (LR: 0.000274)
+  ★ Nouveau meilleur modèle! (loss: 4.7200)
+  Fin: Monday 12 January 2026 02:57:30
+  Durée itération: 4m 40s
+  Temps cumulé: 22m 50s
+
+--- Itération 6 ---
+  Début: Monday 12 January 2026 02:57:31
+  Self-play: 200 parties (12 workers)...
+    200 parties en 270.4s (0.74 p/s)
+    Résultats: P0=98, P1=91, Nuls=11
+  Training: 4 epochs...
+  Loss: 4.6230 (LR: 0.000263)
+  ★ Nouveau meilleur modèle! (loss: 4.6230)
+  Fin: Monday 12 January 2026 03:02:04
+  Durée itération: 4m 33s
+  Temps cumulé: 27m 23s
+
+--- Itération 7 ---
+  Début: Monday 12 January 2026 03:02:04
+  Self-play: 200 parties (12 workers)...
+    200 parties en 262.8s (0.76 p/s)
+    Résultats: P0=103, P1=88, Nuls=9
+  Training: 4 epochs...
+  Loss: 4.5132 (LR: 0.000251)
+  ★ Nouveau meilleur modèle! (loss: 4.5132)
+  Fin: Monday 12 January 2026 03:06:30
+  Durée itération: 4m 26s
+  Temps cumulé: 31m 50s
+
+--- Itération 8 ---
+  Début: Monday 12 January 2026 03:06:30
+  Self-play: 200 parties (12 workers)...
+    200 parties en 264.0s (0.76 p/s)
+    Résultats: P0=98, P1=82, Nuls=20
+  Training: 4 epochs...
+  Loss: 4.4405 (LR: 0.000237)
+  ★ Nouveau meilleur modèle! (loss: 4.4405)
+  Fin: Monday 12 January 2026 03:10:58
+  Durée itération: 4m 28s
+  Temps cumulé: 36m 18s
+
+--- Itération 9 ---
+  Début: Monday 12 January 2026 03:10:58
+  Self-play: 200 parties (12 workers)...
+    200 parties en 262.9s (0.76 p/s)
+    Résultats: P0=99, P1=84, Nuls=17
+  Training: 4 epochs...
+  Loss: 4.3835 (LR: 0.000222)
+  ★ Nouveau meilleur modèle! (loss: 4.3835)
+  Fin: Monday 12 January 2026 03:15:26
+  Durée itération: 4m 27s
+  Temps cumulé: 40m 45s
+
+--- Itération 10 ---
+  Début: Monday 12 January 2026 03:15:26
+  Self-play: 200 parties (12 workers)...
+    200 parties en 264.9s (0.76 p/s)
+    Résultats: P0=94, P1=93, Nuls=13
+  Training: 4 epochs...
+  Loss: 4.3343 (LR: 0.000207)
+  ★ Nouveau meilleur modèle! (loss: 4.3343)
+  Fin: Monday 12 January 2026 03:19:56
+  Durée itération: 4m 30s
+  Temps cumulé: 45m 15s
+
+--- Itération 11 ---
+  Début: Monday 12 January 2026 03:19:56
+  Self-play: 200 parties (12 workers)...
+    200 parties en 257.6s (0.78 p/s)
+    Résultats: P0=100, P1=92, Nuls=8
+  Training: 4 epochs...
+  Loss: 4.2825 (LR: 0.000190)
+  ★ Nouveau meilleur modèle! (loss: 4.2825)
+  Fin: Monday 12 January 2026 03:24:19
+  Durée itération: 4m 22s
+  Temps cumulé: 49m 38s
+
+--- Itération 12 ---
+  Début: Monday 12 January 2026 03:24:19
+  Self-play: 200 parties (12 workers)...
+    200 parties en 261.5s (0.76 p/s)
+    Résultats: P0=104, P1=81, Nuls=15
+  Training: 4 epochs...
+  Loss: 4.2371 (LR: 0.000173)
+  ★ Nouveau meilleur modèle! (loss: 4.2371)
+  Fin: Monday 12 January 2026 03:28:46
+  Durée itération: 4m 27s
+  Temps cumulé: 54m 06s
+
+--- Itération 13 ---
+  Début: Monday 12 January 2026 03:28:46
+  Self-play: 200 parties (12 workers)...
+    200 parties en 270.0s (0.74 p/s)
+    Résultats: P0=94, P1=94, Nuls=12
+  Training: 4 epochs...
+  Loss: 4.2016 (LR: 0.000157)
+  ★ Nouveau meilleur modèle! (loss: 4.2016)
+  Fin: Monday 12 January 2026 03:33:23
+  Durée itération: 4m 36s
+  Temps cumulé: 58m 43s
+
+--- Itération 14 ---
+  Début: Monday 12 January 2026 03:33:23
+  Self-play: 200 parties (12 workers)...
+    200 parties en 257.8s (0.78 p/s)
+    Résultats: P0=103, P1=84, Nuls=13
+  Training: 4 epochs...
+  Loss: 4.1579 (LR: 0.000140)
+  ★ Nouveau meilleur modèle! (loss: 4.1579)
+  Fin: Monday 12 January 2026 03:37:48
+  Durée itération: 4m 25s
+  Temps cumulé: 1h 03m 08s
+
+--- Itération 15 ---
+  Début: Monday 12 January 2026 03:37:48
+  Self-play: 200 parties (12 workers)...
+    200 parties en 266.2s (0.75 p/s)
+    Résultats: P0=107, P1=83, Nuls=10
+  Training: 4 epochs...
+  Loss: 4.1146 (LR: 0.000123)
+  ★ Nouveau meilleur modèle! (loss: 4.1146)
+  Fin: Monday 12 January 2026 03:42:23
+  Durée itération: 4m 34s
+  Temps cumulé: 1h 07m 42s
+
+--- Itération 16 ---
+  Début: Monday 12 January 2026 03:42:23
+  Self-play: 200 parties (12 workers)...
+    200 parties en 266.2s (0.75 p/s)
+    Résultats: P0=95, P1=89, Nuls=16
+  Training: 4 epochs...
+  Loss: 4.0950 (LR: 0.000108)
+  ★ Nouveau meilleur modèle! (loss: 4.0950)
+  Fin: Monday 12 January 2026 03:46:58
+  Durée itération: 4m 34s
+  Temps cumulé: 1h 12m 17s
+
+--- Itération 17 ---
+  Début: Monday 12 January 2026 03:46:58
+  Self-play: 200 parties (12 workers)...
+    200 parties en 260.0s (0.77 p/s)
+    Résultats: P0=105, P1=82, Nuls=13
+  Training: 4 epochs...
+  Loss: 4.0653 (LR: 0.000093)
+  ★ Nouveau meilleur modèle! (loss: 4.0653)
+  Fin: Monday 12 January 2026 03:51:27
+  Durée itération: 4m 28s
+  Temps cumulé: 1h 16m 46s
+
+--- Itération 18 ---
+  Début: Monday 12 January 2026 03:51:27
+  Self-play: 200 parties (12 workers)...
+    200 parties en 264.5s (0.76 p/s)
+    Résultats: P0=98, P1=84, Nuls=18
+  Training: 4 epochs...
+  Loss: 4.0277 (LR: 0.000079)
+  ★ Nouveau meilleur modèle! (loss: 4.0277)
+  Fin: Monday 12 January 2026 03:56:01
+  Durée itération: 4m 33s
+  Temps cumulé: 1h 21m 20s
+
+--- Itération 19 ---
+  Début: Monday 12 January 2026 03:56:01
+  Self-play: 200 parties (12 workers)...
+    200 parties en 261.9s (0.76 p/s)
+    Résultats: P0=96, P1=92, Nuls=12
+  Training: 4 epochs...
+  Loss: 4.0149 (LR: 0.000067)
+  ★ Nouveau meilleur modèle! (loss: 4.0149)
+  Fin: Monday 12 January 2026 04:00:33
+  Durée itération: 4m 31s
+  Temps cumulé: 1h 25m 52s
+
+--- Itération 20 ---
+  Début: Monday 12 January 2026 04:00:33
+  Self-play: 200 parties (12 workers)...
+    200 parties en 270.0s (0.74 p/s)
+    Résultats: P0=93, P1=84, Nuls=23
+  Training: 4 epochs...
+  Loss: 3.9976 (LR: 0.000056)
+  ★ Nouveau meilleur modèle! (loss: 3.9976)
+  Fin: Monday 12 January 2026 04:05:12
+  Durée itération: 4m 39s
+  Temps cumulé: 1h 30m 32s
+
+--- Itération 21 ---
+  Début: Monday 12 January 2026 04:05:12
+  Self-play: 200 parties (12 workers)...
+    200 parties en 261.1s (0.77 p/s)
+    Résultats: P0=95, P1=96, Nuls=9
+  Training: 4 epochs...
+  Loss: 3.9779 (LR: 0.000047)
+  ★ Nouveau meilleur modèle! (loss: 3.9779)
+  Fin: Monday 12 January 2026 04:09:44
+  Durée itération: 4m 31s
+  Temps cumulé: 1h 35m 04s
+
+--- Itération 22 ---
+  Début: Monday 12 January 2026 04:09:44
+  Self-play: 200 parties (12 workers)...
+    200 parties en 261.1s (0.77 p/s)
+    Résultats: P0=102, P1=90, Nuls=8
+  Training: 4 epochs...
+  Loss: 3.9802 (LR: 0.000039)
+  Fin: Monday 12 January 2026 04:14:17
+  Durée itération: 4m 32s
+  Temps cumulé: 1h 39m 37s
+
+--- Itération 23 ---
+  Début: Monday 12 January 2026 04:14:17
+  Self-play: 200 parties (12 workers)...
+    200 parties en 259.7s (0.77 p/s)
+    Résultats: P0=91, P1=94, Nuls=15
+  Training: 4 epochs...
+  Loss: 3.9895 (LR: 0.000034)
+  Fin: Monday 12 January 2026 04:18:48
+  Durée itération: 4m 30s
+  Temps cumulé: 1h 44m 07s
+
+--- Itération 24 ---
+  Début: Monday 12 January 2026 04:18:48
+  Self-play: 200 parties (12 workers)...
+    200 parties en 267.3s (0.75 p/s)
+    Résultats: P0=91, P1=101, Nuls=8
+  Training: 4 epochs...
+  Loss: 4.0183 (LR: 0.000031)
+  Fin: Monday 12 January 2026 04:23:27
+  Durée itération: 4m 39s
+  Temps cumulé: 1h 48m 47s
+
+--- Itération 25 ---
+  Début: Monday 12 January 2026 04:23:27
+  Self-play: 200 parties (12 workers)...
+    200 parties en 259.5s (0.77 p/s)
+    Résultats: P0=96, P1=91, Nuls=13
+  Training: 4 epochs...
+  Loss: 4.0419 (LR: 0.000300)
+  Fin: Monday 12 January 2026 04:28:00
+  Durée itération: 4m 32s
+  Temps cumulé: 1h 53m 19s
+
+--- Itération 26 ---
+  Début: Monday 12 January 2026 04:28:00
+  Self-play: 200 parties (12 workers)...
+    200 parties en 258.3s (0.77 p/s)
+    Résultats: P0=97, P1=95, Nuls=8
+  Training: 4 epochs...
+  Loss: 5.0520 (LR: 0.000299)
+  Fin: Monday 12 January 2026 04:32:31
+  Durée itération: 4m 31s
+  Temps cumulé: 1h 57m 50s
+
+--- Itération 27 ---
+  Début: Monday 12 January 2026 04:32:31
+  Self-play: 200 parties (12 workers)...
+    200 parties en 264.9s (0.75 p/s)
+    Résultats: P0=103, P1=81, Nuls=16
+  Training: 4 epochs...
+  Loss: 4.9627 (LR: 0.000296)
+  Fin: Monday 12 January 2026 04:37:08
+  Durée itération: 4m 36s
+  Temps cumulé: 2h 02m 27s
+
+--- Itération 28 ---
+  Début: Monday 12 January 2026 04:37:08
+  Self-play: 200 parties (12 workers)...
+    200 parties en 268.8s (0.74 p/s)
+    Résultats: P0=93, P1=94, Nuls=13
+  Training: 4 epochs...
+  Loss: 4.8371 (LR: 0.000291)
+  Fin: Monday 12 January 2026 04:41:49
+  Durée itération: 4m 41s
+  Temps cumulé: 2h 07m 08s
+
+--- Itération 29 ---
+  Début: Monday 12 January 2026 04:41:49
+  Self-play: 200 parties (12 workers)...
+    200 parties en 257.5s (0.78 p/s)
+    Résultats: P0=101, P1=84, Nuls=15
+  Training: 4 epochs...
+  Loss: 4.7252 (LR: 0.000283)
+  Fin: Monday 12 January 2026 04:46:19
+  Durée itération: 4m 30s
+  Temps cumulé: 2h 11m 38s
+
+--- Itération 30 ---
+  Début: Monday 12 January 2026 04:46:19
+  Self-play: 200 parties (12 workers)...
+    200 parties en 270.5s (0.74 p/s)
+    Résultats: P0=95, P1=93, Nuls=12
+  Training: 4 epochs...
+  Loss: 4.6369 (LR: 0.000274)
+  Fin: Monday 12 January 2026 04:51:02
+  Durée itération: 4m 43s
+  Temps cumulé: 2h 16m 21s
+
+--- Itération 31 ---
+  Début: Monday 12 January 2026 04:51:02
+  Self-play: 200 parties (12 workers)...
+    200 parties en 257.9s (0.78 p/s)
+    Résultats: P0=91, P1=93, Nuls=16
+  Training: 4 epochs...
+  Loss: 4.5667 (LR: 0.000263)
+  Fin: Monday 12 January 2026 04:55:31
+  Durée itération: 4m 29s
+  Temps cumulé: 2h 20m 51s
+
+--- Itération 32 ---
+  Début: Monday 12 January 2026 04:55:31
+  Self-play: 200 parties (12 workers)...
+    200 parties en 267.8s (0.75 p/s)
+    Résultats: P0=103, P1=88, Nuls=9
+  Training: 4 epochs...
+  Loss: 4.4920 (LR: 0.000251)
+  Fin: Monday 12 January 2026 05:00:11
+  Durée itération: 4m 39s
+  Temps cumulé: 2h 25m 30s
+
+--- Itération 33 ---
+  Début: Monday 12 January 2026 05:00:11
+  Self-play: 200 parties (12 workers)...
+    200 parties en 264.6s (0.76 p/s)
+    Résultats: P0=88, P1=98, Nuls=14
+  Training: 4 epochs...
+  Loss: 4.4387 (LR: 0.000237)
+  Fin: Monday 12 January 2026 05:04:48
+  Durée itération: 4m 37s
+  Temps cumulé: 2h 30m 07s
+
+--- Itération 34 ---
+  Début: Monday 12 January 2026 05:04:48
+  Self-play: 200 parties (12 workers)...
+    200 parties en 264.4s (0.76 p/s)
+    Résultats: P0=86, P1=103, Nuls=11
+  Training: 4 epochs...
+  Loss: 4.3708 (LR: 0.000222)
+  Fin: Monday 12 January 2026 05:09:24
+  Durée itération: 4m 35s
+  Temps cumulé: 2h 34m 43s
+
+--- Itération 35 ---
+  Début: Monday 12 January 2026 05:09:24
+  Self-play: 200 parties (12 workers)...
+    200 parties en 268.4s (0.75 p/s)
+    Résultats: P0=92, P1=94, Nuls=14
+  Training: 4 epochs...
+  Loss: 4.3046 (LR: 0.000207)
+  Fin: Monday 12 January 2026 05:14:04
+  Durée itération: 4m 40s
+  Temps cumulé: 2h 39m 24s
+
+--- Itération 36 ---
+  Début: Monday 12 January 2026 05:14:04
+  Self-play: 200 parties (12 workers)...
+    200 parties en 267.9s (0.75 p/s)
+    Résultats: P0=108, P1=76, Nuls=16
+  Training: 4 epochs...
+  Loss: 4.2580 (LR: 0.000190)
+  Fin: Monday 12 January 2026 05:18:45
+  Durée itération: 4m 40s
+  Temps cumulé: 2h 44m 04s
+
+--- Itération 37 ---
+  Début: Monday 12 January 2026 05:18:45
+  Self-play: 200 parties (12 workers)...
+    200 parties en 264.7s (0.76 p/s)
+    Résultats: P0=92, P1=95, Nuls=13
+  Training: 4 epochs...
+  Loss: 4.1926 (LR: 0.000173)
+  Fin: Monday 12 January 2026 05:23:22
+  Durée itération: 4m 37s
+  Temps cumulé: 2h 48m 42s
+
+--- Itération 38 ---
+  Début: Monday 12 January 2026 05:23:23
+  Self-play: 200 parties (12 workers)...
+    200 parties en 263.6s (0.76 p/s)
+    Résultats: P0=76, P1=113, Nuls=11
+  Training: 4 epochs...
+  Loss: 4.1508 (LR: 0.000157)
+  Fin: Monday 12 January 2026 05:27:59
+  Durée itération: 4m 36s
+  Temps cumulé: 2h 53m 18s
+
+--- Itération 39 ---
+  Début: Monday 12 January 2026 05:27:59
+  Self-play: 200 parties (12 workers)...
+    200 parties en 275.1s (0.73 p/s)
+    Résultats: P0=87, P1=91, Nuls=22
+  Training: 4 epochs...
+  Loss: 4.0962 (LR: 0.000140)
+  Fin: Monday 12 January 2026 05:32:46
+  Durée itération: 4m 46s
+  Temps cumulé: 2h 58m 05s
+
+--- Itération 40 ---
+  Début: Monday 12 January 2026 05:32:46
+  Self-play: 200 parties (12 workers)...
+    200 parties en 265.4s (0.75 p/s)
+    Résultats: P0=90, P1=91, Nuls=19
+  Training: 4 epochs...
+  Loss: 4.0470 (LR: 0.000123)
+  Fin: Monday 12 January 2026 05:37:23
+  Durée itération: 4m 37s
+  Temps cumulé: 3h 02m 43s
+
+--- Itération 41 ---
+  Début: Monday 12 January 2026 05:37:23
+  Self-play: 200 parties (12 workers)...
+    200 parties en 262.7s (0.76 p/s)
+    Résultats: P0=96, P1=93, Nuls=11
+  Training: 4 epochs...
+  Loss: 3.9917 (LR: 0.000108)
+  Fin: Monday 12 January 2026 05:41:59
+  Durée itération: 4m 35s
+  Temps cumulé: 3h 07m 18s
+
+--- Itération 42 ---
+  Début: Monday 12 January 2026 05:41:59
+  Self-play: 200 parties (12 workers)...
+    200 parties en 255.4s (0.78 p/s)
+    Résultats: P0=101, P1=89, Nuls=10
+  Training: 4 epochs...
+  Loss: 3.9621 (LR: 0.000093)
+  ★ Nouveau meilleur modèle! (loss: 3.9621)
+  Fin: Monday 12 January 2026 05:46:26
+  Durée itération: 4m 26s
+  Temps cumulé: 3h 11m 45s
+
+--- Itération 43 ---
+  Début: Monday 12 January 2026 05:46:26
+  Self-play: 200 parties (12 workers)...
+    200 parties en 267.8s (0.75 p/s)
+    Résultats: P0=91, P1=99, Nuls=10
+  Training: 4 epochs...
+  Loss: 3.9197 (LR: 0.000079)
+  ★ Nouveau meilleur modèle! (loss: 3.9197)
+  Fin: Monday 12 January 2026 05:51:05
+  Durée itération: 4m 39s
+  Temps cumulé: 3h 16m 24s
+
+--- Itération 44 ---
+  Début: Monday 12 January 2026 05:51:05
+  Self-play: 200 parties (12 workers)...
+    200 parties en 268.0s (0.75 p/s)
+    Résultats: P0=115, P1=74, Nuls=11
+  Training: 4 epochs...
+  Loss: 3.8875 (LR: 0.000067)
+  ★ Nouveau meilleur modèle! (loss: 3.8875)
+  Fin: Monday 12 January 2026 05:55:47
+  Durée itération: 4m 41s
+  Temps cumulé: 3h 21m 06s
+
+--- Itération 45 ---
+  Début: Monday 12 January 2026 05:55:47
+  Self-play: 200 parties (12 workers)...
+    200 parties en 297.8s (0.67 p/s)
+    Résultats: P0=86, P1=96, Nuls=18
+  Training: 4 epochs...
+  Loss: 3.8557 (LR: 0.000056)
+  ★ Nouveau meilleur modèle! (loss: 3.8557)
+  Fin: Monday 12 January 2026 06:00:56
+  Durée itération: 5m 09s
+  Temps cumulé: 3h 26m 15s
+
+--- Itération 46 ---
+  Début: Monday 12 January 2026 06:00:56
+  Self-play: 200 parties (12 workers)...
+    200 parties en 255.9s (0.78 p/s)
+    Résultats: P0=91, P1=96, Nuls=13
+  Training: 4 epochs...
+  Loss: 3.8488 (LR: 0.000047)
+  ★ Nouveau meilleur modèle! (loss: 3.8488)
+  Fin: Monday 12 January 2026 06:05:25
+  Durée itération: 4m 28s
+  Temps cumulé: 3h 30m 44s
+
+--- Itération 47 ---
+  Début: Monday 12 January 2026 06:05:25
+  Self-play: 200 parties (12 workers)...
+    200 parties en 269.5s (0.74 p/s)
+    Résultats: P0=101, P1=88, Nuls=11
+  Training: 4 epochs...
+  Loss: 3.8380 (LR: 0.000039)
+  ★ Nouveau meilleur modèle! (loss: 3.8380)
+  Fin: Monday 12 January 2026 06:10:07
+  Durée itération: 4m 42s
+  Temps cumulé: 3h 35m 26s
+
+--- Itération 48 ---
+  Début: Monday 12 January 2026 06:10:07
+  Self-play: 200 parties (12 workers)...
+    200 parties en 261.7s (0.76 p/s)
+    Résultats: P0=88, P1=100, Nuls=12
+  Training: 4 epochs...
+  Loss: 3.8421 (LR: 0.000034)
+  Fin: Monday 12 January 2026 06:14:42
+  Durée itération: 4m 34s
+  Temps cumulé: 3h 40m 01s
+
+--- Itération 49 ---
+  Début: Monday 12 January 2026 06:14:42
+  Self-play: 200 parties (12 workers)...
+    200 parties en 263.8s (0.76 p/s)
+    Résultats: P0=107, P1=77, Nuls=16
+  Training: 4 epochs...
+  Loss: 3.8507 (LR: 0.000031)
+  Fin: Monday 12 January 2026 06:19:19
+  Durée itération: 4m 36s
+  Temps cumulé: 3h 44m 38s
+
+--- Itération 50 ---
+  Début: Monday 12 January 2026 06:19:19
+  Self-play: 200 parties (12 workers)...
+    200 parties en 266.2s (0.75 p/s)
+    Résultats: P0=99, P1=87, Nuls=14
+  Training: 4 epochs...
+  Loss: 3.8551 (LR: 0.000300)
+  Fin: Monday 12 January 2026 06:23:57
+  Durée itération: 4m 38s
+  Temps cumulé: 3h 49m 16s
+
+--- Itération 51 ---
+  Début: Monday 12 January 2026 06:23:57
+  Self-play: 200 parties (12 workers)...
+    200 parties en 260.7s (0.77 p/s)
+    Résultats: P0=98, P1=87, Nuls=15
+  Training: 4 epochs...
+  Loss: 4.8464 (LR: 0.000299)
+  Fin: Monday 12 January 2026 06:28:30
+  Durée itération: 4m 32s
+  Temps cumulé: 3h 53m 49s
+
+--- Itération 52 ---
+  Début: Monday 12 January 2026 06:28:30
+  Self-play: 200 parties (12 workers)...
+    200 parties en 261.0s (0.77 p/s)
+    Résultats: P0=91, P1=96, Nuls=13
+  Training: 4 epochs...
+  Loss: 4.7626 (LR: 0.000296)
+  Fin: Monday 12 January 2026 06:33:04
+  Durée itération: 4m 33s
+  Temps cumulé: 3h 58m 23s
+
+--- Itération 53 ---
+  Début: Monday 12 January 2026 06:33:04
+  Self-play: 200 parties (12 workers)...
+    200 parties en 274.4s (0.73 p/s)
+    Résultats: P0=94, P1=87, Nuls=19
+  Training: 4 epochs...
+  Loss: 4.6453 (LR: 0.000291)
+  Fin: Monday 12 January 2026 06:37:51
+  Durée itération: 4m 46s
+  Temps cumulé: 4h 03m 10s
+
+--- Itération 54 ---
+  Début: Monday 12 January 2026 06:37:51
+  Self-play: 200 parties (12 workers)...
+    200 parties en 297.9s (0.67 p/s)
+    Résultats: P0=101, P1=89, Nuls=10
+  Training: 4 epochs...
+  Loss: 4.5621 (LR: 0.000283)
+  Fin: Monday 12 January 2026 06:43:01
+  Durée itération: 5m 09s
+  Temps cumulé: 4h 08m 19s
+
+--- Itération 55 ---
+  Début: Monday 12 January 2026 06:43:01
+  Self-play: 200 parties (12 workers)...
+    200 parties en 274.1s (0.73 p/s)
+    Résultats: P0=88, P1=95, Nuls=17
+  Training: 4 epochs...
+  Loss: 4.4786 (LR: 0.000274)
+  Fin: Monday 12 January 2026 06:47:47
+  Durée itération: 4m 46s
+  Temps cumulé: 4h 13m 06s
+
+--- Itération 56 ---
+  Début: Monday 12 January 2026 06:47:47
+  Self-play: 200 parties (12 workers)...
+    200 parties en 272.3s (0.73 p/s)
+    Résultats: P0=93, P1=96, Nuls=11
+  Training: 4 epochs...
+  Loss: 4.4234 (LR: 0.000263)
+  Fin: Monday 12 January 2026 06:52:32
+  Durée itération: 4m 45s
+  Temps cumulé: 4h 17m 51s
+
+--- Itération 57 ---
+  Début: Monday 12 January 2026 06:52:32
+  Self-play: 200 parties (12 workers)...
+    200 parties en 265.4s (0.75 p/s)
+    Résultats: P0=100, P1=85, Nuls=15
+  Training: 4 epochs...
+  Loss: 4.3547 (LR: 0.000251)
+  Fin: Monday 12 January 2026 06:57:11
+  Durée itération: 4m 38s
+  Temps cumulé: 4h 22m 30s
+
+--- Itération 58 ---
+  Début: Monday 12 January 2026 06:57:11
+  Self-play: 200 parties (12 workers)...
+    200 parties en 270.8s (0.74 p/s)
+    Résultats: P0=102, P1=86, Nuls=12
+  Training: 4 epochs...
+  Loss: 4.3006 (LR: 0.000237)
+  Fin: Monday 12 January 2026 07:01:54
+  Durée itération: 4m 43s
+  Temps cumulé: 4h 27m 13s
+
+--- Itération 59 ---
+  Début: Monday 12 January 2026 07:01:54
+  Self-play: 200 parties (12 workers)...
+    200 parties en 269.2s (0.74 p/s)
+    Résultats: P0=94, P1=89, Nuls=17
+  Training: 4 epochs...
+  Loss: 4.2458 (LR: 0.000222)
+  Fin: Monday 12 January 2026 07:06:36
+  Durée itération: 4m 41s
+  Temps cumulé: 4h 31m 55s
+
+--- Itération 60 ---
+  Début: Monday 12 January 2026 07:06:36
+  Self-play: 200 parties (12 workers)...
+    200 parties en 275.8s (0.73 p/s)
+    Résultats: P0=93, P1=94, Nuls=13
+  Training: 4 epochs...
+  Loss: 4.1922 (LR: 0.000207)
+  Fin: Monday 12 January 2026 07:11:24
+  Durée itération: 4m 48s
+  Temps cumulé: 4h 36m 43s
+
+--- Itération 61 ---
+  Début: Monday 12 January 2026 07:11:24
+  Self-play: 200 parties (12 workers)...
+    200 parties en 281.0s (0.71 p/s)
+    Résultats: P0=88, P1=94, Nuls=18
+  Training: 4 epochs...
+  Loss: 4.1445 (LR: 0.000190)
+  Fin: Monday 12 January 2026 07:16:19
+  Durée itération: 4m 54s
+  Temps cumulé: 4h 41m 38s
+
+--- Itération 62 ---
+  Début: Monday 12 January 2026 07:16:19
+  Self-play: 200 parties (12 workers)...
+    200 parties en 279.4s (0.72 p/s)
+    Résultats: P0=90, P1=91, Nuls=19
+  Training: 4 epochs...
+  Loss: 4.0955 (LR: 0.000173)
+  Fin: Monday 12 January 2026 07:21:13
+  Durée itération: 4m 54s
+  Temps cumulé: 4h 46m 32s
+
+--- Itération 63 ---
+  Début: Monday 12 January 2026 07:21:13
+  Self-play: 200 parties (12 workers)...
+    200 parties en 282.4s (0.71 p/s)
+    Résultats: P0=99, P1=85, Nuls=16
+  Training: 4 epochs...
+  Loss: 4.0490 (LR: 0.000157)
+  Fin: Monday 12 January 2026 07:26:09
+  Durée itération: 4m 56s
+  Temps cumulé: 4h 51m 28s
+
+--- Itération 64 ---
+  Début: Monday 12 January 2026 07:26:09
+  Self-play: 200 parties (12 workers)...
+    200 parties en 266.5s (0.75 p/s)
+    Résultats: P0=87, P1=99, Nuls=14
+  Training: 4 epochs...
+  Loss: 4.0088 (LR: 0.000140)
+  Fin: Monday 12 January 2026 07:30:48
+  Durée itération: 4m 38s
+  Temps cumulé: 4h 56m 07s
+
+--- Itération 65 ---
+  Début: Monday 12 January 2026 07:30:48
+  Self-play: 200 parties (12 workers)...
+    200 parties en 269.4s (0.74 p/s)
+    Résultats: P0=109, P1=82, Nuls=9
+  Training: 4 epochs...
+  Loss: 3.9435 (LR: 0.000123)
+  Fin: Monday 12 January 2026 07:35:29
+  Durée itération: 4m 40s
+  Temps cumulé: 5h 00m 48s
+
+--- Itération 66 ---
+  Début: Monday 12 January 2026 07:35:29
+  Self-play: 200 parties (12 workers)...
+    200 parties en 260.7s (0.77 p/s)
+    Résultats: P0=97, P1=91, Nuls=12
+  Training: 4 epochs...
+  Loss: 3.9114 (LR: 0.000108)
+  Fin: Monday 12 January 2026 07:40:01
+  Durée itération: 4m 31s
+  Temps cumulé: 5h 05m 19s
+
+--- Itération 67 ---
+  Début: Monday 12 January 2026 07:40:01
+  Self-play: 200 parties (12 workers)...
+    200 parties en 266.5s (0.75 p/s)
+    Résultats: P0=92, P1=91, Nuls=17
+  Training: 4 epochs...
+  Loss: 3.8768 (LR: 0.000093)
+  Fin: Monday 12 January 2026 07:44:39
+  Durée itération: 4m 38s
+  Temps cumulé: 5h 09m 58s
+
+--- Itération 68 ---
+  Début: Monday 12 January 2026 07:44:39
+  Self-play: 200 parties (12 workers)...
+    200 parties en 265.4s (0.75 p/s)
+    Résultats: P0=97, P1=89, Nuls=14
+  Training: 4 epochs...
+  Loss: 3.8366 (LR: 0.000079)
+  ★ Nouveau meilleur modèle! (loss: 3.8366)
+  Fin: Monday 12 January 2026 07:49:17
+  Durée itération: 4m 37s
+  Temps cumulé: 5h 14m 35s
+
+--- Itération 69 ---
+  Début: Monday 12 January 2026 07:49:17
+  Self-play: 200 parties (12 workers)...
+    200 parties en 273.3s (0.73 p/s)
+    Résultats: P0=98, P1=86, Nuls=16
+  Training: 4 epochs...
+  Loss: 3.8030 (LR: 0.000067)
+  ★ Nouveau meilleur modèle! (loss: 3.8030)
+  Fin: Monday 12 January 2026 07:54:03
+  Durée itération: 4m 46s
+  Temps cumulé: 5h 19m 21s
+
+--- Itération 70 ---
+  Début: Monday 12 January 2026 07:54:03
+  Self-play: 200 parties (12 workers)...
+    200 parties en 262.6s (0.76 p/s)
+    Résultats: P0=90, P1=88, Nuls=22
+  Training: 4 epochs...
+  Loss: 3.7851 (LR: 0.000056)
+  ★ Nouveau meilleur modèle! (loss: 3.7851)
+  Fin: Monday 12 January 2026 07:58:38
+  Durée itération: 4m 35s
+  Temps cumulé: 5h 23m 57s
+
+--- Itération 71 ---
+  Début: Monday 12 January 2026 07:58:38
+  Self-play: 200 parties (12 workers)...
+    200 parties en 269.0s (0.74 p/s)
+    Résultats: P0=95, P1=90, Nuls=15
+  Training: 4 epochs...
+  Loss: 3.7708 (LR: 0.000047)
+  ★ Nouveau meilleur modèle! (loss: 3.7708)
+  Fin: Monday 12 January 2026 08:03:21
+  Durée itération: 4m 42s
+  Temps cumulé: 5h 28m 39s
+
+--- Itération 72 ---
+  Début: Monday 12 January 2026 08:03:21
+  Self-play: 200 parties (12 workers)...
+    200 parties en 275.8s (0.73 p/s)
+    Résultats: P0=100, P1=83, Nuls=17
+  Training: 4 epochs...
+  Loss: 3.7563 (LR: 0.000039)
+  ★ Nouveau meilleur modèle! (loss: 3.7563)
+  Fin: Monday 12 January 2026 08:08:09
+  Durée itération: 4m 48s
+  Temps cumulé: 5h 33m 28s
+
+--- Itération 73 ---
+  Début: Monday 12 January 2026 08:08:09
+  Self-play: 200 parties (12 workers)...
+    200 parties en 269.8s (0.74 p/s)
+    Résultats: P0=85, P1=99, Nuls=16
+  Training: 4 epochs...
+  Loss: 3.7495 (LR: 0.000034)
+  ★ Nouveau meilleur modèle! (loss: 3.7495)
+  Fin: Monday 12 January 2026 08:12:52
+  Durée itération: 4m 42s
+  Temps cumulé: 5h 38m 11s
+
+--- Itération 74 ---
+  Début: Monday 12 January 2026 08:12:52
+  Self-play: 200 parties (12 workers)...
+    200 parties en 273.5s (0.73 p/s)
+    Résultats: P0=86, P1=95, Nuls=19
+  Training: 4 epochs...
+  Loss: 3.7634 (LR: 0.000031)
+  Fin: Monday 12 January 2026 08:17:39
+  Durée itération: 4m 47s
+  Temps cumulé: 5h 42m 58s
+
+--- Itération 75 ---
+  Début: Monday 12 January 2026 08:17:39
+  Self-play: 200 parties (12 workers)...
+    200 parties en 272.2s (0.73 p/s)
+    Résultats: P0=114, P1=70, Nuls=16
+  Training: 4 epochs...
+  Loss: 3.7804 (LR: 0.000300)
+  Fin: Monday 12 January 2026 08:22:25
+  Durée itération: 4m 45s
+  Temps cumulé: 5h 47m 44s
+
+--- Itération 76 ---
+  Début: Monday 12 January 2026 08:22:25
+  Self-play: 200 parties (12 workers)...
+    200 parties en 285.5s (0.70 p/s)
+    Résultats: P0=89, P1=96, Nuls=15
+  Training: 4 epochs...
+  Loss: 4.7264 (LR: 0.000299)
+  Fin: Monday 12 January 2026 08:27:26
+  Durée itération: 5m 00s
+  Temps cumulé: 5h 52m 44s
+
+--- Itération 77 ---
+  Début: Monday 12 January 2026 08:27:26
+  Self-play: 200 parties (12 workers)...
+    200 parties en 291.2s (0.69 p/s)
+    Résultats: P0=94, P1=91, Nuls=15
+  Training: 4 epochs...
+  Loss: 4.6498 (LR: 0.000296)
+  Fin: Monday 12 January 2026 08:32:29
+  Durée itération: 5m 03s
+  Temps cumulé: 5h 57m 47s
+
+--- Itération 78 ---
+  Début: Monday 12 January 2026 08:32:29
+  Self-play: 200 parties (12 workers)...
+    200 parties en 276.9s (0.72 p/s)
+    Résultats: P0=98, P1=77, Nuls=25
+  Training: 4 epochs...
+  Loss: 4.5319 (LR: 0.000291)
+  Fin: Monday 12 January 2026 08:37:18
+  Durée itération: 4m 49s
+  Temps cumulé: 6h 02m 37s
+
+--- Itération 79 ---
+  Début: Monday 12 January 2026 08:37:18
+  Self-play: 200 parties (12 workers)...
+    200 parties en 273.2s (0.73 p/s)
+    Résultats: P0=94, P1=90, Nuls=16
+  Training: 4 epochs...
+  Loss: 4.4482 (LR: 0.000283)
+  Fin: Monday 12 January 2026 08:42:04
+  Durée itération: 4m 46s
+  Temps cumulé: 6h 07m 23s
+
+--- Itération 80 ---
+  Début: Monday 12 January 2026 08:42:04
+  Self-play: 200 parties (12 workers)...
+    200 parties en 267.8s (0.75 p/s)
+    Résultats: P0=100, P1=88, Nuls=12
+  Training: 4 epochs...
+  Loss: 4.3806 (LR: 0.000274)
+  Fin: Monday 12 January 2026 08:46:45
+  Durée itération: 4m 40s
+  Temps cumulé: 6h 12m 04s
+
+--- Itération 81 ---
+  Début: Monday 12 January 2026 08:46:45
+  Self-play: 200 parties (12 workers)...
+    200 parties en 267.4s (0.75 p/s)
+    Résultats: P0=96, P1=87, Nuls=17
+  Training: 4 epochs...
+  Loss: 4.3133 (LR: 0.000263)
+  Fin: Monday 12 January 2026 08:51:25
+  Durée itération: 4m 39s
+  Temps cumulé: 6h 16m 43s
+
+--- Itération 82 ---
+  Début: Monday 12 January 2026 08:51:25
+  Self-play: 200 parties (12 workers)...
+    200 parties en 265.2s (0.75 p/s)
+    Résultats: P0=100, P1=81, Nuls=19
+  Training: 4 epochs...
+  Loss: 4.2586 (LR: 0.000251)
+  Fin: Monday 12 January 2026 08:56:03
+  Durée itération: 4m 37s
+  Temps cumulé: 6h 21m 21s
+
+--- Itération 83 ---
+  Début: Monday 12 January 2026 08:56:03
+  Self-play: 200 parties (12 workers)...
+    200 parties en 267.8s (0.75 p/s)
+    Résultats: P0=96, P1=84, Nuls=20
+  Training: 4 epochs...
+  Loss: 4.2093 (LR: 0.000237)
+  Fin: Monday 12 January 2026 09:00:43
+  Durée itération: 4m 40s
+  Temps cumulé: 6h 26m 02s
+
+--- Itération 84 ---
+  Début: Monday 12 January 2026 09:00:43
+  Self-play: 200 parties (12 workers)...
+    200 parties en 265.3s (0.75 p/s)
+    Résultats: P0=102, P1=84, Nuls=14
+  Training: 4 epochs...
+  Loss: 4.1586 (LR: 0.000222)
+  Fin: Monday 12 January 2026 09:05:21
+  Durée itération: 4m 37s
+  Temps cumulé: 6h 30m 39s
+
+--- Itération 85 ---
+  Début: Monday 12 January 2026 09:05:21
+  Self-play: 200 parties (12 workers)...
+    200 parties en 267.5s (0.75 p/s)
+    Résultats: P0=102, P1=86, Nuls=12
+  Training: 4 epochs...
+  Loss: 4.1173 (LR: 0.000207)
+  Fin: Monday 12 January 2026 09:10:01
+  Durée itération: 4m 39s
+  Temps cumulé: 6h 35m 19s
+
+--- Itération 86 ---
+  Début: Monday 12 January 2026 09:10:01
+  Self-play: 200 parties (12 workers)...
+    200 parties en 270.3s (0.74 p/s)
+    Résultats: P0=91, P1=92, Nuls=17
+  Training: 4 epochs...
+  Loss: 4.0654 (LR: 0.000190)
+  Fin: Monday 12 January 2026 09:14:44
+  Durée itération: 4m 43s
+  Temps cumulé: 6h 40m 02s
+
+--- Itération 87 ---
+  Début: Monday 12 January 2026 09:14:44
+  Self-play: 200 parties (12 workers)...
+    200 parties en 270.2s (0.74 p/s)
+    Résultats: P0=103, P1=87, Nuls=10
+  Training: 4 epochs...
+  Loss: 4.0184 (LR: 0.000173)
+  Fin: Monday 12 January 2026 09:19:27
+  Durée itération: 4m 42s
+  Temps cumulé: 6h 44m 45s
+
+--- Itération 88 ---
+  Début: Monday 12 January 2026 09:19:27
+  Self-play: 200 parties (12 workers)...
+    200 parties en 282.1s (0.71 p/s)
+    Résultats: P0=95, P1=81, Nuls=24
+  Training: 4 epochs...
+  Loss: 3.9675 (LR: 0.000157)
+  Fin: Monday 12 January 2026 09:24:21
+  Durée itération: 4m 54s
+  Temps cumulé: 6h 49m 39s
+
+--- Itération 89 ---
+  Début: Monday 12 January 2026 09:24:21
+  Self-play: 200 parties (12 workers)...
+    200 parties en 278.5s (0.72 p/s)
+    Résultats: P0=93, P1=88, Nuls=19
+  Training: 4 epochs...
+  Loss: 3.9137 (LR: 0.000140)
+  Fin: Monday 12 January 2026 09:29:12
+  Durée itération: 4m 51s
+  Temps cumulé: 6h 54m 31s
+
+--- Itération 90 ---
+  Début: Monday 12 January 2026 09:29:12
+  Self-play: 200 parties (12 workers)...
+    200 parties en 279.9s (0.71 p/s)
+    Résultats: P0=102, P1=90, Nuls=8
+  Training: 4 epochs...
+  Loss: 3.8715 (LR: 0.000123)
+  Fin: Monday 12 January 2026 09:34:06
+  Durée itération: 4m 53s
+  Temps cumulé: 6h 59m 24s
+
+--- Itération 91 ---
+  Début: Monday 12 January 2026 09:34:06
+  Self-play: 200 parties (12 workers)...
+    200 parties en 271.5s (0.74 p/s)
+    Résultats: P0=94, P1=94, Nuls=12
+  Training: 4 epochs...
+  Loss: 3.8305 (LR: 0.000108)
+  Fin: Monday 12 January 2026 09:38:49
+  Durée itération: 4m 43s
+  Temps cumulé: 7h 04m 08s
+
+--- Itération 92 ---
+  Début: Monday 12 January 2026 09:38:49
+  Self-play: 200 parties (12 workers)...
+    200 parties en 271.3s (0.74 p/s)
+    Résultats: P0=93, P1=91, Nuls=16
+  Training: 4 epochs...
+  Loss: 3.7972 (LR: 0.000093)
+  Fin: Monday 12 January 2026 09:43:34
+  Durée itération: 4m 44s
+  Temps cumulé: 7h 08m 52s
+
+--- Itération 93 ---
+  Début: Monday 12 January 2026 09:43:34
+  Self-play: 200 parties (12 workers)...
+    200 parties en 265.4s (0.75 p/s)
+    Résultats: P0=99, P1=82, Nuls=19
+  Training: 4 epochs...
+  Loss: 3.7617 (LR: 0.000079)
+  Fin: Monday 12 January 2026 09:48:12
+  Durée itération: 4m 38s
+  Temps cumulé: 7h 13m 30s
+
+--- Itération 94 ---
+  Début: Monday 12 January 2026 09:48:12
+  Self-play: 200 parties (12 workers)...
+    200 parties en 262.9s (0.76 p/s)
+    Résultats: P0=89, P1=101, Nuls=10
+  Training: 4 epochs...
+  Loss: 3.7443 (LR: 0.000067)
+  ★ Nouveau meilleur modèle! (loss: 3.7443)
+  Fin: Monday 12 January 2026 09:52:47
+  Durée itération: 4m 35s
+  Temps cumulé: 7h 18m 05s
+
+--- Itération 95 ---
+  Début: Monday 12 January 2026 09:52:47
+  Self-play: 200 parties (12 workers)...
+    200 parties en 280.2s (0.71 p/s)
+    Résultats: P0=105, P1=83, Nuls=12
+  Training: 4 epochs...
+  Loss: 3.7323 (LR: 0.000056)
+  ★ Nouveau meilleur modèle! (loss: 3.7323)
+  Fin: Monday 12 January 2026 09:57:42
+  Durée itération: 4m 55s
+  Temps cumulé: 7h 23m 00s
+
+--- Itération 96 ---
+  Début: Monday 12 January 2026 09:57:42
+  Self-play: 200 parties (12 workers)...
+    200 parties en 261.5s (0.76 p/s)
+    Résultats: P0=91, P1=91, Nuls=18
+  Training: 4 epochs...
+  Loss: 3.7177 (LR: 0.000047)
+  ★ Nouveau meilleur modèle! (loss: 3.7177)
+  Fin: Monday 12 January 2026 10:02:16
+  Durée itération: 4m 34s
+  Temps cumulé: 7h 27m 34s
+
+--- Itération 97 ---
+  Début: Monday 12 January 2026 10:02:16
+  Self-play: 200 parties (12 workers)...
+    200 parties en 262.6s (0.76 p/s)
+    Résultats: P0=101, P1=85, Nuls=14
+  Training: 4 epochs...
+  Loss: 3.7172 (LR: 0.000039)
+  ★ Nouveau meilleur modèle! (loss: 3.7172)
+  Fin: Monday 12 January 2026 10:06:51
+  Durée itération: 4m 35s
+  Temps cumulé: 7h 32m 09s
+
+--- Itération 98 ---
+  Début: Monday 12 January 2026 10:06:51
+  Self-play: 200 parties (12 workers)...
+    200 parties en 269.0s (0.74 p/s)
+    Résultats: P0=115, P1=77, Nuls=8
+  Training: 4 epochs...
+  Loss: 3.7251 (LR: 0.000034)
+  Fin: Monday 12 January 2026 10:11:33
+  Durée itération: 4m 41s
+  Temps cumulé: 7h 36m 51s
+
+--- Itération 99 ---
+  Début: Monday 12 January 2026 10:11:33
+  Self-play: 200 parties (12 workers)...
+    200 parties en 262.5s (0.76 p/s)
+    Résultats: P0=101, P1=82, Nuls=17
+  Training: 4 epochs...
+  Loss: 3.7282 (LR: 0.000031)
+  Fin: Monday 12 January 2026 10:16:07
+  Durée itération: 4m 33s
+  Temps cumulé: 7h 41m 25s
+
+--- Itération 100 ---
+  Début: Monday 12 January 2026 10:16:07
+  Self-play: 200 parties (12 workers)...
+    200 parties en 257.9s (0.78 p/s)
+    Résultats: P0=85, P1=93, Nuls=22
+  Training: 4 epochs...
+  Loss: 3.7451 (LR: 0.000300)
+  Fin: Monday 12 January 2026 10:20:36
+  Durée itération: 4m 29s
+  Temps cumulé: 7h 45m 54s
+  Modèle sauvé: data/models/best_model.pt
+
+============================================================
+ENTRAÎNEMENT TERMINÉ
+Best model: iteration 97 (loss: 3.7172)
+Fin: Monday 12 January 2026 10:20:36
+Temps total: 7h 45m 56s
 ============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 900.0s (0.11 parties/s)
-  Terminé en 900.1s (0.11 parties/s)
-  Victoires: J0=55, J1=38, Nuls=7
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.092, value_mae=0.866
-  Époque 2/10: loss=nan, policy_acc=0.092, value_mae=0.866
-  Époque 3/10: loss=nan, policy_acc=0.092, value_mae=0.867
-  Époque 4/10: loss=nan, policy_acc=0.093, value_mae=0.866
-  Époque 5/10: loss=nan, policy_acc=0.090, value_mae=0.866
-  Époque 6/10: loss=nan, policy_acc=0.092, value_mae=0.869
-  Époque 7/10: loss=nan, policy_acc=0.091, value_mae=0.869
-  Époque 8/10: loss=nan, policy_acc=0.092, value_mae=0.870
-  Époque 9/10: loss=nan, policy_acc=0.092, value_mae=0.869
-  Époque 10/10: loss=nan, policy_acc=0.090, value_mae=0.868
-
-  Itération 48 terminée
-  Total parties: 4800, Buffer: 54914
-
-============================================================
-ITERATION 49
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 926.0s (0.11 parties/s)
-  Terminé en 926.1s (0.11 parties/s)
-  Victoires: J0=36, J1=51, Nuls=13
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.094, value_mae=0.868
-  Époque 2/10: loss=nan, policy_acc=0.092, value_mae=0.867
-  Époque 3/10: loss=nan, policy_acc=0.094, value_mae=0.868
-  Époque 4/10: loss=nan, policy_acc=0.091, value_mae=0.870
-  Époque 5/10: loss=nan, policy_acc=0.093, value_mae=0.869
-  Époque 6/10: loss=nan, policy_acc=0.091, value_mae=0.867
-  Époque 7/10: loss=nan, policy_acc=0.093, value_mae=0.870
-  Époque 8/10: loss=nan, policy_acc=0.092, value_mae=0.868
-  Époque 9/10: loss=nan, policy_acc=0.091, value_mae=0.866
-  Époque 10/10: loss=nan, policy_acc=0.093, value_mae=0.869
-
-  Itération 49 terminée
-  Total parties: 4900, Buffer: 56056
-
-============================================================
-ITERATION 50
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 925.1s (0.11 parties/s)
-  Terminé en 925.2s (0.11 parties/s)
-  Victoires: J0=49, J1=42, Nuls=9
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.091, value_mae=0.870
-  Époque 2/10: loss=nan, policy_acc=0.091, value_mae=0.868
-  Époque 3/10: loss=nan, policy_acc=0.092, value_mae=0.867
-  Époque 4/10: loss=nan, policy_acc=0.093, value_mae=0.867
-  Époque 5/10: loss=nan, policy_acc=0.093, value_mae=0.866
-  Époque 6/10: loss=nan, policy_acc=0.090, value_mae=0.869
-  Époque 7/10: loss=nan, policy_acc=0.091, value_mae=0.865
-  Époque 8/10: loss=nan, policy_acc=0.090, value_mae=0.864
-  Époque 9/10: loss=nan, policy_acc=0.091, value_mae=0.864
-  Époque 10/10: loss=nan, policy_acc=0.094, value_mae=0.864
-
-  Itération 50 terminée
-  Total parties: 5000, Buffer: 57173
-
-============================================================
-ITERATION 51
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 911.2s (0.11 parties/s)
-  Terminé en 911.3s (0.11 parties/s)
-  Victoires: J0=52, J1=44, Nuls=4
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.090, value_mae=0.867
-  Époque 2/10: loss=nan, policy_acc=0.093, value_mae=0.868
-  Époque 3/10: loss=nan, policy_acc=0.091, value_mae=0.866
-  Époque 4/10: loss=nan, policy_acc=0.092, value_mae=0.868
-  Époque 5/10: loss=nan, policy_acc=0.091, value_mae=0.865
-  Époque 6/10: loss=nan, policy_acc=0.094, value_mae=0.869
-  Époque 7/10: loss=nan, policy_acc=0.090, value_mae=0.870
-  Époque 8/10: loss=nan, policy_acc=0.091, value_mae=0.867
-  Époque 9/10: loss=nan, policy_acc=0.092, value_mae=0.866
-  Époque 10/10: loss=nan, policy_acc=0.092, value_mae=0.869
-
-  Itération 51 terminée
-  Total parties: 5100, Buffer: 58287
-
-============================================================
-ITERATION 52
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.11/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 887.9s (0.11 parties/s)
-  Terminé en 888.0s (0.11 parties/s)
-  Victoires: J0=43, J1=53, Nuls=4
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.094, value_mae=0.867
-  Époque 2/10: loss=nan, policy_acc=0.090, value_mae=0.866
-  Époque 3/10: loss=nan, policy_acc=0.092, value_mae=0.865
-  Époque 4/10: loss=nan, policy_acc=0.089, value_mae=0.866
-  Époque 5/10: loss=nan, policy_acc=0.091, value_mae=0.866
-  Époque 6/10: loss=nan, policy_acc=0.089, value_mae=0.867
-  Époque 7/10: loss=nan, policy_acc=0.088, value_mae=0.869
-  Époque 8/10: loss=nan, policy_acc=0.086, value_mae=0.866
-  Époque 9/10: loss=nan, policy_acc=0.087, value_mae=0.867
-  Époque 10/10: loss=nan, policy_acc=0.087, value_mae=0.866
-
-  Itération 52 terminée
-  Total parties: 5200, Buffer: 59354
-
-============================================================
-ITERATION 53
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 910.5s (0.11 parties/s)
-  Terminé en 910.6s (0.11 parties/s)
-  Victoires: J0=53, J1=39, Nuls=8
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.088, value_mae=0.866
-  Époque 2/10: loss=nan, policy_acc=0.088, value_mae=0.871
-  Époque 3/10: loss=nan, policy_acc=0.089, value_mae=0.866
-  Époque 4/10: loss=nan, policy_acc=0.090, value_mae=0.865
-  Époque 5/10: loss=nan, policy_acc=0.089, value_mae=0.865
-  Époque 6/10: loss=nan, policy_acc=0.089, value_mae=0.866
-  Époque 7/10: loss=nan, policy_acc=0.089, value_mae=0.866
-  Époque 8/10: loss=nan, policy_acc=0.090, value_mae=0.867
-  Époque 9/10: loss=nan, policy_acc=0.087, value_mae=0.867
-  Époque 10/10: loss=nan, policy_acc=0.090, value_mae=0.867
-
-  Itération 53 terminée
-  Total parties: 5300, Buffer: 60447
-
-============================================================
-ITERATION 54
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.11/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 898.6s (0.11 parties/s)
-  Terminé en 898.7s (0.11 parties/s)
-  Victoires: J0=54, J1=40, Nuls=6
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.088, value_mae=0.869
-  Époque 2/10: loss=nan, policy_acc=0.087, value_mae=0.869
-  Époque 3/10: loss=nan, policy_acc=0.090, value_mae=0.867
-  Époque 4/10: loss=nan, policy_acc=0.089, value_mae=0.867
-  Époque 5/10: loss=nan, policy_acc=0.086, value_mae=0.867
-  Époque 6/10: loss=nan, policy_acc=0.089, value_mae=0.871
-  Époque 7/10: loss=nan, policy_acc=0.089, value_mae=0.869
-  Époque 8/10: loss=nan, policy_acc=0.090, value_mae=0.870
-  Époque 9/10: loss=nan, policy_acc=0.091, value_mae=0.871
-  Époque 10/10: loss=nan, policy_acc=0.091, value_mae=0.869
-
-  Itération 54 terminée
-  Total parties: 5400, Buffer: 61525
-
-============================================================
-ITERATION 55
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 897.2s (0.11 parties/s)
-  Terminé en 897.3s (0.11 parties/s)
-  Victoires: J0=50, J1=42, Nuls=8
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.090, value_mae=0.870
-  Époque 2/10: loss=nan, policy_acc=0.090, value_mae=0.873
-  Époque 3/10: loss=nan, policy_acc=0.091, value_mae=0.871
-  Époque 4/10: loss=nan, policy_acc=0.091, value_mae=0.871
-  Époque 5/10: loss=nan, policy_acc=0.092, value_mae=0.871
-  Époque 6/10: loss=nan, policy_acc=0.092, value_mae=0.872
-  Époque 7/10: loss=nan, policy_acc=0.090, value_mae=0.870
-  Époque 8/10: loss=nan, policy_acc=0.091, value_mae=0.869
-  Époque 9/10: loss=nan, policy_acc=0.092, value_mae=0.871
-  Époque 10/10: loss=nan, policy_acc=0.091, value_mae=0.871
-
-  Itération 55 terminée
-  Total parties: 5500, Buffer: 62619
-
-============================================================
-ITERATION 56
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 898.7s (0.11 parties/s)
-  Terminé en 898.8s (0.11 parties/s)
-  Victoires: J0=42, J1=48, Nuls=10
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.091, value_mae=0.870
-  Époque 2/10: loss=nan, policy_acc=0.090, value_mae=0.871
-  Époque 3/10: loss=nan, policy_acc=0.093, value_mae=0.872
-  Époque 4/10: loss=nan, policy_acc=0.090, value_mae=0.868
-  Époque 5/10: loss=nan, policy_acc=0.092, value_mae=0.869
-  Époque 6/10: loss=nan, policy_acc=0.093, value_mae=0.870
-  Époque 7/10: loss=nan, policy_acc=0.092, value_mae=0.867
-  Époque 8/10: loss=nan, policy_acc=0.092, value_mae=0.869
-  Époque 9/10: loss=nan, policy_acc=0.090, value_mae=0.869
-  Époque 10/10: loss=nan, policy_acc=0.092, value_mae=0.869
-
-  Itération 56 terminée
-  Total parties: 5600, Buffer: 63727
-
-============================================================
-ITERATION 57
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 926.9s (0.11 parties/s)
-  Terminé en 927.0s (0.11 parties/s)
-  Victoires: J0=45, J1=39, Nuls=16
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.090, value_mae=0.868
-  Époque 2/10: loss=nan, policy_acc=0.092, value_mae=0.866
-  Époque 3/10: loss=nan, policy_acc=0.092, value_mae=0.867
-  Époque 4/10: loss=nan, policy_acc=0.089, value_mae=0.868
-  Époque 5/10: loss=nan, policy_acc=0.092, value_mae=0.867
-  Époque 6/10: loss=nan, policy_acc=0.088, value_mae=0.869
-  Époque 7/10: loss=nan, policy_acc=0.092, value_mae=0.866
-  Époque 8/10: loss=nan, policy_acc=0.090, value_mae=0.866
-  Époque 9/10: loss=nan, policy_acc=0.092, value_mae=0.867
-  Époque 10/10: loss=nan, policy_acc=0.091, value_mae=0.867
-
-  Itération 57 terminée
-  Total parties: 5700, Buffer: 64878
-
-============================================================
-ITERATION 58
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 916.3s (0.11 parties/s)
-  Terminé en 916.4s (0.11 parties/s)
-  Victoires: J0=49, J1=42, Nuls=9
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.091, value_mae=0.867
-  Époque 2/10: loss=nan, policy_acc=0.090, value_mae=0.864
-  Époque 3/10: loss=nan, policy_acc=0.091, value_mae=0.867
-  Époque 4/10: loss=nan, policy_acc=0.091, value_mae=0.865
-  Époque 5/10: loss=nan, policy_acc=0.090, value_mae=0.868
-  Époque 6/10: loss=nan, policy_acc=0.091, value_mae=0.867
-  Époque 7/10: loss=nan, policy_acc=0.089, value_mae=0.867
-  Époque 8/10: loss=nan, policy_acc=0.092, value_mae=0.867
-  Époque 9/10: loss=nan, policy_acc=0.092, value_mae=0.866
-  Époque 10/10: loss=nan, policy_acc=0.090, value_mae=0.868
-
-  Itération 58 terminée
-  Total parties: 5800, Buffer: 66013
-
-============================================================
-ITERATION 59
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 915.5s (0.11 parties/s)
-  Terminé en 915.6s (0.11 parties/s)
-  Victoires: J0=50, J1=42, Nuls=8
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.091, value_mae=0.868
-  Époque 2/10: loss=nan, policy_acc=0.091, value_mae=0.865
-  Époque 3/10: loss=nan, policy_acc=0.089, value_mae=0.868
-  Époque 4/10: loss=nan, policy_acc=0.090, value_mae=0.864
-  Époque 5/10: loss=nan, policy_acc=0.089, value_mae=0.865
-  Époque 6/10: loss=nan, policy_acc=0.089, value_mae=0.867
-  Époque 7/10: loss=nan, policy_acc=0.089, value_mae=0.867
-  Époque 8/10: loss=nan, policy_acc=0.090, value_mae=0.868
-  Époque 9/10: loss=nan, policy_acc=0.089, value_mae=0.868
-  Époque 10/10: loss=nan, policy_acc=0.090, value_mae=0.867
-
-  Itération 59 terminée
-  Total parties: 5900, Buffer: 67143
-
-============================================================
-ITERATION 60
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 924.9s (0.11 parties/s)
-  Terminé en 925.0s (0.11 parties/s)
-  Victoires: J0=59, J1=33, Nuls=8
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.090, value_mae=0.869
-  Époque 2/10: loss=nan, policy_acc=0.091, value_mae=0.868
-  Époque 3/10: loss=nan, policy_acc=0.091, value_mae=0.867
-  Époque 4/10: loss=nan, policy_acc=0.092, value_mae=0.865
-  Époque 5/10: loss=nan, policy_acc=0.091, value_mae=0.866
-  Époque 6/10: loss=nan, policy_acc=0.091, value_mae=0.869
-  Époque 7/10: loss=nan, policy_acc=0.092, value_mae=0.868
-  Époque 8/10: loss=nan, policy_acc=0.090, value_mae=0.866
-  Époque 9/10: loss=nan, policy_acc=0.092, value_mae=0.869
-  Époque 10/10: loss=nan, policy_acc=0.091, value_mae=0.868
-
-  Itération 60 terminée
-  Total parties: 6000, Buffer: 68254
-
-============================================================
-ITERATION 61
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.11/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 900.1s (0.11 parties/s)
-  Terminé en 900.2s (0.11 parties/s)
-  Victoires: J0=45, J1=47, Nuls=8
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.088, value_mae=0.869
-  Époque 2/10: loss=nan, policy_acc=0.090, value_mae=0.869
-  Époque 3/10: loss=nan, policy_acc=0.090, value_mae=0.869
-  Époque 4/10: loss=nan, policy_acc=0.091, value_mae=0.870
-  Époque 5/10: loss=nan, policy_acc=0.089, value_mae=0.866
-  Époque 6/10: loss=nan, policy_acc=0.091, value_mae=0.868
-  Époque 7/10: loss=nan, policy_acc=0.090, value_mae=0.870
-  Époque 8/10: loss=nan, policy_acc=0.091, value_mae=0.868
-  Époque 9/10: loss=nan, policy_acc=0.090, value_mae=0.867
-  Époque 10/10: loss=nan, policy_acc=0.090, value_mae=0.866
-
-  Itération 61 terminée
-  Total parties: 6100, Buffer: 69367
-
-============================================================
-ITERATION 62
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 910.2s (0.11 parties/s)
-  Terminé en 910.3s (0.11 parties/s)
-  Victoires: J0=59, J1=37, Nuls=4
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.090, value_mae=0.869
-  Époque 2/10: loss=nan, policy_acc=0.092, value_mae=0.868
-  Époque 3/10: loss=nan, policy_acc=0.088, value_mae=0.869
-  Époque 4/10: loss=nan, policy_acc=0.090, value_mae=0.869
-  Époque 5/10: loss=nan, policy_acc=0.090, value_mae=0.870
-  Époque 6/10: loss=nan, policy_acc=0.091, value_mae=0.870
-  Époque 7/10: loss=nan, policy_acc=0.090, value_mae=0.870
-  Époque 8/10: loss=nan, policy_acc=0.091, value_mae=0.869
-  Époque 9/10: loss=nan, policy_acc=0.089, value_mae=0.868
-  Époque 10/10: loss=nan, policy_acc=0.092, value_mae=0.870
-
-  Itération 62 terminée
-  Total parties: 6200, Buffer: 70470
-
-============================================================
-ITERATION 63
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.11/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 906.0s (0.11 parties/s)
-  Terminé en 906.1s (0.11 parties/s)
-  Victoires: J0=52, J1=41, Nuls=7
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.091, value_mae=0.869
-  Époque 2/10: loss=nan, policy_acc=0.091, value_mae=0.869
-  Époque 3/10: loss=nan, policy_acc=0.091, value_mae=0.872
-  Époque 4/10: loss=nan, policy_acc=0.089, value_mae=0.869
-  Époque 5/10: loss=nan, policy_acc=0.089, value_mae=0.868
-  Époque 6/10: loss=nan, policy_acc=0.091, value_mae=0.869
-  Époque 7/10: loss=nan, policy_acc=0.092, value_mae=0.868
-  Époque 8/10: loss=nan, policy_acc=0.091, value_mae=0.867
-  Époque 9/10: loss=nan, policy_acc=0.090, value_mae=0.871
-  Époque 10/10: loss=nan, policy_acc=0.091, value_mae=0.872
-
-  Itération 63 terminée
-  Total parties: 6300, Buffer: 71582
-
-============================================================
-ITERATION 64
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 916.7s (0.11 parties/s)
-  Terminé en 916.8s (0.11 parties/s)
-  Victoires: J0=50, J1=41, Nuls=9
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.091, value_mae=0.871
-  Époque 2/10: loss=nan, policy_acc=0.090, value_mae=0.871
-  Époque 3/10: loss=nan, policy_acc=0.091, value_mae=0.871
-  Époque 4/10: loss=nan, policy_acc=0.090, value_mae=0.870
-  Époque 5/10: loss=nan, policy_acc=0.090, value_mae=0.872
-  Époque 6/10: loss=nan, policy_acc=0.089, value_mae=0.869
-  Époque 7/10: loss=nan, policy_acc=0.089, value_mae=0.869
-  Époque 8/10: loss=nan, policy_acc=0.090, value_mae=0.870
-  Époque 9/10: loss=nan, policy_acc=0.090, value_mae=0.869
-  Époque 10/10: loss=nan, policy_acc=0.090, value_mae=0.871
-
-  Itération 64 terminée
-  Total parties: 6400, Buffer: 72716
-
-============================================================
-ITERATION 65
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 926.7s (0.11 parties/s)
-  Terminé en 926.8s (0.11 parties/s)
-  Victoires: J0=52, J1=40, Nuls=8
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.088, value_mae=0.870
-  Époque 2/10: loss=nan, policy_acc=0.089, value_mae=0.872
-  Époque 3/10: loss=nan, policy_acc=0.092, value_mae=0.872
-  Époque 4/10: loss=nan, policy_acc=0.090, value_mae=0.870
-  Époque 5/10: loss=nan, policy_acc=0.090, value_mae=0.869
-  Époque 6/10: loss=nan, policy_acc=0.089, value_mae=0.871
-  Époque 7/10: loss=nan, policy_acc=0.090, value_mae=0.871
-  Époque 8/10: loss=nan, policy_acc=0.090, value_mae=0.870
-  Époque 9/10: loss=nan, policy_acc=0.090, value_mae=0.871
-  Époque 10/10: loss=nan, policy_acc=0.089, value_mae=0.871
-
-  Itération 65 terminée
-  Total parties: 6500, Buffer: 73822
-
-============================================================
-ITERATION 66
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.09/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.10/s)
-    Terminé en 954.8s (0.10 parties/s)
-  Terminé en 954.9s (0.10 parties/s)
-  Victoires: J0=51, J1=38, Nuls=11
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.090, value_mae=0.870
-  Époque 2/10: loss=nan, policy_acc=0.089, value_mae=0.873
-  Époque 3/10: loss=nan, policy_acc=0.091, value_mae=0.870
-  Époque 4/10: loss=nan, policy_acc=0.089, value_mae=0.872
-  Époque 5/10: loss=nan, policy_acc=0.092, value_mae=0.871
-  Époque 6/10: loss=nan, policy_acc=0.090, value_mae=0.869
-  Époque 7/10: loss=nan, policy_acc=0.089, value_mae=0.869
-  Époque 8/10: loss=nan, policy_acc=0.090, value_mae=0.874
-  Époque 9/10: loss=nan, policy_acc=0.090, value_mae=0.869
-  Époque 10/10: loss=nan, policy_acc=0.090, value_mae=0.871
-
-  Itération 66 terminée
-  Total parties: 6600, Buffer: 74975
-
-============================================================
-ITERATION 67
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 915.1s (0.11 parties/s)
-  Terminé en 915.2s (0.11 parties/s)
-  Victoires: J0=46, J1=45, Nuls=9
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.091, value_mae=0.871
-  Époque 2/10: loss=nan, policy_acc=0.092, value_mae=0.871
-  Époque 3/10: loss=nan, policy_acc=0.089, value_mae=0.869
-  Époque 4/10: loss=nan, policy_acc=0.092, value_mae=0.870
-  Époque 5/10: loss=nan, policy_acc=0.089, value_mae=0.871
-  Époque 6/10: loss=nan, policy_acc=0.089, value_mae=0.871
-  Époque 7/10: loss=nan, policy_acc=0.090, value_mae=0.869
-  Époque 8/10: loss=nan, policy_acc=0.090, value_mae=0.870
-  Époque 9/10: loss=nan, policy_acc=0.090, value_mae=0.869
-  Époque 10/10: loss=nan, policy_acc=0.090, value_mae=0.869
-
-  Itération 67 terminée
-  Total parties: 6700, Buffer: 76095
-
-============================================================
-ITERATION 68
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 928.0s (0.11 parties/s)
-  Terminé en 928.1s (0.11 parties/s)
-  Victoires: J0=56, J1=38, Nuls=6
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.090, value_mae=0.871
-  Époque 2/10: loss=nan, policy_acc=0.090, value_mae=0.873
-  Époque 3/10: loss=nan, policy_acc=0.089, value_mae=0.872
-  Époque 4/10: loss=nan, policy_acc=0.089, value_mae=0.871
-  Époque 5/10: loss=nan, policy_acc=0.089, value_mae=0.871
-  Époque 6/10: loss=nan, policy_acc=0.090, value_mae=0.870
-  Époque 7/10: loss=nan, policy_acc=0.090, value_mae=0.870
-  Époque 8/10: loss=nan, policy_acc=0.089, value_mae=0.872
-  Époque 9/10: loss=nan, policy_acc=0.092, value_mae=0.870
-  Époque 10/10: loss=nan, policy_acc=0.090, value_mae=0.873
-
-  Itération 68 terminée
-  Total parties: 6800, Buffer: 77233
-
-============================================================
-ITERATION 69
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 917.5s (0.11 parties/s)
-  Terminé en 917.6s (0.11 parties/s)
-  Victoires: J0=48, J1=44, Nuls=8
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.088, value_mae=0.872
-  Époque 2/10: loss=nan, policy_acc=0.088, value_mae=0.871
-  Époque 3/10: loss=nan, policy_acc=0.090, value_mae=0.873
-  Époque 4/10: loss=nan, policy_acc=0.091, value_mae=0.872
-  Époque 5/10: loss=nan, policy_acc=0.089, value_mae=0.872
-  Époque 6/10: loss=nan, policy_acc=0.090, value_mae=0.872
-  Époque 7/10: loss=nan, policy_acc=0.088, value_mae=0.872
-  Époque 8/10: loss=nan, policy_acc=0.089, value_mae=0.870
-  Époque 9/10: loss=nan, policy_acc=0.089, value_mae=0.872
-  Époque 10/10: loss=nan, policy_acc=0.090, value_mae=0.872
-
-  Itération 69 terminée
-  Total parties: 6900, Buffer: 78333
-
-============================================================
-ITERATION 70
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 891.7s (0.11 parties/s)
-  Terminé en 891.7s (0.11 parties/s)
-  Victoires: J0=54, J1=38, Nuls=8
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.091, value_mae=0.872
-  Époque 2/10: loss=nan, policy_acc=0.091, value_mae=0.872
-  Époque 3/10: loss=nan, policy_acc=0.089, value_mae=0.869
-  Époque 4/10: loss=nan, policy_acc=0.091, value_mae=0.872
-  Époque 5/10: loss=nan, policy_acc=0.089, value_mae=0.872
-  Époque 6/10: loss=nan, policy_acc=0.090, value_mae=0.873
-  Époque 7/10: loss=nan, policy_acc=0.090, value_mae=0.872
-  Époque 8/10: loss=nan, policy_acc=0.090, value_mae=0.872
-  Époque 9/10: loss=nan, policy_acc=0.091, value_mae=0.876
-  Époque 10/10: loss=nan, policy_acc=0.090, value_mae=0.872
-
-  Itération 70 terminée
-  Total parties: 7000, Buffer: 79433
-
-============================================================
-ITERATION 71
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 947.4s (0.11 parties/s)
-  Terminé en 947.5s (0.11 parties/s)
-  Victoires: J0=58, J1=35, Nuls=7
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.089, value_mae=0.873
-  Époque 2/10: loss=nan, policy_acc=0.090, value_mae=0.872
-  Époque 3/10: loss=nan, policy_acc=0.090, value_mae=0.871
-  Époque 4/10: loss=nan, policy_acc=0.090, value_mae=0.872
-  Époque 5/10: loss=nan, policy_acc=0.090, value_mae=0.873
-  Époque 6/10: loss=nan, policy_acc=0.089, value_mae=0.875
-  Époque 7/10: loss=nan, policy_acc=0.089, value_mae=0.873
-  Époque 8/10: loss=nan, policy_acc=0.090, value_mae=0.874
-  Époque 9/10: loss=nan, policy_acc=0.089, value_mae=0.872
-  Époque 10/10: loss=nan, policy_acc=0.091, value_mae=0.873
-
-  Itération 71 terminée
-  Total parties: 7100, Buffer: 80581
-
-============================================================
-ITERATION 72
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.11/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 896.4s (0.11 parties/s)
-  Terminé en 896.5s (0.11 parties/s)
-  Victoires: J0=54, J1=38, Nuls=8
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.090, value_mae=0.874
-  Époque 2/10: loss=nan, policy_acc=0.089, value_mae=0.871
-  Époque 3/10: loss=nan, policy_acc=0.088, value_mae=0.871
-  Époque 4/10: loss=nan, policy_acc=0.089, value_mae=0.873
-  Époque 5/10: loss=nan, policy_acc=0.090, value_mae=0.874
-  Époque 6/10: loss=nan, policy_acc=0.091, value_mae=0.874
-  Époque 7/10: loss=nan, policy_acc=0.090, value_mae=0.871
-  Époque 8/10: loss=nan, policy_acc=0.091, value_mae=0.874
-  Époque 9/10: loss=nan, policy_acc=0.090, value_mae=0.874
-  Époque 10/10: loss=nan, policy_acc=0.089, value_mae=0.873
-
-  Itération 72 terminée
-  Total parties: 7200, Buffer: 81687
-
-============================================================
-ITERATION 73
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 922.0s (0.11 parties/s)
-  Terminé en 922.1s (0.11 parties/s)
-  Victoires: J0=44, J1=46, Nuls=10
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.090, value_mae=0.871
-  Époque 2/10: loss=nan, policy_acc=0.089, value_mae=0.872
-  Époque 3/10: loss=nan, policy_acc=0.089, value_mae=0.873
-  Époque 4/10: loss=nan, policy_acc=0.090, value_mae=0.876
-  Époque 5/10: loss=nan, policy_acc=0.089, value_mae=0.872
-  Époque 6/10: loss=nan, policy_acc=0.090, value_mae=0.874
-  Époque 7/10: loss=nan, policy_acc=0.090, value_mae=0.872
-  Époque 8/10: loss=nan, policy_acc=0.089, value_mae=0.872
-  Époque 9/10: loss=nan, policy_acc=0.090, value_mae=0.873
-  Époque 10/10: loss=nan, policy_acc=0.089, value_mae=0.873
-
-  Itération 73 terminée
-  Total parties: 7300, Buffer: 82827
-
-============================================================
-ITERATION 74
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 933.8s (0.11 parties/s)
-  Terminé en 933.9s (0.11 parties/s)
-  Victoires: J0=53, J1=38, Nuls=9
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.090, value_mae=0.872
-  Époque 2/10: loss=nan, policy_acc=0.089, value_mae=0.873
-  Époque 3/10: loss=nan, policy_acc=0.089, value_mae=0.872
-  Époque 4/10: loss=nan, policy_acc=0.089, value_mae=0.873
-  Époque 5/10: loss=nan, policy_acc=0.089, value_mae=0.873
-  Époque 6/10: loss=nan, policy_acc=0.089, value_mae=0.874
-  Époque 7/10: loss=nan, policy_acc=0.090, value_mae=0.874
-  Époque 8/10: loss=nan, policy_acc=0.090, value_mae=0.872
-  Époque 9/10: loss=nan, policy_acc=0.091, value_mae=0.876
-  Époque 10/10: loss=nan, policy_acc=0.089, value_mae=0.874
-
-  Itération 74 terminée
-  Total parties: 7400, Buffer: 83964
-
-============================================================
-ITERATION 75
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.07/s)
-    Parties: 40/100 (0.09/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 945.9s (0.11 parties/s)
-  Terminé en 946.0s (0.11 parties/s)
-  Victoires: J0=48, J1=45, Nuls=7
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.088, value_mae=0.873
-  Époque 2/10: loss=nan, policy_acc=0.089, value_mae=0.875
-  Époque 3/10: loss=nan, policy_acc=0.090, value_mae=0.873
-  Époque 4/10: loss=nan, policy_acc=0.089, value_mae=0.871
-  Époque 5/10: loss=nan, policy_acc=0.090, value_mae=0.871
-  Époque 6/10: loss=nan, policy_acc=0.087, value_mae=0.873
-  Époque 7/10: loss=nan, policy_acc=0.091, value_mae=0.875
-  Époque 8/10: loss=nan, policy_acc=0.089, value_mae=0.875
-  Époque 9/10: loss=nan, policy_acc=0.088, value_mae=0.877
-  Époque 10/10: loss=nan, policy_acc=0.089, value_mae=0.874
-
-  Itération 75 terminée
-  Total parties: 7500, Buffer: 85098
-
-============================================================
-ITERATION 76
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 943.9s (0.11 parties/s)
-  Terminé en 943.9s (0.11 parties/s)
-  Victoires: J0=51, J1=38, Nuls=11
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.089, value_mae=0.875
-  Époque 2/10: loss=nan, policy_acc=0.090, value_mae=0.875
-  Époque 3/10: loss=nan, policy_acc=0.090, value_mae=0.874
-  Époque 4/10: loss=nan, policy_acc=0.090, value_mae=0.873
-  Époque 5/10: loss=nan, policy_acc=0.089, value_mae=0.875
-  Époque 6/10: loss=nan, policy_acc=0.091, value_mae=0.873
-  Époque 7/10: loss=nan, policy_acc=0.090, value_mae=0.874
-  Époque 8/10: loss=nan, policy_acc=0.089, value_mae=0.874
-  Époque 9/10: loss=nan, policy_acc=0.089, value_mae=0.873
-  Époque 10/10: loss=nan, policy_acc=0.090, value_mae=0.876
-
-  Itération 76 terminée
-  Total parties: 7600, Buffer: 86235
-
-============================================================
-ITERATION 77
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 952.3s (0.11 parties/s)
-  Terminé en 952.4s (0.11 parties/s)
-  Victoires: J0=52, J1=40, Nuls=8
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.089, value_mae=0.874
-  Époque 2/10: loss=nan, policy_acc=0.090, value_mae=0.873
-  Époque 3/10: loss=nan, policy_acc=0.091, value_mae=0.876
-  Époque 4/10: loss=nan, policy_acc=0.088, value_mae=0.875
-  Époque 5/10: loss=nan, policy_acc=0.089, value_mae=0.874
-  Époque 6/10: loss=nan, policy_acc=0.091, value_mae=0.873
-  Époque 7/10: loss=nan, policy_acc=0.090, value_mae=0.876
-  Époque 8/10: loss=nan, policy_acc=0.088, value_mae=0.874
-  Époque 9/10: loss=nan, policy_acc=0.090, value_mae=0.876
-  Époque 10/10: loss=nan, policy_acc=0.090, value_mae=0.876
-
-  Itération 77 terminée
-  Total parties: 7700, Buffer: 87363
-
-============================================================
-ITERATION 78
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.09/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 952.3s (0.11 parties/s)
-  Terminé en 952.4s (0.11 parties/s)
-  Victoires: J0=55, J1=34, Nuls=11
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.090, value_mae=0.874
-  Époque 2/10: loss=nan, policy_acc=0.093, value_mae=0.874
-  Époque 3/10: loss=nan, policy_acc=0.090, value_mae=0.875
-  Époque 4/10: loss=nan, policy_acc=0.090, value_mae=0.874
-  Époque 5/10: loss=nan, policy_acc=0.089, value_mae=0.876
-  Époque 6/10: loss=nan, policy_acc=0.091, value_mae=0.876
-  Époque 7/10: loss=nan, policy_acc=0.091, value_mae=0.872
-  Époque 8/10: loss=nan, policy_acc=0.089, value_mae=0.874
-  Époque 9/10: loss=nan, policy_acc=0.089, value_mae=0.876
-  Époque 10/10: loss=nan, policy_acc=0.092, value_mae=0.876
-
-  Itération 78 terminée
-  Total parties: 7800, Buffer: 88514
-
-============================================================
-ITERATION 79
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.09/s)
-    Parties: 60/100 (0.09/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 949.6s (0.11 parties/s)
-  Terminé en 949.7s (0.11 parties/s)
-  Victoires: J0=50, J1=41, Nuls=9
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.090, value_mae=0.874
-  Époque 2/10: loss=nan, policy_acc=0.090, value_mae=0.876
-  Époque 3/10: loss=nan, policy_acc=0.089, value_mae=0.874
-  Époque 4/10: loss=nan, policy_acc=0.090, value_mae=0.875
-  Époque 5/10: loss=nan, policy_acc=0.089, value_mae=0.877
-  Époque 6/10: loss=nan, policy_acc=0.088, value_mae=0.876
-  Époque 7/10: loss=nan, policy_acc=0.089, value_mae=0.874
-  Époque 8/10: loss=nan, policy_acc=0.090, value_mae=0.876
-  Époque 9/10: loss=nan, policy_acc=0.092, value_mae=0.876
-  Époque 10/10: loss=nan, policy_acc=0.089, value_mae=0.874
-
-  Itération 79 terminée
-  Total parties: 7900, Buffer: 89666
-
-============================================================
-ITERATION 80
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 935.3s (0.11 parties/s)
-  Terminé en 935.4s (0.11 parties/s)
-  Victoires: J0=47, J1=44, Nuls=9
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.090, value_mae=0.875
-  Époque 2/10: loss=nan, policy_acc=0.089, value_mae=0.875
-  Époque 3/10: loss=nan, policy_acc=0.089, value_mae=0.875
-  Époque 4/10: loss=nan, policy_acc=0.090, value_mae=0.875
-  Époque 5/10: loss=nan, policy_acc=0.090, value_mae=0.874
-  Époque 6/10: loss=nan, policy_acc=0.091, value_mae=0.876
-  Époque 7/10: loss=nan, policy_acc=0.089, value_mae=0.877
-  Époque 8/10: loss=nan, policy_acc=0.090, value_mae=0.876
-  Époque 9/10: loss=nan, policy_acc=0.092, value_mae=0.874
-  Époque 10/10: loss=nan, policy_acc=0.090, value_mae=0.875
-
-  Itération 80 terminée
-  Total parties: 8000, Buffer: 90807
-
-============================================================
-ITERATION 81
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 946.1s (0.11 parties/s)
-  Terminé en 946.2s (0.11 parties/s)
-  Victoires: J0=45, J1=46, Nuls=9
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.091, value_mae=0.876
-  Époque 2/10: loss=nan, policy_acc=0.089, value_mae=0.874
-  Époque 3/10: loss=nan, policy_acc=0.091, value_mae=0.877
-  Époque 4/10: loss=nan, policy_acc=0.091, value_mae=0.875
-  Époque 5/10: loss=nan, policy_acc=0.089, value_mae=0.876
-  Époque 6/10: loss=nan, policy_acc=0.090, value_mae=0.876
-  Époque 7/10: loss=nan, policy_acc=0.091, value_mae=0.876
-  Époque 8/10: loss=nan, policy_acc=0.090, value_mae=0.877
-  Époque 9/10: loss=nan, policy_acc=0.091, value_mae=0.876
-  Époque 10/10: loss=nan, policy_acc=0.089, value_mae=0.875
-
-  Itération 81 terminée
-  Total parties: 8100, Buffer: 91962
-
-============================================================
-ITERATION 82
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.09/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 941.8s (0.11 parties/s)
-  Terminé en 941.9s (0.11 parties/s)
-  Victoires: J0=53, J1=41, Nuls=6
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.090, value_mae=0.876
-  Époque 2/10: loss=nan, policy_acc=0.090, value_mae=0.876
-  Époque 3/10: loss=nan, policy_acc=0.090, value_mae=0.876
-  Époque 4/10: loss=nan, policy_acc=0.091, value_mae=0.878
-  Époque 5/10: loss=nan, policy_acc=0.090, value_mae=0.876
-  Époque 6/10: loss=nan, policy_acc=0.090, value_mae=0.878
-  Époque 7/10: loss=nan, policy_acc=0.090, value_mae=0.876
-  Époque 8/10: loss=nan, policy_acc=0.091, value_mae=0.878
-  Époque 9/10: loss=nan, policy_acc=0.092, value_mae=0.877
-  Époque 10/10: loss=nan, policy_acc=0.089, value_mae=0.875
-
-  Itération 82 terminée
-  Total parties: 8200, Buffer: 93097
-
-============================================================
-ITERATION 83
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 917.3s (0.11 parties/s)
-  Terminé en 917.4s (0.11 parties/s)
-  Victoires: J0=48, J1=44, Nuls=8
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.090, value_mae=0.875
-  Époque 2/10: loss=nan, policy_acc=0.091, value_mae=0.875
-  Époque 3/10: loss=nan, policy_acc=0.090, value_mae=0.876
-  Époque 4/10: loss=nan, policy_acc=0.089, value_mae=0.875
-  Époque 5/10: loss=nan, policy_acc=0.088, value_mae=0.875
-  Époque 6/10: loss=nan, policy_acc=0.087, value_mae=0.875
-  Époque 7/10: loss=nan, policy_acc=0.087, value_mae=0.875
-  Époque 8/10: loss=nan, policy_acc=0.088, value_mae=0.877
-  Époque 9/10: loss=nan, policy_acc=0.088, value_mae=0.876
-  Époque 10/10: loss=nan, policy_acc=0.089, value_mae=0.876
-
-  Itération 83 terminée
-  Total parties: 8300, Buffer: 94197
-
-============================================================
-ITERATION 84
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 919.7s (0.11 parties/s)
-  Terminé en 919.7s (0.11 parties/s)
-  Victoires: J0=52, J1=39, Nuls=9
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.089, value_mae=0.874
-  Époque 2/10: loss=nan, policy_acc=0.087, value_mae=0.876
-  Époque 3/10: loss=nan, policy_acc=0.090, value_mae=0.875
-  Époque 4/10: loss=nan, policy_acc=0.087, value_mae=0.874
-  Époque 5/10: loss=nan, policy_acc=0.087, value_mae=0.874
-  Époque 6/10: loss=nan, policy_acc=0.088, value_mae=0.874
-  Époque 7/10: loss=nan, policy_acc=0.086, value_mae=0.874
-  Époque 8/10: loss=nan, policy_acc=0.088, value_mae=0.875
-  Époque 9/10: loss=nan, policy_acc=0.086, value_mae=0.873
-  Époque 10/10: loss=nan, policy_acc=0.088, value_mae=0.874
-
-  Itération 84 terminée
-  Total parties: 8400, Buffer: 95309
-
-============================================================
-ITERATION 85
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 916.1s (0.11 parties/s)
-  Terminé en 916.2s (0.11 parties/s)
-  Victoires: J0=55, J1=41, Nuls=4
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.086, value_mae=0.876
-  Époque 2/10: loss=nan, policy_acc=0.088, value_mae=0.875
-  Époque 3/10: loss=nan, policy_acc=0.088, value_mae=0.877
-  Époque 4/10: loss=nan, policy_acc=0.087, value_mae=0.876
-  Époque 5/10: loss=nan, policy_acc=0.087, value_mae=0.876
-  Époque 6/10: loss=nan, policy_acc=0.089, value_mae=0.875
-  Époque 7/10: loss=nan, policy_acc=0.087, value_mae=0.876
-  Époque 8/10: loss=nan, policy_acc=0.087, value_mae=0.874
-  Époque 9/10: loss=nan, policy_acc=0.088, value_mae=0.875
-  Époque 10/10: loss=nan, policy_acc=0.087, value_mae=0.875
-
-  Itération 85 terminée
-  Total parties: 8500, Buffer: 96404
-
-============================================================
-ITERATION 86
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.09/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 944.3s (0.11 parties/s)
-  Terminé en 944.4s (0.11 parties/s)
-  Victoires: J0=50, J1=39, Nuls=11
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.088, value_mae=0.876
-  Époque 2/10: loss=nan, policy_acc=0.086, value_mae=0.876
-  Époque 3/10: loss=nan, policy_acc=0.089, value_mae=0.876
-  Époque 4/10: loss=nan, policy_acc=0.088, value_mae=0.875
-  Époque 5/10: loss=nan, policy_acc=0.088, value_mae=0.877
-  Époque 6/10: loss=nan, policy_acc=0.089, value_mae=0.877
-  Époque 7/10: loss=nan, policy_acc=0.088, value_mae=0.876
-  Époque 8/10: loss=nan, policy_acc=0.087, value_mae=0.876
-  Époque 9/10: loss=nan, policy_acc=0.090, value_mae=0.878
-  Époque 10/10: loss=nan, policy_acc=0.088, value_mae=0.878
-
-  Itération 86 terminée
-  Total parties: 8600, Buffer: 97558
-
-============================================================
-ITERATION 87
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 930.1s (0.11 parties/s)
-  Terminé en 930.2s (0.11 parties/s)
-  Victoires: J0=41, J1=49, Nuls=10
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.089, value_mae=0.874
-  Époque 2/10: loss=nan, policy_acc=0.090, value_mae=0.878
-  Époque 3/10: loss=nan, policy_acc=0.090, value_mae=0.877
-  Époque 4/10: loss=nan, policy_acc=0.091, value_mae=0.876
-  Époque 5/10: loss=nan, policy_acc=0.089, value_mae=0.875
-  Époque 6/10: loss=nan, policy_acc=0.091, value_mae=0.877
-  Époque 7/10: loss=nan, policy_acc=0.090, value_mae=0.879
-  Époque 8/10: loss=nan, policy_acc=0.089, value_mae=0.876
-  Époque 9/10: loss=nan, policy_acc=0.091, value_mae=0.877
-  Époque 10/10: loss=nan, policy_acc=0.091, value_mae=0.876
-
-  Itération 87 terminée
-  Total parties: 8700, Buffer: 98683
-
-============================================================
-ITERATION 88
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.09/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 949.4s (0.11 parties/s)
-  Terminé en 949.5s (0.11 parties/s)
-  Victoires: J0=51, J1=42, Nuls=7
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.089, value_mae=0.876
-  Époque 2/10: loss=nan, policy_acc=0.089, value_mae=0.877
-  Époque 3/10: loss=nan, policy_acc=0.092, value_mae=0.876
-  Époque 4/10: loss=nan, policy_acc=0.092, value_mae=0.875
-  Époque 5/10: loss=nan, policy_acc=0.092, value_mae=0.875
-  Époque 6/10: loss=nan, policy_acc=0.091, value_mae=0.877
-  Époque 7/10: loss=nan, policy_acc=0.089, value_mae=0.878
-  Époque 8/10: loss=nan, policy_acc=0.092, value_mae=0.879
-  Époque 9/10: loss=nan, policy_acc=0.091, value_mae=0.875
-  Époque 10/10: loss=nan, policy_acc=0.091, value_mae=0.877
-
-  Itération 88 terminée
-  Total parties: 8800, Buffer: 99838
-
-============================================================
-ITERATION 89
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 934.1s (0.11 parties/s)
-  Terminé en 934.2s (0.11 parties/s)
-  Victoires: J0=56, J1=35, Nuls=9
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.091, value_mae=0.878
-  Époque 2/10: loss=nan, policy_acc=0.089, value_mae=0.876
-  Époque 3/10: loss=nan, policy_acc=0.090, value_mae=0.876
-  Époque 4/10: loss=nan, policy_acc=0.089, value_mae=0.877
-  Époque 5/10: loss=nan, policy_acc=0.090, value_mae=0.877
-  Époque 6/10: loss=nan, policy_acc=0.090, value_mae=0.875
-  Époque 7/10: loss=nan, policy_acc=0.091, value_mae=0.876
-  Époque 8/10: loss=nan, policy_acc=0.089, value_mae=0.876
-  Époque 9/10: loss=nan, policy_acc=0.092, value_mae=0.877
-  Époque 10/10: loss=nan, policy_acc=0.090, value_mae=0.876
-
-  Itération 89 terminée
-  Total parties: 8900, Buffer: 100000
-
-============================================================
-ITERATION 90
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.07/s)
-    Parties: 40/100 (0.09/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 935.9s (0.11 parties/s)
-  Terminé en 936.0s (0.11 parties/s)
-  Victoires: J0=45, J1=52, Nuls=3
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.091, value_mae=0.878
-  Époque 2/10: loss=nan, policy_acc=0.091, value_mae=0.877
-  Époque 3/10: loss=nan, policy_acc=0.090, value_mae=0.878
-  Époque 4/10: loss=nan, policy_acc=0.091, value_mae=0.879
-  Époque 5/10: loss=nan, policy_acc=0.090, value_mae=0.877
-  Époque 6/10: loss=nan, policy_acc=0.091, value_mae=0.877
-  Époque 7/10: loss=nan, policy_acc=0.092, value_mae=0.879
-  Époque 8/10: loss=nan, policy_acc=0.091, value_mae=0.880
-  Époque 9/10: loss=nan, policy_acc=0.089, value_mae=0.878
-  Époque 10/10: loss=nan, policy_acc=0.091, value_mae=0.879
-
-  Itération 90 terminée
-  Total parties: 9000, Buffer: 100000
-
-============================================================
-ITERATION 91
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.09/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 936.5s (0.11 parties/s)
-  Terminé en 936.6s (0.11 parties/s)
-  Victoires: J0=53, J1=37, Nuls=10
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.089, value_mae=0.877
-  Époque 2/10: loss=nan, policy_acc=0.091, value_mae=0.878
-  Époque 3/10: loss=nan, policy_acc=0.091, value_mae=0.880
-  Époque 4/10: loss=nan, policy_acc=0.091, value_mae=0.877
-  Époque 5/10: loss=nan, policy_acc=0.090, value_mae=0.879
-  Époque 6/10: loss=nan, policy_acc=0.090, value_mae=0.878
-  Époque 7/10: loss=nan, policy_acc=0.090, value_mae=0.877
-  Époque 8/10: loss=nan, policy_acc=0.090, value_mae=0.879
-  Époque 9/10: loss=nan, policy_acc=0.090, value_mae=0.879
-  Époque 10/10: loss=nan, policy_acc=0.092, value_mae=0.878
-
-  Itération 91 terminée
-  Total parties: 9100, Buffer: 100000
-
-============================================================
-ITERATION 92
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.09/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 951.7s (0.11 parties/s)
-  Terminé en 951.8s (0.11 parties/s)
-  Victoires: J0=49, J1=40, Nuls=11
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.090, value_mae=0.877
-  Époque 2/10: loss=nan, policy_acc=0.089, value_mae=0.880
-  Époque 3/10: loss=nan, policy_acc=0.090, value_mae=0.879
-  Époque 4/10: loss=nan, policy_acc=0.091, value_mae=0.880
-  Époque 5/10: loss=nan, policy_acc=0.090, value_mae=0.881
-  Époque 6/10: loss=nan, policy_acc=0.090, value_mae=0.880
-  Époque 7/10: loss=nan, policy_acc=0.092, value_mae=0.878
-  Époque 8/10: loss=nan, policy_acc=0.090, value_mae=0.879
-  Époque 9/10: loss=nan, policy_acc=0.090, value_mae=0.879
-  Époque 10/10: loss=nan, policy_acc=0.090, value_mae=0.879
-
-  Itération 92 terminée
-  Total parties: 9200, Buffer: 100000
-
-============================================================
-ITERATION 93
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.07/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 944.2s (0.11 parties/s)
-  Terminé en 944.3s (0.11 parties/s)
-  Victoires: J0=49, J1=42, Nuls=9
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.088, value_mae=0.880
-  Époque 2/10: loss=nan, policy_acc=0.090, value_mae=0.879
-  Époque 3/10: loss=nan, policy_acc=0.091, value_mae=0.880
-  Époque 4/10: loss=nan, policy_acc=0.091, value_mae=0.880
-  Époque 5/10: loss=nan, policy_acc=0.090, value_mae=0.881
-  Époque 6/10: loss=nan, policy_acc=0.090, value_mae=0.880
-  Époque 7/10: loss=nan, policy_acc=0.091, value_mae=0.879
-  Époque 8/10: loss=nan, policy_acc=0.090, value_mae=0.879
-  Époque 9/10: loss=nan, policy_acc=0.089, value_mae=0.881
-  Époque 10/10: loss=nan, policy_acc=0.092, value_mae=0.880
-
-  Itération 93 terminée
-  Total parties: 9300, Buffer: 100000
-
-============================================================
-ITERATION 94
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.09/s)
-    Parties: 60/100 (0.10/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.11/s)
-    Terminé en 937.2s (0.11 parties/s)
-  Terminé en 937.2s (0.11 parties/s)
-  Victoires: J0=29, J1=56, Nuls=15
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.090, value_mae=0.878
-  Époque 2/10: loss=nan, policy_acc=0.090, value_mae=0.879
-  Époque 3/10: loss=nan, policy_acc=0.091, value_mae=0.878
-  Époque 4/10: loss=nan, policy_acc=0.088, value_mae=0.877
-  Époque 5/10: loss=nan, policy_acc=0.090, value_mae=0.880
-  Époque 6/10: loss=nan, policy_acc=0.090, value_mae=0.880
-  Époque 7/10: loss=nan, policy_acc=0.089, value_mae=0.879
-  Époque 8/10: loss=nan, policy_acc=0.090, value_mae=0.879
-  Époque 9/10: loss=nan, policy_acc=0.089, value_mae=0.878
-  Époque 10/10: loss=nan, policy_acc=0.087, value_mae=0.878
-
-  Itération 94 terminée
-  Total parties: 9400, Buffer: 100000
-
-============================================================
-ITERATION 95
-============================================================
-
-=== Génération PARALLÈLE de 100 parties (14 workers) ===
-  Génération parallèle: 100 parties sur 14 workers
-    Parties: 20/100 (0.08/s)
-    Parties: 40/100 (0.10/s)
-    Parties: 60/100 (0.09/s)
-    Parties: 80/100 (0.10/s)
-    Parties: 100/100 (0.10/s)
-    Terminé en 970.8s (0.10 parties/s)
-  Terminé en 970.9s (0.10 parties/s)
-  Victoires: J0=51, J1=37, Nuls=12
-
-=== Entraînement (10 époques, batch=32) ===
-  Époque 1/10: loss=nan, policy_acc=0.091, value_mae=0.882
-  Époque 2/10: loss=nan, policy_acc=0.090, value_mae=0.879
-  Époque 3/10: loss=nan, policy_acc=0.091, value_mae=0.879
-  Époque 4/10: loss=nan, policy_acc=0.089, value_mae=0.880
-  Époque 5/10: loss=nan, policy_acc=0.090, value_mae=0.878
-  Époque 6/10: loss=nan, policy_acc=0.090, value_mae=0.881
-  Époque 7/10: loss=nan, policy_acc=0.088, value_mae=0.879
-  Époque 8/10: loss=nan, policy_acc=0.091, value_mae=0.878
-  Époque 9/10: loss=nan, policy_acc=0.090, value_mae=0.880
-  Époque 10/10: loss=nan, policy_acc=0.091, value_mae=0.881
-
-  Itération 95 terminée
-  Total parties: 9500, Buffer: 100000
-
-############################################################
-# ENTRAÎNEMENT TERMINÉ
-# Durée totale: 2422.4 minutes
-# Parties jouées: 9500
-# Itérations: 95
-############################################################
-
-Sauvegarde du replay buffer...

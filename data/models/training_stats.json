@@ -1,25 +1,2402 @@
 [
   {
     "iteration": 1,
-    "total_games": 4,
-    "buffer_size": 36,
+    "total_games": 200,
+    "buffer_size": 2202,
     "selfplay": {
-      "games": 4,
-      "wins_player_0": 2,
-      "wins_player_1": 2,
-      "draws": 0,
-      "avg_moves": 9.0,
-      "duration": 30.651676416397095,
-      "games_per_second": 0.13049857194304068,
+      "games": 200,
+      "wins_player_0": 104,
+      "wins_player_1": 86,
+      "draws": 10,
+      "avg_moves": 11.01,
+      "duration": 256.8407382965088,
+      "games_per_second": 0.7786926689531268,
       "errors": 0
     },
     "training": {
-      "loss": 6.047240110735099,
-      "policy_loss": 2.5671972578598394,
-      "piece_loss": 2.558484830376175,
-      "value_loss": 0.9215580224990845,
-      "num_batches": 2
+      "loss": 5.660490682897418,
+      "policy_loss": 2.4250110212132334,
+      "piece_loss": 2.451621223935668,
+      "value_loss": 0.7838584377485163,
+      "num_batches": 136
     },
-    "duration": 30.918771266937256
+    "duration": 257.48094367980957,
+    "cumulative_time": 257.48094367980957
+  },
+  {
+    "iteration": 2,
+    "total_games": 400,
+    "buffer_size": 4411,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 105,
+      "wins_player_1": 88,
+      "draws": 7,
+      "avg_moves": 11.045,
+      "duration": 272.81574630737305,
+      "games_per_second": 0.7330955148558991,
+      "errors": 0
+    },
+    "training": {
+      "loss": 5.300325107986089,
+      "policy_loss": 2.351136012143413,
+      "piece_loss": 2.3314831897039756,
+      "value_loss": 0.6177059061387006,
+      "num_batches": 272
+    },
+    "duration": 273.68763160705566,
+    "cumulative_time": 531.1685752868652
+  },
+  {
+    "iteration": 3,
+    "total_games": 600,
+    "buffer_size": 6700,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 105,
+      "wins_player_1": 77,
+      "draws": 18,
+      "avg_moves": 11.445,
+      "duration": 283.38671708106995,
+      "games_per_second": 0.705749380422742,
+      "errors": 0
+    },
+    "training": {
+      "loss": 5.082962089890065,
+      "policy_loss": 2.2999194482321013,
+      "piece_loss": 2.2577341425094186,
+      "value_loss": 0.5253084991485453,
+      "num_batches": 416
+    },
+    "duration": 284.900634765625,
+    "cumulative_time": 816.0692100524902
+  },
+  {
+    "iteration": 4,
+    "total_games": 800,
+    "buffer_size": 8926,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 94,
+      "wins_player_1": 89,
+      "draws": 17,
+      "avg_moves": 11.13,
+      "duration": 272.3252499103546,
+      "games_per_second": 0.7344159238478143,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.894012779086226,
+      "policy_loss": 2.250462913558292,
+      "piece_loss": 2.1875280266729633,
+      "value_loss": 0.45602183885497155,
+      "num_batches": 556
+    },
+    "duration": 274.29301357269287,
+    "cumulative_time": 1090.362223625183
+  },
+  {
+    "iteration": 5,
+    "total_games": 1000,
+    "buffer_size": 11192,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 88,
+      "wins_player_1": 94,
+      "draws": 18,
+      "avg_moves": 11.33,
+      "duration": 277.78137588500977,
+      "games_per_second": 0.7199906738268583,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.719981354030452,
+      "policy_loss": 2.1954866100808768,
+      "piece_loss": 2.104070567505307,
+      "value_loss": 0.42042417644426744,
+      "num_batches": 696
+    },
+    "duration": 280.35426688194275,
+    "cumulative_time": 1370.7164905071259
+  },
+  {
+    "iteration": 6,
+    "total_games": 1200,
+    "buffer_size": 13370,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 98,
+      "wins_player_1": 91,
+      "draws": 11,
+      "avg_moves": 10.89,
+      "duration": 270.44347310066223,
+      "games_per_second": 0.7395260743658534,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.622972769768028,
+      "policy_loss": 2.1638766653688686,
+      "piece_loss": 2.0637007064920345,
+      "value_loss": 0.39539539790712297,
+      "num_batches": 832
+    },
+    "duration": 273.08795380592346,
+    "cumulative_time": 1643.8044443130493
+  },
+  {
+    "iteration": 7,
+    "total_games": 1400,
+    "buffer_size": 15579,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 103,
+      "wins_player_1": 88,
+      "draws": 9,
+      "avg_moves": 11.045,
+      "duration": 262.7992250919342,
+      "games_per_second": 0.7610372516510833,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.513197450943043,
+      "policy_loss": 2.123056878426582,
+      "piece_loss": 2.0101867685543113,
+      "value_loss": 0.3799538039621502,
+      "num_batches": 972
+    },
+    "duration": 266.3122067451477,
+    "cumulative_time": 1910.116651058197
+  },
+  {
+    "iteration": 8,
+    "total_games": 1600,
+    "buffer_size": 17753,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 98,
+      "wins_player_1": 82,
+      "draws": 20,
+      "avg_moves": 10.87,
+      "duration": 264.0264492034912,
+      "games_per_second": 0.7574998664086696,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.440497316281458,
+      "policy_loss": 2.0987915727204487,
+      "piece_loss": 1.9778950135186746,
+      "value_loss": 0.3638107300423328,
+      "num_batches": 1108
+    },
+    "duration": 268.139280796051,
+    "cumulative_time": 2178.255931854248
+  },
+  {
+    "iteration": 9,
+    "total_games": 1800,
+    "buffer_size": 19972,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 99,
+      "wins_player_1": 84,
+      "draws": 17,
+      "avg_moves": 11.095,
+      "duration": 262.90358805656433,
+      "games_per_second": 0.7607351481143327,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.38348138873528,
+      "policy_loss": 2.081849659759417,
+      "piece_loss": 1.9507597391141605,
+      "value_loss": 0.3508719898617038,
+      "num_batches": 1248
+    },
+    "duration": 267.49792432785034,
+    "cumulative_time": 2445.7538561820984
+  },
+  {
+    "iteration": 10,
+    "total_games": 2000,
+    "buffer_size": 22178,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 94,
+      "wins_player_1": 93,
+      "draws": 13,
+      "avg_moves": 11.03,
+      "duration": 264.86553263664246,
+      "games_per_second": 0.755100137073597,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.334315863654822,
+      "policy_loss": 2.063646979949515,
+      "piece_loss": 1.9255930023059635,
+      "value_loss": 0.3450758813993434,
+      "num_batches": 1384
+    },
+    "duration": 270.00835037231445,
+    "cumulative_time": 2715.762206554413
+  },
+  {
+    "iteration": 11,
+    "total_games": 2200,
+    "buffer_size": 24358,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 100,
+      "wins_player_1": 92,
+      "draws": 8,
+      "avg_moves": 10.9,
+      "duration": 257.6207296848297,
+      "games_per_second": 0.7763350420002215,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.282469958551873,
+      "policy_loss": 2.0503165008263022,
+      "piece_loss": 1.9042693387656755,
+      "value_loss": 0.3278841189598959,
+      "num_batches": 1520
+    },
+    "duration": 262.9990494251251,
+    "cumulative_time": 2978.761255979538
+  },
+  {
+    "iteration": 12,
+    "total_games": 2400,
+    "buffer_size": 26528,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 104,
+      "wins_player_1": 81,
+      "draws": 15,
+      "avg_moves": 10.85,
+      "duration": 261.50016593933105,
+      "games_per_second": 0.7648178703121767,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.237129504627848,
+      "policy_loss": 2.034290540437097,
+      "piece_loss": 1.8861187832664346,
+      "value_loss": 0.316720180924316,
+      "num_batches": 1656
+    },
+    "duration": 267.7001066207886,
+    "cumulative_time": 3246.4613626003265
+  },
+  {
+    "iteration": 13,
+    "total_games": 2600,
+    "buffer_size": 28690,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 94,
+      "wins_player_1": 94,
+      "draws": 12,
+      "avg_moves": 10.81,
+      "duration": 270.04038166999817,
+      "games_per_second": 0.7406299708330633,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.201617558545277,
+      "policy_loss": 2.0257855825295037,
+      "piece_loss": 1.8701594795333767,
+      "value_loss": 0.30567249648239725,
+      "num_batches": 1792
+    },
+    "duration": 276.7666220664978,
+    "cumulative_time": 3523.2279846668243
+  },
+  {
+    "iteration": 14,
+    "total_games": 2800,
+    "buffer_size": 30845,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 103,
+      "wins_player_1": 84,
+      "draws": 13,
+      "avg_moves": 10.775,
+      "duration": 257.7981688976288,
+      "games_per_second": 0.7758007004286351,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.157854396754616,
+      "policy_loss": 2.0104438999833274,
+      "piece_loss": 1.8489047340786482,
+      "value_loss": 0.29850576269264156,
+      "num_batches": 1924
+    },
+    "duration": 265.1523895263672,
+    "cumulative_time": 3788.3803741931915
+  },
+  {
+    "iteration": 15,
+    "total_games": 3000,
+    "buffer_size": 33052,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 107,
+      "wins_player_1": 83,
+      "draws": 10,
+      "avg_moves": 11.035,
+      "duration": 266.1817555427551,
+      "games_per_second": 0.7513662970333639,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.1146169732388795,
+      "policy_loss": 1.9966417951177928,
+      "piece_loss": 1.8291010911033352,
+      "value_loss": 0.28887408701775147,
+      "num_batches": 2064
+    },
+    "duration": 274.5819706916809,
+    "cumulative_time": 4062.9623448848724
+  },
+  {
+    "iteration": 16,
+    "total_games": 3200,
+    "buffer_size": 35285,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 95,
+      "wins_player_1": 89,
+      "draws": 16,
+      "avg_moves": 11.165,
+      "duration": 266.21503043174744,
+      "games_per_second": 0.7512723818622866,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.094982361968694,
+      "policy_loss": 1.9912311064598405,
+      "piece_loss": 1.8197072927576938,
+      "value_loss": 0.28404396275115856,
+      "num_batches": 2204
+    },
+    "duration": 274.6069679260254,
+    "cumulative_time": 4337.569312810898
+  },
+  {
+    "iteration": 17,
+    "total_games": 3400,
+    "buffer_size": 37462,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 105,
+      "wins_player_1": 82,
+      "draws": 13,
+      "avg_moves": 10.885,
+      "duration": 259.9901123046875,
+      "games_per_second": 0.7692600238797392,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.065348471530155,
+      "policy_loss": 1.9840536519746856,
+      "piece_loss": 1.80900876040845,
+      "value_loss": 0.27228605914701765,
+      "num_batches": 2340
+    },
+    "duration": 268.905921459198,
+    "cumulative_time": 4606.475234270096
+  },
+  {
+    "iteration": 18,
+    "total_games": 3600,
+    "buffer_size": 39670,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 98,
+      "wins_player_1": 84,
+      "draws": 18,
+      "avg_moves": 11.04,
+      "duration": 264.48043036460876,
+      "games_per_second": 0.756199616449062,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.027725029122684,
+      "policy_loss": 1.9702031137616245,
+      "piece_loss": 1.7927088086915008,
+      "value_loss": 0.2648131066695554,
+      "num_batches": 2476
+    },
+    "duration": 273.98181104660034,
+    "cumulative_time": 4880.457045316696
+  },
+  {
+    "iteration": 19,
+    "total_games": 3800,
+    "buffer_size": 41856,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 96,
+      "wins_player_1": 92,
+      "draws": 12,
+      "avg_moves": 10.93,
+      "duration": 261.89570903778076,
+      "games_per_second": 0.7636627600154695,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.014941243020724,
+      "policy_loss": 1.9662314624097859,
+      "piece_loss": 1.7861824088485085,
+      "value_loss": 0.26252737176242863,
+      "num_batches": 2616
+    },
+    "duration": 271.95479369163513,
+    "cumulative_time": 5152.411839008331
+  },
+  {
+    "iteration": 20,
+    "total_games": 4000,
+    "buffer_size": 44095,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 93,
+      "wins_player_1": 84,
+      "draws": 23,
+      "avg_moves": 11.195,
+      "duration": 270.04892683029175,
+      "games_per_second": 0.7406065350731316,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.997642085497424,
+      "policy_loss": 1.9624182086398259,
+      "piece_loss": 1.7782542363848433,
+      "value_loss": 0.2569696404727523,
+      "num_batches": 2752
+    },
+    "duration": 279.68442821502686,
+    "cumulative_time": 5432.096267223358
+  },
+  {
+    "iteration": 21,
+    "total_games": 4200,
+    "buffer_size": 46264,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 95,
+      "wins_player_1": 96,
+      "draws": 9,
+      "avg_moves": 10.845,
+      "duration": 261.08602643013,
+      "games_per_second": 0.7660310386374607,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.9779008633137085,
+      "policy_loss": 1.9554448564868598,
+      "piece_loss": 1.7671974848562086,
+      "value_loss": 0.2552585219706401,
+      "num_batches": 2888
+    },
+    "duration": 271.94762659072876,
+    "cumulative_time": 5704.043893814087
+  },
+  {
+    "iteration": 22,
+    "total_games": 4400,
+    "buffer_size": 48476,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 102,
+      "wins_player_1": 90,
+      "draws": 8,
+      "avg_moves": 11.06,
+      "duration": 261.0528998374939,
+      "games_per_second": 0.7661282449821493,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.980150619707876,
+      "policy_loss": 1.9538778394518819,
+      "piece_loss": 1.7668981114219988,
+      "value_loss": 0.2593746688339953,
+      "num_batches": 3028
+    },
+    "duration": 272.97629833221436,
+    "cumulative_time": 5977.020192146301
+  },
+  {
+    "iteration": 23,
+    "total_games": 4600,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 91,
+      "wins_player_1": 94,
+      "draws": 15,
+      "avg_moves": 11.045,
+      "duration": 259.65090012550354,
+      "games_per_second": 0.7702649977463164,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.989461409401623,
+      "policy_loss": 1.9565524928037852,
+      "piece_loss": 1.7723701212681129,
+      "value_loss": 0.2605387953297258,
+      "num_batches": 3124
+    },
+    "duration": 270.60418605804443,
+    "cumulative_time": 6247.624378204346
+  },
+  {
+    "iteration": 24,
+    "total_games": 4800,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 91,
+      "wins_player_1": 101,
+      "draws": 8,
+      "avg_moves": 10.735,
+      "duration": 267.3173849582672,
+      "games_per_second": 0.7481743098423,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.018269802010145,
+      "policy_loss": 1.9661882133084652,
+      "piece_loss": 1.7794518288012071,
+      "value_loss": 0.2726297599004722,
+      "num_batches": 3124
+    },
+    "duration": 279.677127122879,
+    "cumulative_time": 6527.301505327225
+  },
+  {
+    "iteration": 25,
+    "total_games": 5000,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 96,
+      "wins_player_1": 91,
+      "draws": 13,
+      "avg_moves": 10.79,
+      "duration": 259.549875497818,
+      "games_per_second": 0.7705648080793681,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.041869308387777,
+      "policy_loss": 1.9687887247718396,
+      "piece_loss": 1.7950412674306695,
+      "value_loss": 0.2780393161852671,
+      "num_batches": 3124
+    },
+    "duration": 272.28267669677734,
+    "cumulative_time": 6799.584182024002
+  },
+  {
+    "iteration": 26,
+    "total_games": 5200,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 97,
+      "wins_player_1": 95,
+      "draws": 8,
+      "avg_moves": 10.825,
+      "duration": 258.2942295074463,
+      "games_per_second": 0.7743107555340653,
+      "errors": 0
+    },
+    "training": {
+      "loss": 5.051967040861822,
+      "policy_loss": 2.211303074732201,
+      "piece_loss": 2.167032528305624,
+      "value_loss": 0.6736314378239969,
+      "num_batches": 3124
+    },
+    "duration": 271.2131221294403,
+    "cumulative_time": 7070.797304153442
+  },
+  {
+    "iteration": 27,
+    "total_games": 5400,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 103,
+      "wins_player_1": 81,
+      "draws": 16,
+      "avg_moves": 10.935,
+      "duration": 264.91204476356506,
+      "games_per_second": 0.754967559812166,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.962678584008634,
+      "policy_loss": 2.1982583316705435,
+      "piece_loss": 2.1447365337311664,
+      "value_loss": 0.6196837186069251,
+      "num_batches": 3124
+    },
+    "duration": 276.56303787231445,
+    "cumulative_time": 7347.360342025757
+  },
+  {
+    "iteration": 28,
+    "total_games": 5600,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 93,
+      "wins_player_1": 94,
+      "draws": 13,
+      "avg_moves": 11.135,
+      "duration": 268.8281133174896,
+      "games_per_second": 0.7439698085586656,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.837148757414145,
+      "policy_loss": 2.1727594982968004,
+      "piece_loss": 2.10277948777141,
+      "value_loss": 0.5616097713459316,
+      "num_batches": 3124
+    },
+    "duration": 281.3918082714081,
+    "cumulative_time": 7628.752150297165
+  },
+  {
+    "iteration": 29,
+    "total_games": 5800,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 101,
+      "wins_player_1": 84,
+      "draws": 15,
+      "avg_moves": 11.015,
+      "duration": 257.5370593070984,
+      "games_per_second": 0.7765872629675068,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.725183357071354,
+      "policy_loss": 2.151434844712161,
+      "piece_loss": 2.059906891372924,
+      "value_loss": 0.5138416209862724,
+      "num_batches": 3124
+    },
+    "duration": 270.1256742477417,
+    "cumulative_time": 7898.877824544907
+  },
+  {
+    "iteration": 30,
+    "total_games": 6000,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 95,
+      "wins_player_1": 93,
+      "draws": 12,
+      "avg_moves": 10.995,
+      "duration": 270.462854385376,
+      "games_per_second": 0.739473080155491,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.636931956302631,
+      "policy_loss": 2.132766368377082,
+      "piece_loss": 2.027233718681215,
+      "value_loss": 0.4769318692443389,
+      "num_batches": 3124
+    },
+    "duration": 283.0573012828827,
+    "cumulative_time": 8181.935125827789
+  },
+  {
+    "iteration": 31,
+    "total_games": 6200,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 91,
+      "wins_player_1": 93,
+      "draws": 16,
+      "avg_moves": 11.225,
+      "duration": 257.8749122619629,
+      "games_per_second": 0.775569822770621,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.5667193780362,
+      "policy_loss": 2.1208499815115456,
+      "piece_loss": 2.0006217034443163,
+      "value_loss": 0.44524769308033585,
+      "num_batches": 3124
+    },
+    "duration": 269.26831007003784,
+    "cumulative_time": 8451.203435897827
+  },
+  {
+    "iteration": 32,
+    "total_games": 6400,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 103,
+      "wins_player_1": 88,
+      "draws": 9,
+      "avg_moves": 11.085,
+      "duration": 267.780072927475,
+      "games_per_second": 0.7468815652095502,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.492017170671808,
+      "policy_loss": 2.1022512747628967,
+      "piece_loss": 1.9712364206317914,
+      "value_loss": 0.4185294752771204,
+      "num_batches": 3124
+    },
+    "duration": 279.31101751327515,
+    "cumulative_time": 8730.514453411102
+  },
+  {
+    "iteration": 33,
+    "total_games": 6600,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 88,
+      "wins_player_1": 98,
+      "draws": 14,
+      "avg_moves": 10.94,
+      "duration": 264.5811824798584,
+      "games_per_second": 0.7559116567756109,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.438676986048105,
+      "policy_loss": 2.094441950719464,
+      "piece_loss": 1.9472384571961507,
+      "value_loss": 0.39699657813248806,
+      "num_batches": 3124
+    },
+    "duration": 277.14335107803345,
+    "cumulative_time": 9007.657804489136
+  },
+  {
+    "iteration": 34,
+    "total_games": 6800,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 86,
+      "wins_player_1": 103,
+      "draws": 11,
+      "avg_moves": 11.07,
+      "duration": 264.3769130706787,
+      "games_per_second": 0.7564957078779865,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.370793975641917,
+      "policy_loss": 2.077185194726109,
+      "piece_loss": 1.9186187616267636,
+      "value_loss": 0.3749900192890445,
+      "num_batches": 3124
+    },
+    "duration": 275.63755083084106,
+    "cumulative_time": 9283.295355319977
+  },
+  {
+    "iteration": 35,
+    "total_games": 7000,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 92,
+      "wins_player_1": 94,
+      "draws": 14,
+      "avg_moves": 11.27,
+      "duration": 268.36382031440735,
+      "games_per_second": 0.7452569417356101,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.304632101605073,
+      "policy_loss": 2.058688808345182,
+      "piece_loss": 1.892267529325079,
+      "value_loss": 0.35367576393481254,
+      "num_batches": 3124
+    },
+    "duration": 280.79783964157104,
+    "cumulative_time": 9564.093194961548
+  },
+  {
+    "iteration": 36,
+    "total_games": 7200,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 108,
+      "wins_player_1": 76,
+      "draws": 16,
+      "avg_moves": 11.01,
+      "duration": 267.87464570999146,
+      "games_per_second": 0.7466178796799066,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.257950822594239,
+      "policy_loss": 2.049173548747748,
+      "piece_loss": 1.8699031198914564,
+      "value_loss": 0.3388741539550347,
+      "num_batches": 3124
+    },
+    "duration": 280.7087724208832,
+    "cumulative_time": 9844.801967382431
+  },
+  {
+    "iteration": 37,
+    "total_games": 7400,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 92,
+      "wins_player_1": 95,
+      "draws": 13,
+      "avg_moves": 10.93,
+      "duration": 264.7120010852814,
+      "games_per_second": 0.7555380911331129,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.192589852596007,
+      "policy_loss": 2.029988219916949,
+      "piece_loss": 1.8423466844575367,
+      "value_loss": 0.3202549482215191,
+      "num_batches": 3124
+    },
+    "duration": 277.3489601612091,
+    "cumulative_time": 10122.15092754364
+  },
+  {
+    "iteration": 38,
+    "total_games": 7600,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 76,
+      "wins_player_1": 113,
+      "draws": 11,
+      "avg_moves": 11.07,
+      "duration": 263.55759739875793,
+      "games_per_second": 0.7588474093478838,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.150827943023698,
+      "policy_loss": 2.0197694932216503,
+      "piece_loss": 1.8237387332981425,
+      "value_loss": 0.3073197165039033,
+      "num_batches": 3124
+    },
+    "duration": 276.20615816116333,
+    "cumulative_time": 10398.357085704803
+  },
+  {
+    "iteration": 39,
+    "total_games": 7800,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 87,
+      "wins_player_1": 91,
+      "draws": 22,
+      "avg_moves": 11.355,
+      "duration": 275.05762791633606,
+      "games_per_second": 0.7271203547964638,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.09618496150839,
+      "policy_loss": 2.004978865919315,
+      "piece_loss": 1.7968441252768026,
+      "value_loss": 0.2943619703122733,
+      "num_batches": 3124
+    },
+    "duration": 286.8127410411835,
+    "cumulative_time": 10685.169826745987
+  },
+  {
+    "iteration": 40,
+    "total_games": 8000,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 90,
+      "wins_player_1": 91,
+      "draws": 19,
+      "avg_moves": 11.24,
+      "duration": 265.35226917266846,
+      "games_per_second": 0.7537150544201948,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.047009731316373,
+      "policy_loss": 1.9906345983368552,
+      "piece_loss": 1.7750794258664784,
+      "value_loss": 0.2812957071130392,
+      "num_batches": 3124
+    },
+    "duration": 277.92357778549194,
+    "cumulative_time": 10963.093404531479
+  },
+  {
+    "iteration": 41,
+    "total_games": 8200,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 96,
+      "wins_player_1": 93,
+      "draws": 11,
+      "avg_moves": 10.99,
+      "duration": 262.7128083705902,
+      "games_per_second": 0.7612875871581954,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.991701690678824,
+      "policy_loss": 1.9767446801333777,
+      "piece_loss": 1.7460469443673148,
+      "value_loss": 0.2689100661781281,
+      "num_batches": 3124
+    },
+    "duration": 275.7318856716156,
+    "cumulative_time": 11238.825290203094
+  },
+  {
+    "iteration": 42,
+    "total_games": 8400,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 101,
+      "wins_player_1": 89,
+      "draws": 10,
+      "avg_moves": 10.745,
+      "duration": 255.38486194610596,
+      "games_per_second": 0.7831317740446422,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.9620706350041197,
+      "policy_loss": 1.9714176611767726,
+      "piece_loss": 1.7287695931392602,
+      "value_loss": 0.2618833806880877,
+      "num_batches": 3124
+    },
+    "duration": 266.6761496067047,
+    "cumulative_time": 11505.5014398098
+  },
+  {
+    "iteration": 43,
+    "total_games": 8600,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 91,
+      "wins_player_1": 99,
+      "draws": 10,
+      "avg_moves": 10.975,
+      "duration": 267.81157660484314,
+      "games_per_second": 0.7467937067377063,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.9197390144934827,
+      "policy_loss": 1.9596376257309338,
+      "piece_loss": 1.7087533921389297,
+      "value_loss": 0.2513479966236214,
+      "num_batches": 3124
+    },
+    "duration": 279.1425631046295,
+    "cumulative_time": 11784.644002914429
+  },
+  {
+    "iteration": 44,
+    "total_games": 8800,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 115,
+      "wins_player_1": 74,
+      "draws": 11,
+      "avg_moves": 11.155,
+      "duration": 268.034823179245,
+      "games_per_second": 0.7461717012279873,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.887534003959678,
+      "policy_loss": 1.947512919412052,
+      "piece_loss": 1.6917662642223703,
+      "value_loss": 0.24825482032525323,
+      "num_batches": 3124
+    },
+    "duration": 281.68168592453003,
+    "cumulative_time": 12066.325688838959
+  },
+  {
+    "iteration": 45,
+    "total_games": 9000,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 86,
+      "wins_player_1": 96,
+      "draws": 18,
+      "avg_moves": 11.4,
+      "duration": 297.78423738479614,
+      "games_per_second": 0.6716272216301377,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.8556786973694672,
+      "policy_loss": 1.9364321563539642,
+      "piece_loss": 1.6761569365545248,
+      "value_loss": 0.24308960446098127,
+      "num_batches": 3124
+    },
+    "duration": 309.55513191223145,
+    "cumulative_time": 12375.88082075119
+  },
+  {
+    "iteration": 46,
+    "total_games": 9200,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 91,
+      "wins_player_1": 96,
+      "draws": 13,
+      "avg_moves": 10.795,
+      "duration": 255.91295075416565,
+      "games_per_second": 0.7815157435784617,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.8488240137489953,
+      "policy_loss": 1.935091939367601,
+      "piece_loss": 1.6713400220109542,
+      "value_loss": 0.24239205237043956,
+      "num_batches": 3124
+    },
+    "duration": 268.6948652267456,
+    "cumulative_time": 12644.575685977936
+  },
+  {
+    "iteration": 47,
+    "total_games": 9400,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 101,
+      "wins_player_1": 88,
+      "draws": 11,
+      "avg_moves": 10.785,
+      "duration": 269.4527118206024,
+      "games_per_second": 0.7422452668917914,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.8380121231042237,
+      "policy_loss": 1.9284446292811508,
+      "piece_loss": 1.664313243596462,
+      "value_loss": 0.24525425022661151,
+      "num_batches": 3124
+    },
+    "duration": 282.03698468208313,
+    "cumulative_time": 12926.612670660019
+  },
+  {
+    "iteration": 48,
+    "total_games": 9600,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 88,
+      "wins_player_1": 100,
+      "draws": 12,
+      "avg_moves": 10.99,
+      "duration": 261.6691014766693,
+      "games_per_second": 0.7643240981504735,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.8421316300584163,
+      "policy_loss": 1.9270592707034115,
+      "piece_loss": 1.6639282302756495,
+      "value_loss": 0.2511441290793552,
+      "num_batches": 3124
+    },
+    "duration": 274.55586314201355,
+    "cumulative_time": 13201.168533802032
+  },
+  {
+    "iteration": 49,
+    "total_games": 9800,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 107,
+      "wins_player_1": 77,
+      "draws": 16,
+      "avg_moves": 11.175,
+      "duration": 263.77749252319336,
+      "games_per_second": 0.7582148047844319,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.8506874178110153,
+      "policy_loss": 1.925155750094424,
+      "piece_loss": 1.6705171173870195,
+      "value_loss": 0.2550145503295712,
+      "num_batches": 3124
+    },
+    "duration": 276.9017505645752,
+    "cumulative_time": 13478.070284366608
+  },
+  {
+    "iteration": 50,
+    "total_games": 10000,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 99,
+      "wins_player_1": 87,
+      "draws": 14,
+      "avg_moves": 11.125,
+      "duration": 266.2353036403656,
+      "games_per_second": 0.7512151741910337,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.855111380747723,
+      "policy_loss": 1.9206803418757308,
+      "piece_loss": 1.6750698628895833,
+      "value_loss": 0.259361175982408,
+      "num_batches": 3124
+    },
+    "duration": 278.835253238678,
+    "cumulative_time": 13756.905537605286
+  },
+  {
+    "iteration": 51,
+    "total_games": 10200,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 98,
+      "wins_player_1": 87,
+      "draws": 15,
+      "avg_moves": 11.0,
+      "duration": 260.65376925468445,
+      "games_per_second": 0.7673013920799291,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.846373635256802,
+      "policy_loss": 2.161570710495483,
+      "piece_loss": 2.052444561956099,
+      "value_loss": 0.6323583628052175,
+      "num_batches": 3124
+    },
+    "duration": 272.9170787334442,
+    "cumulative_time": 14029.82261633873
+  },
+  {
+    "iteration": 52,
+    "total_games": 10400,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 91,
+      "wins_player_1": 96,
+      "draws": 13,
+      "avg_moves": 10.885,
+      "duration": 260.99304366111755,
+      "games_per_second": 0.7663039489270334,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.762628517480767,
+      "policy_loss": 2.156280503342101,
+      "piece_loss": 2.0327710465716518,
+      "value_loss": 0.5735769675670146,
+      "num_batches": 3124
+    },
+    "duration": 273.8034574985504,
+    "cumulative_time": 14303.62607383728
+  },
+  {
+    "iteration": 53,
+    "total_games": 10600,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 94,
+      "wins_player_1": 87,
+      "draws": 19,
+      "avg_moves": 11.4,
+      "duration": 274.3820357322693,
+      "games_per_second": 0.7289106936838671,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.645273341969588,
+      "policy_loss": 2.136325800266203,
+      "piece_loss": 1.9983281871653278,
+      "value_loss": 0.5106193545380567,
+      "num_batches": 3124
+    },
+    "duration": 286.95734572410583,
+    "cumulative_time": 14590.583419561386
+  },
+  {
+    "iteration": 54,
+    "total_games": 10800,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 101,
+      "wins_player_1": 89,
+      "draws": 10,
+      "avg_moves": 10.955,
+      "duration": 297.9341549873352,
+      "games_per_second": 0.6712892652690382,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.562117919529938,
+      "policy_loss": 2.1191722820925225,
+      "piece_loss": 1.972427914182738,
+      "value_loss": 0.4705177232546782,
+      "num_batches": 3124
+    },
+    "duration": 309.33922362327576,
+    "cumulative_time": 14899.922643184662
+  },
+  {
+    "iteration": 55,
+    "total_games": 11000,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 88,
+      "wins_player_1": 95,
+      "draws": 17,
+      "avg_moves": 11.21,
+      "duration": 274.06767106056213,
+      "games_per_second": 0.7297467783268935,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.478561372657464,
+      "policy_loss": 2.1025976443863876,
+      "piece_loss": 1.9403765941160576,
+      "value_loss": 0.4355871341550167,
+      "num_batches": 3124
+    },
+    "duration": 286.78586196899414,
+    "cumulative_time": 15186.708505153656
+  },
+  {
+    "iteration": 56,
+    "total_games": 11200,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 93,
+      "wins_player_1": 96,
+      "draws": 11,
+      "avg_moves": 11.255,
+      "duration": 272.34359908103943,
+      "games_per_second": 0.7343664425191332,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.423411489181792,
+      "policy_loss": 2.0927520948679823,
+      "piece_loss": 1.9199843738427256,
+      "value_loss": 0.4106750204710817,
+      "num_batches": 3124
+    },
+    "duration": 285.0853228569031,
+    "cumulative_time": 15471.793828010559
+  },
+  {
+    "iteration": 57,
+    "total_games": 11400,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 100,
+      "wins_player_1": 85,
+      "draws": 15,
+      "avg_moves": 11.25,
+      "duration": 265.4372081756592,
+      "games_per_second": 0.7534738681686457,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.354741878627917,
+      "policy_loss": 2.0762464397994966,
+      "piece_loss": 1.8937761118936511,
+      "value_loss": 0.38471932693476407,
+      "num_batches": 3124
+    },
+    "duration": 278.32423305511475,
+    "cumulative_time": 15750.118061065674
+  },
+  {
+    "iteration": 58,
+    "total_games": 11600,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 102,
+      "wins_player_1": 86,
+      "draws": 12,
+      "avg_moves": 11.07,
+      "duration": 270.77723574638367,
+      "games_per_second": 0.7386145273575535,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.300599585614771,
+      "policy_loss": 2.0656530727899964,
+      "piece_loss": 1.8707938830759292,
+      "value_loss": 0.36415262974884544,
+      "num_batches": 3124
+    },
+    "duration": 283.69505977630615,
+    "cumulative_time": 16033.81312084198
+  },
+  {
+    "iteration": 59,
+    "total_games": 11800,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 94,
+      "wins_player_1": 89,
+      "draws": 17,
+      "avg_moves": 11.18,
+      "duration": 269.2388188838959,
+      "games_per_second": 0.7428349330497034,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.245814799965992,
+      "policy_loss": 2.0482814161582805,
+      "piece_loss": 1.8493568194780718,
+      "value_loss": 0.3481765643296413,
+      "num_batches": 3124
+    },
+    "duration": 281.3202545642853,
+    "cumulative_time": 16315.133375406265
+  },
+  {
+    "iteration": 60,
+    "total_games": 12000,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 93,
+      "wins_player_1": 94,
+      "draws": 13,
+      "avg_moves": 11.045,
+      "duration": 275.8335313796997,
+      "games_per_second": 0.725075008102221,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.192216287811343,
+      "policy_loss": 2.0362879993502045,
+      "piece_loss": 1.826581503215626,
+      "value_loss": 0.3293467852455133,
+      "num_batches": 3124
+    },
+    "duration": 288.1136837005615,
+    "cumulative_time": 16603.247059106827
+  },
+  {
+    "iteration": 61,
+    "total_games": 12200,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 88,
+      "wins_player_1": 94,
+      "draws": 18,
+      "avg_moves": 11.21,
+      "duration": 280.97378373146057,
+      "games_per_second": 0.7118101815191025,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.144534257568727,
+      "policy_loss": 2.0233029132005345,
+      "piece_loss": 1.8057846278650622,
+      "value_loss": 0.3154467165031293,
+      "num_batches": 3124
+    },
+    "duration": 294.9427981376648,
+    "cumulative_time": 16898.18985724449
+  },
+  {
+    "iteration": 62,
+    "total_games": 12400,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 90,
+      "wins_player_1": 91,
+      "draws": 19,
+      "avg_moves": 11.34,
+      "duration": 279.4007031917572,
+      "games_per_second": 0.7158178118926808,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.095461077556019,
+      "policy_loss": 2.0095503711527507,
+      "piece_loss": 1.7841094065719512,
+      "value_loss": 0.3018012998313208,
+      "num_batches": 3124
+    },
+    "duration": 294.2745659351349,
+    "cumulative_time": 17192.464423179626
+  },
+  {
+    "iteration": 63,
+    "total_games": 12600,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 99,
+      "wins_player_1": 85,
+      "draws": 16,
+      "avg_moves": 11.065,
+      "duration": 282.38409757614136,
+      "games_per_second": 0.7082551805031178,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.049022586673641,
+      "policy_loss": 1.9959098313986694,
+      "piece_loss": 1.765602562463826,
+      "value_loss": 0.28751019281114565,
+      "num_batches": 3124
+    },
+    "duration": 296.2323434352875,
+    "cumulative_time": 17488.696766614914
+  },
+  {
+    "iteration": 64,
+    "total_games": 12800,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 87,
+      "wins_player_1": 99,
+      "draws": 14,
+      "avg_moves": 10.985,
+      "duration": 266.5286021232605,
+      "games_per_second": 0.7503885076750852,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.008781530705418,
+      "policy_loss": 1.9851184903095456,
+      "piece_loss": 1.7454485235956083,
+      "value_loss": 0.2782145168002642,
+      "num_batches": 3124
+    },
+    "duration": 278.4303939342499,
+    "cumulative_time": 17767.127160549164
+  },
+  {
+    "iteration": 65,
+    "total_games": 13000,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 109,
+      "wins_player_1": 82,
+      "draws": 9,
+      "avg_moves": 11.055,
+      "duration": 269.44698119163513,
+      "games_per_second": 0.7422610530483424,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.9434650635632194,
+      "policy_loss": 1.9652744246260059,
+      "piece_loss": 1.7173182053550706,
+      "value_loss": 0.26087243358214673,
+      "num_batches": 3124
+    },
+    "duration": 280.9519212245941,
+    "cumulative_time": 18048.079081773758
+  },
+  {
+    "iteration": 66,
+    "total_games": 13200,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 97,
+      "wins_player_1": 91,
+      "draws": 12,
+      "avg_moves": 11.125,
+      "duration": 260.66342520713806,
+      "games_per_second": 0.7672729683539935,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.911396618655546,
+      "policy_loss": 1.9562275668759679,
+      "piece_loss": 1.7003119351586615,
+      "value_loss": 0.2548571166209161,
+      "num_batches": 3124
+    },
+    "duration": 271.79829359054565,
+    "cumulative_time": 18319.877375364304
+  },
+  {
+    "iteration": 67,
+    "total_games": 13400,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 92,
+      "wins_player_1": 91,
+      "draws": 17,
+      "avg_moves": 11.15,
+      "duration": 266.4898338317871,
+      "games_per_second": 0.7504976723661563,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.876824560481348,
+      "policy_loss": 1.9448931207101023,
+      "piece_loss": 1.683317247247128,
+      "value_loss": 0.24861419252412115,
+      "num_batches": 3124
+    },
+    "duration": 278.5716462135315,
+    "cumulative_time": 18598.449021577835
+  },
+  {
+    "iteration": 68,
+    "total_games": 13600,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 97,
+      "wins_player_1": 89,
+      "draws": 14,
+      "avg_moves": 10.855,
+      "duration": 265.3613362312317,
+      "games_per_second": 0.7536893009376586,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.83658240502043,
+      "policy_loss": 1.9306427259193792,
+      "piece_loss": 1.6646878953455253,
+      "value_loss": 0.24125178375552084,
+      "num_batches": 3124
+    },
+    "duration": 277.24317383766174,
+    "cumulative_time": 18875.692195415497
+  },
+  {
+    "iteration": 69,
+    "total_games": 13800,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 98,
+      "wins_player_1": 86,
+      "draws": 16,
+      "avg_moves": 11.13,
+      "duration": 273.3171248435974,
+      "games_per_second": 0.7317507094165714,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.802974144147001,
+      "policy_loss": 1.9168536143521757,
+      "piece_loss": 1.6494316007012118,
+      "value_loss": 0.2366889290936129,
+      "num_batches": 3124
+    },
+    "duration": 286.2899715900421,
+    "cumulative_time": 19161.98216700554
+  },
+  {
+    "iteration": 70,
+    "total_games": 14000,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 90,
+      "wins_player_1": 88,
+      "draws": 22,
+      "avg_moves": 11.27,
+      "duration": 262.6358389854431,
+      "games_per_second": 0.7615106939425934,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.785147556502655,
+      "policy_loss": 1.9109718388410786,
+      "piece_loss": 1.640423510632368,
+      "value_loss": 0.23375220702920543,
+      "num_batches": 3124
+    },
+    "duration": 275.5514738559723,
+    "cumulative_time": 19437.53364086151
+  },
+  {
+    "iteration": 71,
+    "total_games": 14200,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 95,
+      "wins_player_1": 90,
+      "draws": 15,
+      "avg_moves": 11.185,
+      "duration": 269.0008683204651,
+      "games_per_second": 0.7434920238314501,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.7708003929637606,
+      "policy_loss": 1.9032588884340806,
+      "piece_loss": 1.6320141686930345,
+      "value_loss": 0.2355273358366439,
+      "num_batches": 3124
+    },
+    "duration": 282.1223647594452,
+    "cumulative_time": 19719.656005620956
+  },
+  {
+    "iteration": 72,
+    "total_games": 14400,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 100,
+      "wins_player_1": 83,
+      "draws": 17,
+      "avg_moves": 11.23,
+      "duration": 275.8424949645996,
+      "games_per_second": 0.7250514465715919,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.756267719239149,
+      "policy_loss": 1.8953134691099522,
+      "piece_loss": 1.6255130298989604,
+      "value_loss": 0.2354412202302381,
+      "num_batches": 3124
+    },
+    "duration": 288.6905415058136,
+    "cumulative_time": 20008.34654712677
+  },
+  {
+    "iteration": 73,
+    "total_games": 14600,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 85,
+      "wins_player_1": 99,
+      "draws": 16,
+      "avg_moves": 11.155,
+      "duration": 269.7931025028229,
+      "games_per_second": 0.7413087960538479,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.7494559703453905,
+      "policy_loss": 1.8908841439711266,
+      "piece_loss": 1.6214996770730903,
+      "value_loss": 0.23707214930117437,
+      "num_batches": 3124
+    },
+    "duration": 282.8887276649475,
+    "cumulative_time": 20291.235274791718
+  },
+  {
+    "iteration": 74,
+    "total_games": 14800,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 86,
+      "wins_player_1": 95,
+      "draws": 19,
+      "avg_moves": 11.35,
+      "duration": 273.5109875202179,
+      "games_per_second": 0.7312320496273154,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.7634417460468335,
+      "policy_loss": 1.8917108320889588,
+      "piece_loss": 1.62710777726315,
+      "value_loss": 0.2446231366947255,
+      "num_batches": 3124
+    },
+    "duration": 287.1768000125885,
+    "cumulative_time": 20578.412074804306
+  },
+  {
+    "iteration": 75,
+    "total_games": 15000,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 114,
+      "wins_player_1": 70,
+      "draws": 16,
+      "avg_moves": 11.27,
+      "duration": 272.2386453151703,
+      "games_per_second": 0.7346495563422316,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.7804189571208378,
+      "policy_loss": 1.8905430892416393,
+      "piece_loss": 1.638332849470363,
+      "value_loss": 0.2515430184088352,
+      "num_batches": 3124
+    },
+    "duration": 285.9952070713043,
+    "cumulative_time": 20864.40728187561
+  },
+  {
+    "iteration": 76,
+    "total_games": 15200,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 89,
+      "wins_player_1": 96,
+      "draws": 15,
+      "avg_moves": 11.135,
+      "duration": 285.4986412525177,
+      "games_per_second": 0.7005287279917528,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.7264307118363345,
+      "policy_loss": 2.1287341453383615,
+      "piece_loss": 2.0033369011234528,
+      "value_loss": 0.5943596653745208,
+      "num_batches": 3124
+    },
+    "duration": 300.2875266075134,
+    "cumulative_time": 21164.694808483124
+  },
+  {
+    "iteration": 77,
+    "total_games": 15400,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 94,
+      "wins_player_1": 91,
+      "draws": 15,
+      "avg_moves": 11.37,
+      "duration": 291.21347665786743,
+      "games_per_second": 0.6867814027541393,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.649764525561702,
+      "policy_loss": 2.125434285815131,
+      "piece_loss": 1.9906862080276042,
+      "value_loss": 0.5336440317189648,
+      "num_batches": 3124
+    },
+    "duration": 303.2094533443451,
+    "cumulative_time": 21467.90426182747
+  },
+  {
+    "iteration": 78,
+    "total_games": 15600,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 98,
+      "wins_player_1": 77,
+      "draws": 25,
+      "avg_moves": 11.39,
+      "duration": 276.873663187027,
+      "games_per_second": 0.7223511174658055,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.531889661118485,
+      "policy_loss": 2.1042686812833225,
+      "piece_loss": 1.9568577113063956,
+      "value_loss": 0.47076326852876615,
+      "num_batches": 3124
+    },
+    "duration": 289.16969060897827,
+    "cumulative_time": 21757.073952436447
+  },
+  {
+    "iteration": 79,
+    "total_games": 15800,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 94,
+      "wins_player_1": 90,
+      "draws": 16,
+      "avg_moves": 11.43,
+      "duration": 273.2256066799164,
+      "games_per_second": 0.7319958126556559,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.448181173838611,
+      "policy_loss": 2.086857036334817,
+      "piece_loss": 1.9271253782890048,
+      "value_loss": 0.43419875921478807,
+      "num_batches": 3124
+    },
+    "duration": 286.2059931755066,
+    "cumulative_time": 22043.279945611954
+  },
+  {
+    "iteration": 80,
+    "total_games": 16000,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 100,
+      "wins_player_1": 88,
+      "draws": 12,
+      "avg_moves": 11.25,
+      "duration": 267.75369119644165,
+      "games_per_second": 0.7469551553381458,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.380628721277034,
+      "policy_loss": 2.0758203813843106,
+      "piece_loss": 1.9010663486475428,
+      "value_loss": 0.40374199124518184,
+      "num_batches": 3124
+    },
+    "duration": 280.9956352710724,
+    "cumulative_time": 22324.275580883026
+  },
+  {
+    "iteration": 81,
+    "total_games": 16200,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 96,
+      "wins_player_1": 87,
+      "draws": 17,
+      "avg_moves": 11.38,
+      "duration": 267.3510501384735,
+      "games_per_second": 0.7480800987929942,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.313307686362205,
+      "policy_loss": 2.0580531894872354,
+      "piece_loss": 1.8768195578202018,
+      "value_loss": 0.3784349390547651,
+      "num_batches": 3124
+    },
+    "duration": 279.4446339607239,
+    "cumulative_time": 22603.72021484375
+  },
+  {
+    "iteration": 82,
+    "total_games": 16400,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 100,
+      "wins_player_1": 81,
+      "draws": 19,
+      "avg_moves": 11.01,
+      "duration": 265.208398103714,
+      "games_per_second": 0.7541239320852381,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.258580768718668,
+      "policy_loss": 2.0492013189682554,
+      "piece_loss": 1.852454149679554,
+      "value_loss": 0.356925300070861,
+      "num_batches": 3124
+    },
+    "duration": 277.834214925766,
+    "cumulative_time": 22881.554429769516
+  },
+  {
+    "iteration": 83,
+    "total_games": 16600,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 96,
+      "wins_player_1": 84,
+      "draws": 20,
+      "avg_moves": 11.33,
+      "duration": 267.77583289146423,
+      "games_per_second": 0.7468933915371841,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.209284211880904,
+      "policy_loss": 2.0337406873070467,
+      "piece_loss": 1.8326476126031328,
+      "value_loss": 0.34289591197072317,
+      "num_batches": 3124
+    },
+    "duration": 280.5240275859833,
+    "cumulative_time": 23162.0784573555
+  },
+  {
+    "iteration": 84,
+    "total_games": 16800,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 102,
+      "wins_player_1": 84,
+      "draws": 14,
+      "avg_moves": 11.29,
+      "duration": 265.31107926368713,
+      "games_per_second": 0.75383206971626,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.15856896555924,
+      "policy_loss": 2.019847922632308,
+      "piece_loss": 1.809907635786102,
+      "value_loss": 0.32881340714083285,
+      "num_batches": 3124
+    },
+    "duration": 277.9151666164398,
+    "cumulative_time": 23439.99362397194
+  },
+  {
+    "iteration": 85,
+    "total_games": 17000,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 102,
+      "wins_player_1": 86,
+      "draws": 12,
+      "avg_moves": 11.4,
+      "duration": 267.4785268306732,
+      "games_per_second": 0.7477235738127481,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.117289693880858,
+      "policy_loss": 2.01018754134703,
+      "piece_loss": 1.7928660603827955,
+      "value_loss": 0.31423609215103177,
+      "num_batches": 3124
+    },
+    "duration": 279.7829146385193,
+    "cumulative_time": 23719.77653861046
+  },
+  {
+    "iteration": 86,
+    "total_games": 17200,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 91,
+      "wins_player_1": 92,
+      "draws": 17,
+      "avg_moves": 11.155,
+      "duration": 270.25000190734863,
+      "games_per_second": 0.7400554989397082,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.065434475444944,
+      "policy_loss": 1.994382047204901,
+      "piece_loss": 1.7678989305424602,
+      "value_loss": 0.3031534976975828,
+      "num_batches": 3124
+    },
+    "duration": 283.09610056877136,
+    "cumulative_time": 24002.87263917923
+  },
+  {
+    "iteration": 87,
+    "total_games": 17400,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 103,
+      "wins_player_1": 87,
+      "draws": 10,
+      "avg_moves": 11.025,
+      "duration": 270.24957752227783,
+      "games_per_second": 0.7400566610821552,
+      "errors": 0
+    },
+    "training": {
+      "loss": 4.018371487769423,
+      "policy_loss": 1.9837798576907941,
+      "piece_loss": 1.746103394443962,
+      "value_loss": 0.2884882356346646,
+      "num_batches": 3124
+    },
+    "duration": 282.76154375076294,
+    "cumulative_time": 24285.634182929993
+  },
+  {
+    "iteration": 88,
+    "total_games": 17600,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 95,
+      "wins_player_1": 81,
+      "draws": 24,
+      "avg_moves": 11.505,
+      "duration": 282.12358498573303,
+      "games_per_second": 0.7089091825134506,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.9675298602739693,
+      "policy_loss": 1.9678838592428574,
+      "piece_loss": 1.72592006816167,
+      "value_loss": 0.2737259328694449,
+      "num_batches": 3124
+    },
+    "duration": 294.29914903640747,
+    "cumulative_time": 24579.9333319664
+  },
+  {
+    "iteration": 89,
+    "total_games": 17800,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 93,
+      "wins_player_1": 88,
+      "draws": 19,
+      "avg_moves": 11.055,
+      "duration": 278.46155047416687,
+      "games_per_second": 0.7182320132148879,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.9137223259109097,
+      "policy_loss": 1.9514857192337836,
+      "piece_loss": 1.7010795665279623,
+      "value_loss": 0.26115704014916424,
+      "num_batches": 3124
+    },
+    "duration": 291.1871826648712,
+    "cumulative_time": 24871.12051463127
+  },
+  {
+    "iteration": 90,
+    "total_games": 18000,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 102,
+      "wins_player_1": 90,
+      "draws": 8,
+      "avg_moves": 10.86,
+      "duration": 279.8846595287323,
+      "games_per_second": 0.7145800714364213,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.87148877651941,
+      "policy_loss": 1.9402694775012344,
+      "piece_loss": 1.679254073669508,
+      "value_loss": 0.25196522534866644,
+      "num_batches": 3124
+    },
+    "duration": 293.8407645225525,
+    "cumulative_time": 25164.961279153824
+  },
+  {
+    "iteration": 91,
+    "total_games": 18200,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 94,
+      "wins_player_1": 94,
+      "draws": 12,
+      "avg_moves": 11.21,
+      "duration": 271.4779245853424,
+      "games_per_second": 0.7367081515209077,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.830487521983199,
+      "policy_loss": 1.9266256841416094,
+      "piece_loss": 1.6599688648269648,
+      "value_loss": 0.2438929730146246,
+      "num_batches": 3124
+    },
+    "duration": 283.21448588371277,
+    "cumulative_time": 25448.175765037537
+  },
+  {
+    "iteration": 92,
+    "total_games": 18400,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 93,
+      "wins_player_1": 91,
+      "draws": 16,
+      "avg_moves": 11.545,
+      "duration": 271.25380516052246,
+      "games_per_second": 0.7373168456812765,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.797160079839889,
+      "policy_loss": 1.9139985455162183,
+      "piece_loss": 1.6443068090652087,
+      "value_loss": 0.23885472525846066,
+      "num_batches": 3124
+    },
+    "duration": 284.2036077976227,
+    "cumulative_time": 25732.37937283516
+  },
+  {
+    "iteration": 93,
+    "total_games": 18600,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 99,
+      "wins_player_1": 82,
+      "draws": 19,
+      "avg_moves": 11.225,
+      "duration": 265.37579345703125,
+      "games_per_second": 0.7536482412152762,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.7617441968654384,
+      "policy_loss": 1.903027359321885,
+      "piece_loss": 1.625584145201059,
+      "value_loss": 0.2331326923424929,
+      "num_batches": 3124
+    },
+    "duration": 278.02162885665894,
+    "cumulative_time": 26010.40100169182
+  },
+  {
+    "iteration": 94,
+    "total_games": 18800,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 89,
+      "wins_player_1": 101,
+      "draws": 10,
+      "avg_moves": 10.785,
+      "duration": 262.9179711341858,
+      "games_per_second": 0.7606935316640099,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.7443409850240132,
+      "policy_loss": 1.8961209393379446,
+      "piece_loss": 1.6174394721672118,
+      "value_loss": 0.23078057351885853,
+      "num_batches": 3124
+    },
+    "duration": 275.12193274497986,
+    "cumulative_time": 26285.522934436798
+  },
+  {
+    "iteration": 95,
+    "total_games": 19000,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 105,
+      "wins_player_1": 83,
+      "draws": 12,
+      "avg_moves": 11.075,
+      "duration": 280.1840879917145,
+      "games_per_second": 0.7138164106089934,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.7323125646802437,
+      "policy_loss": 1.8929465352034338,
+      "piece_loss": 1.609552891041194,
+      "value_loss": 0.22981313843561502,
+      "num_batches": 3124
+    },
+    "duration": 295.1854591369629,
+    "cumulative_time": 26580.70839357376
+  },
+  {
+    "iteration": 96,
+    "total_games": 19200,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 91,
+      "wins_player_1": 91,
+      "draws": 18,
+      "avg_moves": 11.075,
+      "duration": 261.46409368515015,
+      "games_per_second": 0.7649233865390176,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.717691959855057,
+      "policy_loss": 1.8862072267195704,
+      "piece_loss": 1.604446878484222,
+      "value_loss": 0.22703785465126347,
+      "num_batches": 3124
+    },
+    "duration": 274.1220819950104,
+    "cumulative_time": 26854.83047556877
+  },
+  {
+    "iteration": 97,
+    "total_games": 19400,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 101,
+      "wins_player_1": 85,
+      "draws": 14,
+      "avg_moves": 11.325,
+      "duration": 262.6230254173279,
+      "games_per_second": 0.7615478486023259,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.717232913564702,
+      "policy_loss": 1.8825859699800935,
+      "piece_loss": 1.6039773466509597,
+      "value_loss": 0.23066959693364883,
+      "num_batches": 3124
+    },
+    "duration": 275.04018998146057,
+    "cumulative_time": 27129.870665550232
+  },
+  {
+    "iteration": 98,
+    "total_games": 19600,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 115,
+      "wins_player_1": 77,
+      "draws": 8,
+      "avg_moves": 11.175,
+      "duration": 269.009970664978,
+      "games_per_second": 0.7434668666949811,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.7250717025140965,
+      "policy_loss": 1.881891791828788,
+      "piece_loss": 1.6092209611488593,
+      "value_loss": 0.23395894953644764,
+      "num_batches": 3124
+    },
+    "duration": 281.9662699699402,
+    "cumulative_time": 27411.836935520172
+  },
+  {
+    "iteration": 99,
+    "total_games": 19800,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 101,
+      "wins_player_1": 82,
+      "draws": 17,
+      "avg_moves": 11.135,
+      "duration": 262.54164719581604,
+      "games_per_second": 0.7617839003304131,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.7281834631950446,
+      "policy_loss": 1.8782454583025898,
+      "piece_loss": 1.6109500512995583,
+      "value_loss": 0.23898795359289793,
+      "num_batches": 3124
+    },
+    "duration": 273.67953753471375,
+    "cumulative_time": 27685.516473054886
+  },
+  {
+    "iteration": 100,
+    "total_games": 20000,
+    "buffer_size": 50000,
+    "selfplay": {
+      "games": 200,
+      "wins_player_0": 85,
+      "wins_player_1": 93,
+      "draws": 22,
+      "avg_moves": 11.165,
+      "duration": 257.86954522132874,
+      "games_per_second": 0.7755859647107243,
+      "errors": 0
+    },
+    "training": {
+      "loss": 3.745112162608997,
+      "policy_loss": 1.8774695213002013,
+      "piece_loss": 1.6204521885532213,
+      "value_loss": 0.24719045275557552,
+      "num_batches": 3124
+    },
+    "duration": 269.0804967880249,
+    "cumulative_time": 27954.59696984291
   }
 ]
