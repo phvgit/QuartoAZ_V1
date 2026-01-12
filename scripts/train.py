@@ -129,6 +129,14 @@ def train(args):
         print(f"\nChargement du checkpoint {args.resume_from}...")
         trainer.load_checkpoint(args.resume_from)
         print(f"  Reprise à l'itération {trainer.iteration}")
+    elif args.from_best:
+        # Charger le meilleur modèle (utile quand les checkpoints sont perdus)
+        print(f"\nChargement du meilleur modèle (best_model.pt)...")
+        trainer.load_best_model()
+        if args.start_iter > 0:
+            trainer.iteration = args.start_iter
+            trainer.total_games = args.start_iter * args.games_per_iter
+            print(f"  Reprise à l'itération {trainer.iteration} ({trainer.total_games} parties comptabilisées)")
 
     # Lancer l'entraînement
     print("\nDémarrage de l'entraînement...")
@@ -255,8 +263,11 @@ Exemples:
   # Évaluation du modèle
   python scripts/train.py --evaluate
 
-  # Reprendre un entraînement
+  # Reprendre un entraînement depuis un checkpoint
   python scripts/train.py --resume-from 7 --iterations 50 --workers 4
+
+  # Reprendre depuis le meilleur modèle (quand les checkpoints sont perdus)
+  python scripts/train.py --from-best --start-iter 100 --iterations 200 --workers 12
 
   # Forcer CPU uniquement (debug ou comparaison)
   python scripts/train.py --no-gpu --iterations 10 --games-per-iter 10
@@ -312,7 +323,11 @@ Exemples:
     parser.add_argument('--model-dir', type=str, default='data/models',
                        help='Répertoire des modèles')
     parser.add_argument('--resume-from', type=int, default=None,
-                       help='Reprendre depuis une itération spécifique')
+                       help='Reprendre depuis une itération spécifique (nécessite checkpoint_iter_X.pt)')
+    parser.add_argument('--from-best', action='store_true', default=False,
+                       help='Charger best_model.pt au lieu d\'un checkpoint (utile quand checkpoints perdus)')
+    parser.add_argument('--start-iter', type=int, default=0,
+                       help='Itération de départ (utilisé avec --from-best, défaut: 0)')
     parser.add_argument('--save-frequency', type=int, default=1,
                        help='Fréquence de sauvegarde du best_model (défaut: 1)')
 

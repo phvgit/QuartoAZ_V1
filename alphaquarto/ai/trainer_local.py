@@ -532,6 +532,18 @@ class AlphaZeroTrainerLocal:
         with open(stats_path, 'w') as f:
             json.dump(self.training_stats, f, indent=2)
 
+    def load_best_model(self):
+        """Charge le meilleur modèle (utile pour reprendre sans checkpoint)."""
+        model_dir = Path(self.config.training.model_dir)
+        weights_path = model_dir / "best_model.pt"
+        if weights_path.exists():
+            self.network.load_state_dict(
+                torch.load(weights_path, map_location=self.device)
+            )
+            print(f"  Modèle chargé: {weights_path}")
+        else:
+            print(f"  Attention: {weights_path} non trouvé, utilisation du réseau aléatoire")
+
     def load_checkpoint(self, iteration: int):
         """Charge un checkpoint."""
         checkpoint_dir = Path(self.config.training.checkpoint_dir)
