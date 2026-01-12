@@ -1,0 +1,157 @@
+Commandes pour le pod RunPod:
+
+ssh ... (voir Display dans l'interface du pod)
+cd /workspace/QuartoAZ_V1
+git pull origin master
+
+Puis lancer l'entraînement :
+
+nohup python scripts/train.py \
+    --arch server \
+    --iterations 100 \
+    --games-per-iter 200 \
+    --epochs 4 \
+    --workers 12 \
+    --mcts-sims 100 \
+    --buffer-size 50000 \
+    --network-size medium \
+    --learning-rate 0.0003 \
+    --batch-size 64 \
+    > training.log 2>&1 &
+
+Paramètres expliqués
+Paramètre	Valeur     : Raison
+--arch server	       : server	Même architecture que le run précédent (InferenceServer)
+--iterations 100     : 100	Nombre max d'itérations (early stopping peut arrêter avant)
+--games-per-iter 200 : 200	Comme avant
+--epochs 4	         : 4	Nouveau (était 2, maintenant 4 pour mieux exploiter le buffer)
+--workers 12         : 12	Comme avant (RTX 6000 peut gérer)
+--mcts-sims 100	     : 100	Comme avant
+--buffer-size 50000	 : 50000	Comme avant
+--batch-size 64	     : 64	Comme avant
+
+Explication de > training.log 2>&1 &
+Cette partie se décompose en 3 éléments :
+
+1. > training.log
+Redirection de la sortie standard (stdout)
+
+Le symbole > redirige tout ce qui s'afficherait normalement à l'écran vers un fichier
+Ici, toutes les sorties "normales" du programme iront dans training.log
+2. 2>&1
+Redirection de la sortie d'erreur (stderr)
+
+Pour comprendre, il faut savoir que Linux utilise des "descripteurs de fichiers" :
+
+1 = stdout (sortie normale)
+2 = stderr (sortie d'erreur)
+Donc 2>&1 signifie : "envoie le flux 2 (erreurs) vers le même endroit que le flux 1 (normal)"
+
+Résultat : les messages normaux ET les erreurs vont tous dans training.log
+
+3. & (à la fin)
+Exécution en arrière-plan
+
+Lance le processus en "background"
+On récupére immédiatement le contrôle du terminal
+Le programme continue de tourner même si on tape d'autres commandes
+Combiné avec nohup
+nohup (no hang up) fait en sorte que le processus continue même si on ferme le terminal. C'est idéal pour un entraînement long sur un serveur distant.
+
+Résumé visuel:
+nohup python scripts/train.py ... > training.log 2>&1 &
+│                                 │             │    │
+│                                 │             │    └─ Arrière-plan
+│                                 │             └────── Erreurs → même fichier
+│                                 └──────────────────── Sortie → training.log
+└─────────────────────────────────────────────────────── Survit à la fermeture du terminal
+
+
+Ce qui sera automatiquement appliqué (via config.py):
+LR scheduler   : CosineAnnealingWarmRestarts(T_0=25, eta_min=0.00003)
+Early stopping : Arrêt après 2 cycles (50 itérations) sans amélioration
+LR min         : 0.00003 (10× plus haut qu'avant)
+
+Suivi de l'entraînement
+
+# Voir les logs en temps réel
+tail -f training.log
+
+# Voir les dernières lignes
+tail -100 training.log
+
+Sortie attendue:
+
+============================================================
+ENTRAÎNEMENT ALPHAZERO - QUARTO
+============================================================
+Démarrage: lundi 13 janvier 2025 10:30:45
+Device: cuda
+Itérations: 100
+Parties/itération: 200
+Workers: 12
+Simulations MCTS: 100
+Buffer size: 50,000
+Epochs/itération: 4
+LR scheduler: Cosine Warm Restarts (T_0=25, 4 cycles)
+  LR: 0.000300 → 0.000030
+Early stopping: patience=2 cycles (50 iters)
+============================================================
+
+
+Lister les processus:
+
+# Lister tous les processus
+ps aux
+
+# Lister les processus de l'utilisateur courant
+ps ux
+
+# Affichage en arbre (hiérarchie parent/enfant)
+ps auxf
+
+# Chercher un processus par nom
+ps aux | grep nom_processus
+pgrep nom_processus
+pgrep -a nom_processus   # avec la ligne de commande complète
+Surveiller en temps réel
+
+# Moniteur interactif classique
+top
+
+# Version améliorée (si installé)
+htop
+
+# Suivre un processus spécifique par PID
+top -p 1234
+Terminer un processus
+
+# Terminer proprement (SIGTERM)
+kill PID
+kill -15 PID
+
+# Forcer l'arrêt (SIGKILL)
+kill -9 PID
+
+# Terminer par nom
+pkill nom_processus
+pkill -9 nom_processus   # forcer
+
+# Terminer tous les processus d'un nom
+killall nom_processus
+killall -9 nom_processus
+Signaux courants
+Signal	Numéro	Description
+SIGTERM	15	Arrêt propre (défaut)
+SIGKILL	9	Arrêt forcé (ne peut être ignoré)
+SIGSTOP	19	Suspendre le processus
+SIGCONT	18	Reprendre un processus suspendu
+Exemples pratiques
+
+# Trouver et tuer un script Python
+pgrep -a python
+kill $(pgrep -f "mon_script.py")
+
+# Suspendre puis reprendre
+kill -STOP PID
+kill -CONT PID
