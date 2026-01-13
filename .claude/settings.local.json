@@ -8,14 +8,12 @@
       "Bash(gh auth:*)",
       "Bash(git init:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)",
       "Bash(gh repo create:*)",
       "Bash(rm:*)",
       "Bash(rmdir:*)",
       "Bash(findstr:*)",
       "Bash(echo:*)",
       "Bash(pip install:*)",
-      "Bash(git push:*)",
       "Bash(git restore:*)"
     ]
   },
