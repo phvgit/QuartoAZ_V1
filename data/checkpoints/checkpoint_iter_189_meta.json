@@ -1,8 +1,7 @@
 {
-  "iteration": 191,
-  "total_games": 35000,
-  "buffer_size": 2269,
-  "best_loss": 5.478491257590596,
+  "iteration": 189,
+  "total_games": 34800,
+  "buffer_size": 0,
   "network_config": {
     "num_filters": 64,
     "num_res_blocks": 6,
