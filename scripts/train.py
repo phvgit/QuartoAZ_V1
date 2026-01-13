@@ -114,10 +114,10 @@ def train(args):
     print("\nInitialisation du trainer...")
     if args.arch == 'local':
         print("  Architecture: LOCAL (réseau par worker, rapide)")
-        trainer = AlphaZeroTrainerLocal(config)
+        trainer = AlphaZeroTrainerLocal(config, use_lr_scheduler=not args.no_lr_scheduler)
     else:
         print("  Architecture: SERVER (InferenceServer centralisé)")
-        trainer = AlphaZeroTrainer(config)
+        trainer = AlphaZeroTrainer(config, use_lr_scheduler=not args.no_lr_scheduler)
 
     print(f"  Paramètres: {trainer.network.count_parameters():,}")
 
@@ -304,6 +304,8 @@ Exemples:
                        default='medium', help='Taille du réseau (défaut: medium)')
     parser.add_argument('--learning-rate', type=float, default=0.0003,
                        help='Taux d\'apprentissage initial (défaut: 0.0003, avec cosine decay)')
+    parser.add_argument('--no-lr-scheduler', action='store_true', default=False,
+                       help='Désactiver le LR scheduler (utilise LR constant, recommandé pour fine-tuning)')
 
     # Configuration GPU
     parser.add_argument('--gpu', action='store_true', default=True,

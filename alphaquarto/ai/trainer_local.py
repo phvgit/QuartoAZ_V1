@@ -91,8 +91,9 @@ class AlphaZeroTrainerLocal:
     Plus simple et plus rapide que l'architecture avec InferenceServer.
     """
 
-    def __init__(self, config: Config):
+    def __init__(self, config: Config, use_lr_scheduler: bool = True):
         self.config = config
+        self.use_lr_scheduler = use_lr_scheduler
 
         # Device pour l'entraînement (GPU si disponible)
         self.device = torch.device(
@@ -112,7 +113,6 @@ class AlphaZeroTrainerLocal:
 
         # Learning rate scheduler (cosine annealing)
         self.scheduler = None
-        self.use_lr_scheduler = True
 
         # Replay buffer
         self.replay_buffer = ReplayBuffer(config.training.buffer_size)
@@ -199,8 +199,11 @@ class AlphaZeroTrainerLocal:
         print(f"Simulations MCTS: {self.config.mcts.num_simulations}")
         print(f"Buffer size: {self.config.training.buffer_size:,}")
         print(f"Epochs/itération: {self.config.training.epochs_per_iteration}")
-        print(f"LR scheduler: Cosine Warm Restarts (T_0={self.cycle_length}, {num_cycles} cycles)")
-        print(f"  LR: {self.config.network.learning_rate:.6f} → {lr_min:.6f}")
+        if self.use_lr_scheduler:
+            print(f"LR scheduler: Cosine Warm Restarts (T_0={self.cycle_length}, {num_cycles} cycles)")
+            print(f"  LR: {self.config.network.learning_rate:.6f} → {lr_min:.6f}")
+        else:
+            print(f"LR scheduler: DÉSACTIVÉ (LR constant = {self.config.network.learning_rate:.6f})")
         print(f"Early stopping: patience={self.patience_cycles} cycles ({self.patience_cycles * self.cycle_length} iters)")
         print(f"{'='*60}\n")
 
