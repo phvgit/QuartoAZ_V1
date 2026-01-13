@@ -1,14 +1,13 @@
 {
-  "iteration": 191,
-  "total_games": 35000,
-  "buffer_size": 2269,
-  "best_loss": 5.478491257590596,
+  "iteration": 250,
+  "total_games": 50000,
+  "buffer_size": 50000,
   "network_config": {
     "num_filters": 64,
     "num_res_blocks": 6,
     "input_channels": 21,
     "board_size": 4,
     "l2_reg": 0.0001,
-    "learning_rate": 0.0001
+    "learning_rate": 5e-05
   }
 }
