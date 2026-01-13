@@ -1,0 +1,729 @@
+
+--- Itération 101 ---
+  Début: Monday 12 January 2026 20:13:54
+  Self-play: 200 parties (12 workers)...
+    200 parties en 268.5s (0.74 p/s)
+    Résultats: P0=93, P1=90, Nuls=17
+  Training: 2 epochs...
+  Loss: 5.2848 (LR: 0.000299)
+  ★ Nouveau meilleur modèle! (loss: 5.2848)
+  Fin: Monday 12 January 2026 20:18:23
+  Durée itération: 4m 29s
+  Temps cumulé: 4m 29s
+
+--- Itération 102 ---
+  Début: Monday 12 January 2026 20:18:23
+  Self-play: 200 parties (12 workers)...
+    200 parties en 269.4s (0.74 p/s)
+    Résultats: P0=108, P1=74, Nuls=18
+  Training: 2 epochs...
+  Loss: 4.6649 (LR: 0.000296)
+  ★ Nouveau meilleur modèle! (loss: 4.6649)
+  Fin: Monday 12 January 2026 20:22:54
+  Durée itération: 4m 30s
+  Temps cumulé: 8m 59s
+
+--- Itération 103 ---
+  Début: Monday 12 January 2026 20:22:54
+  Self-play: 200 parties (12 workers)...
+    200 parties en 269.3s (0.74 p/s)
+    Résultats: P0=90, P1=92, Nuls=18
+  Training: 2 epochs...
+  Loss: 4.5537 (LR: 0.000291)
+  ★ Nouveau meilleur modèle! (loss: 4.5537)
+  Fin: Monday 12 January 2026 20:27:24
+  Durée itération: 4m 30s
+  Temps cumulé: 13m 30s
+
+--- Itération 104 ---
+  Début: Monday 12 January 2026 20:27:24
+  Self-play: 200 parties (12 workers)...
+    200 parties en 264.6s (0.76 p/s)
+    Résultats: P0=110, P1=80, Nuls=10
+  Training: 2 epochs...
+  Loss: 4.4985 (LR: 0.000283)
+  ★ Nouveau meilleur modèle! (loss: 4.4985)
+  Fin: Monday 12 January 2026 20:31:51
+  Durée itération: 4m 26s
+  Temps cumulé: 17m 56s
+
+--- Itération 105 ---
+  Début: Monday 12 January 2026 20:31:51
+  Self-play: 200 parties (12 workers)...
+    200 parties en 267.2s (0.75 p/s)
+    Résultats: P0=88, P1=101, Nuls=11
+  Training: 2 epochs...
+  Loss: 4.4444 (LR: 0.000274)
+  ★ Nouveau meilleur modèle! (loss: 4.4444)
+  Fin: Monday 12 January 2026 20:36:20
+  Durée itération: 4m 29s
+  Temps cumulé: 22m 26s
+
+--- Itération 106 ---
+  Début: Monday 12 January 2026 20:36:20
+  Self-play: 200 parties (12 workers)...
+    200 parties en 272.1s (0.74 p/s)
+    Résultats: P0=96, P1=84, Nuls=20
+  Training: 2 epochs...
+  Loss: 4.4459 (LR: 0.000263)
+  Fin: Monday 12 January 2026 20:40:55
+  Durée itération: 4m 34s
+  Temps cumulé: 27m 01s
+
+--- Itération 107 ---
+  Début: Monday 12 January 2026 20:40:55
+  Self-play: 200 parties (12 workers)...
+    200 parties en 270.8s (0.74 p/s)
+    Résultats: P0=98, P1=85, Nuls=17
+  Training: 2 epochs...
+  Loss: 4.3912 (LR: 0.000251)
+  ★ Nouveau meilleur modèle! (loss: 4.3912)
+  Fin: Monday 12 January 2026 20:45:30
+  Durée itération: 4m 34s
+  Temps cumulé: 31m 35s
+
+--- Itération 108 ---
+  Début: Monday 12 January 2026 20:45:30
+  Self-play: 200 parties (12 workers)...
+    200 parties en 266.7s (0.75 p/s)
+    Résultats: P0=94, P1=88, Nuls=18
+  Training: 2 epochs...
+  Loss: 4.3825 (LR: 0.000237)
+  ★ Nouveau meilleur modèle! (loss: 4.3825)
+  Fin: Monday 12 January 2026 20:50:00
+  Durée itération: 4m 30s
+  Temps cumulé: 36m 05s
+
+--- Itération 109 ---
+  Début: Monday 12 January 2026 20:50:00
+  Self-play: 200 parties (12 workers)...
+    200 parties en 276.1s (0.72 p/s)
+    Résultats: P0=93, P1=86, Nuls=21
+  Training: 2 epochs...
+  Loss: 4.3487 (LR: 0.000222)
+  ★ Nouveau meilleur modèle! (loss: 4.3487)
+  Fin: Monday 12 January 2026 20:54:40
+  Durée itération: 4m 40s
+  Temps cumulé: 40m 45s
+
+--- Itération 110 ---
+  Début: Monday 12 January 2026 20:54:40
+  Self-play: 200 parties (12 workers)...
+    200 parties en 273.8s (0.73 p/s)
+    Résultats: P0=96, P1=86, Nuls=18
+  Training: 2 epochs...
+  Loss: 4.3135 (LR: 0.000207)
+  ★ Nouveau meilleur modèle! (loss: 4.3135)
+  Fin: Monday 12 January 2026 20:59:19
+  Durée itération: 4m 38s
+  Temps cumulé: 45m 24s
+
+--- Itération 111 ---
+  Début: Monday 12 January 2026 20:59:19
+  Self-play: 200 parties (12 workers)...
+    200 parties en 266.9s (0.75 p/s)
+    Résultats: P0=88, P1=98, Nuls=14
+  Training: 2 epochs...
+  Loss: 4.2748 (LR: 0.000190)
+  ★ Nouveau meilleur modèle! (loss: 4.2748)
+  Fin: Monday 12 January 2026 21:03:52
+  Durée itération: 4m 32s
+  Temps cumulé: 49m 57s
+
+--- Itération 112 ---
+  Début: Monday 12 January 2026 21:03:52
+  Self-play: 200 parties (12 workers)...
+    200 parties en 262.6s (0.76 p/s)
+    Résultats: P0=104, P1=79, Nuls=17
+  Training: 2 epochs...
+  Loss: 4.2588 (LR: 0.000173)
+  ★ Nouveau meilleur modèle! (loss: 4.2588)
+  Fin: Monday 12 January 2026 21:08:20
+  Durée itération: 4m 27s
+  Temps cumulé: 54m 25s
+
+--- Itération 113 ---
+  Début: Monday 12 January 2026 21:08:20
+  Self-play: 200 parties (12 workers)...
+    200 parties en 270.6s (0.74 p/s)
+    Résultats: P0=99, P1=83, Nuls=18
+  Training: 2 epochs...
+  Loss: 4.2118 (LR: 0.000157)
+  ★ Nouveau meilleur modèle! (loss: 4.2118)
+  Fin: Monday 12 January 2026 21:12:56
+  Durée itération: 4m 36s
+  Temps cumulé: 59m 01s
+
+--- Itération 114 ---
+  Début: Monday 12 January 2026 21:12:56
+  Self-play: 200 parties (12 workers)...
+    200 parties en 287.0s (0.70 p/s)
+    Résultats: P0=85, P1=101, Nuls=14
+  Training: 2 epochs...
+  Loss: 4.1805 (LR: 0.000140)
+  ★ Nouveau meilleur modèle! (loss: 4.1805)
+  Fin: Monday 12 January 2026 21:17:50
+  Durée itération: 4m 53s
+  Temps cumulé: 1h 03m 55s
+
+--- Itération 115 ---
+  Début: Monday 12 January 2026 21:17:50
+  Self-play: 200 parties (12 workers)...
+    200 parties en 262.9s (0.76 p/s)
+    Résultats: P0=98, P1=84, Nuls=18
+  Training: 2 epochs...
+  Loss: 4.1515 (LR: 0.000123)
+  ★ Nouveau meilleur modèle! (loss: 4.1515)
+  Fin: Monday 12 January 2026 21:22:20
+  Durée itération: 4m 30s
+  Temps cumulé: 1h 08m 25s
+
+--- Itération 116 ---
+  Début: Monday 12 January 2026 21:22:20
+  Self-play: 200 parties (12 workers)...
+    200 parties en 264.7s (0.76 p/s)
+    Résultats: P0=84, P1=99, Nuls=17
+  Training: 2 epochs...
+  Loss: 4.1083 (LR: 0.000108)
+  ★ Nouveau meilleur modèle! (loss: 4.1083)
+  Fin: Monday 12 January 2026 21:26:53
+  Durée itération: 4m 32s
+  Temps cumulé: 1h 12m 58s
+
+--- Itération 117 ---
+  Début: Monday 12 January 2026 21:26:53
+  Self-play: 200 parties (12 workers)...
+    200 parties en 262.2s (0.76 p/s)
+    Résultats: P0=107, P1=78, Nuls=15
+  Training: 2 epochs...
+  Loss: 4.0814 (LR: 0.000093)
+  ★ Nouveau meilleur modèle! (loss: 4.0814)
+  Fin: Monday 12 January 2026 21:31:23
+  Durée itération: 4m 30s
+  Temps cumulé: 1h 17m 28s
+
+--- Itération 118 ---
+  Début: Monday 12 January 2026 21:31:23
+  Self-play: 200 parties (12 workers)...
+    200 parties en 260.7s (0.77 p/s)
+    Résultats: P0=78, P1=101, Nuls=21
+  Training: 2 epochs...
+  Loss: 4.0408 (LR: 0.000079)
+  ★ Nouveau meilleur modèle! (loss: 4.0408)
+  Fin: Monday 12 January 2026 21:35:53
+  Durée itération: 4m 30s
+  Temps cumulé: 1h 21m 58s
+
+--- Itération 119 ---
+  Début: Monday 12 January 2026 21:35:53
+  Self-play: 200 parties (12 workers)...
+    200 parties en 264.8s (0.76 p/s)
+    Résultats: P0=107, P1=79, Nuls=14
+  Training: 2 epochs...
+  Loss: 4.0078 (LR: 0.000067)
+  ★ Nouveau meilleur modèle! (loss: 4.0078)
+  Fin: Monday 12 January 2026 21:40:28
+  Durée itération: 4m 34s
+  Temps cumulé: 1h 26m 33s
+
+--- Itération 120 ---
+  Début: Monday 12 January 2026 21:40:28
+  Self-play: 200 parties (12 workers)...
+    200 parties en 268.0s (0.75 p/s)
+    Résultats: P0=99, P1=85, Nuls=16
+  Training: 2 epochs...
+  Loss: 3.9923 (LR: 0.000056)
+  ★ Nouveau meilleur modèle! (loss: 3.9923)
+  Fin: Monday 12 January 2026 21:45:06
+  Durée itération: 4m 37s
+  Temps cumulé: 1h 31m 11s
+
+--- Itération 121 ---
+  Début: Monday 12 January 2026 21:45:06
+  Self-play: 200 parties (12 workers)...
+    200 parties en 271.2s (0.74 p/s)
+    Résultats: P0=93, P1=91, Nuls=16
+  Training: 2 epochs...
+  Loss: 3.9768 (LR: 0.000047)
+  ★ Nouveau meilleur modèle! (loss: 3.9768)
+  Fin: Monday 12 January 2026 21:49:48
+  Durée itération: 4m 42s
+  Temps cumulé: 1h 35m 53s
+
+--- Itération 122 ---
+  Début: Monday 12 January 2026 21:49:48
+  Self-play: 200 parties (12 workers)...
+    200 parties en 265.7s (0.75 p/s)
+    Résultats: P0=81, P1=106, Nuls=13
+  Training: 2 epochs...
+  Loss: 3.9667 (LR: 0.000039)
+  ★ Nouveau meilleur modèle! (loss: 3.9667)
+  Fin: Monday 12 January 2026 21:54:26
+  Durée itération: 4m 37s
+  Temps cumulé: 1h 40m 31s
+
+--- Itération 123 ---
+  Début: Monday 12 January 2026 21:54:26
+  Self-play: 200 parties (12 workers)...
+    200 parties en 264.5s (0.76 p/s)
+    Résultats: P0=99, P1=83, Nuls=18
+  Training: 2 epochs...
+  Loss: 3.9775 (LR: 0.000034)
+  Fin: Monday 12 January 2026 21:59:02
+  Durée itération: 4m 36s
+  Temps cumulé: 1h 45m 07s
+
+--- Itération 124 ---
+  Début: Monday 12 January 2026 21:59:02
+  Self-play: 200 parties (12 workers)...
+    200 parties en 258.0s (0.78 p/s)
+    Résultats: P0=98, P1=87, Nuls=15
+  Training: 2 epochs...
+  Loss: 3.9869 (LR: 0.000031)
+  Fin: Monday 12 January 2026 22:03:32
+  Durée itération: 4m 29s
+  Temps cumulé: 1h 49m 37s
+
+--- Itération 125 ---
+  Début: Monday 12 January 2026 22:03:32
+  Self-play: 200 parties (12 workers)...
+    200 parties en 269.6s (0.74 p/s)
+    Résultats: P0=92, P1=94, Nuls=14
+  Training: 2 epochs...
+  Loss: 4.0131 (LR: 0.000300)
+  Fin: Monday 12 January 2026 22:08:14
+  Durée itération: 4m 41s
+  Temps cumulé: 1h 54m 19s
+
+--- Itération 126 ---
+  Début: Monday 12 January 2026 22:08:14
+  Self-play: 200 parties (12 workers)...
+    200 parties en 271.6s (0.74 p/s)
+    Résultats: P0=87, P1=90, Nuls=23
+  Training: 2 epochs...
+  Loss: 4.9753 (LR: 0.000299)
+  Fin: Monday 12 January 2026 22:12:56
+  Durée itération: 4m 42s
+  Temps cumulé: 1h 59m 01s
+
+--- Itération 127 ---
+  Début: Monday 12 January 2026 22:12:56
+  Self-play: 200 parties (12 workers)...
+    200 parties en 263.7s (0.76 p/s)
+    Résultats: P0=96, P1=90, Nuls=14
+  Training: 2 epochs...
+  Loss: 4.9626 (LR: 0.000296)
+  Fin: Monday 12 January 2026 22:17:31
+  Durée itération: 4m 35s
+  Temps cumulé: 2h 03m 36s
+
+--- Itération 128 ---
+  Début: Monday 12 January 2026 22:17:31
+  Self-play: 200 parties (12 workers)...
+    200 parties en 268.5s (0.74 p/s)
+    Résultats: P0=87, P1=95, Nuls=18
+  Training: 2 epochs...
+  Loss: 4.8821 (LR: 0.000291)
+  Fin: Monday 12 January 2026 22:22:11
+  Durée itération: 4m 39s
+  Temps cumulé: 2h 08m 16s
+
+--- Itération 129 ---
+  Début: Monday 12 January 2026 22:22:11
+  Self-play: 200 parties (12 workers)...
+    200 parties en 264.4s (0.76 p/s)
+    Résultats: P0=91, P1=91, Nuls=18
+  Training: 2 epochs...
+  Loss: 4.8097 (LR: 0.000283)
+  Fin: Monday 12 January 2026 22:26:48
+  Durée itération: 4m 36s
+  Temps cumulé: 2h 12m 52s
+
+--- Itération 130 ---
+  Début: Monday 12 January 2026 22:26:48
+  Self-play: 200 parties (12 workers)...
+    200 parties en 277.3s (0.72 p/s)
+    Résultats: P0=92, P1=80, Nuls=28
+  Training: 2 epochs...
+  Loss: 4.7455 (LR: 0.000274)
+  Fin: Monday 12 January 2026 22:31:37
+  Durée itération: 4m 49s
+  Temps cumulé: 2h 17m 41s
+
+--- Itération 131 ---
+  Début: Monday 12 January 2026 22:31:37
+  Self-play: 200 parties (12 workers)...
+    200 parties en 277.0s (0.72 p/s)
+    Résultats: P0=101, P1=79, Nuls=20
+  Training: 2 epochs...
+  Loss: 4.6727 (LR: 0.000263)
+  Fin: Monday 12 January 2026 22:36:26
+  Durée itération: 4m 49s
+  Temps cumulé: 2h 22m 30s
+
+--- Itération 132 ---
+  Début: Monday 12 January 2026 22:36:26
+  Self-play: 200 parties (12 workers)...
+    200 parties en 266.7s (0.75 p/s)
+    Résultats: P0=88, P1=91, Nuls=21
+  Training: 2 epochs...
+  Loss: 4.6166 (LR: 0.000251)
+  Fin: Monday 12 January 2026 22:41:03
+  Durée itération: 4m 37s
+  Temps cumulé: 2h 27m 08s
+
+--- Itération 133 ---
+  Début: Monday 12 January 2026 22:41:03
+  Self-play: 200 parties (12 workers)...
+    200 parties en 272.4s (0.73 p/s)
+    Résultats: P0=99, P1=81, Nuls=20
+  Training: 2 epochs...
+  Loss: 4.5632 (LR: 0.000237)
+  Fin: Monday 12 January 2026 22:45:47
+  Durée itération: 4m 44s
+  Temps cumulé: 2h 31m 52s
+
+--- Itération 134 ---
+  Début: Monday 12 January 2026 22:45:47
+  Self-play: 200 parties (12 workers)...
+    200 parties en 266.9s (0.75 p/s)
+    Résultats: P0=98, P1=84, Nuls=18
+  Training: 2 epochs...
+  Loss: 4.5132 (LR: 0.000222)
+  Fin: Monday 12 January 2026 22:50:26
+  Durée itération: 4m 38s
+  Temps cumulé: 2h 36m 31s
+
+--- Itération 135 ---
+  Début: Monday 12 January 2026 22:50:26
+  Self-play: 200 parties (12 workers)...
+    200 parties en 262.4s (0.76 p/s)
+    Résultats: P0=95, P1=90, Nuls=15
+  Training: 2 epochs...
+  Loss: 4.4668 (LR: 0.000207)
+  Fin: Monday 12 January 2026 22:55:00
+  Durée itération: 4m 33s
+  Temps cumulé: 2h 41m 05s
+
+--- Itération 136 ---
+  Début: Monday 12 January 2026 22:55:00
+  Self-play: 200 parties (12 workers)...
+    200 parties en 264.8s (0.76 p/s)
+    Résultats: P0=100, P1=86, Nuls=14
+  Training: 2 epochs...
+  Loss: 4.4145 (LR: 0.000190)
+  Fin: Monday 12 January 2026 22:59:37
+  Durée itération: 4m 36s
+  Temps cumulé: 2h 45m 41s
+
+--- Itération 137 ---
+  Début: Monday 12 January 2026 22:59:37
+  Self-play: 200 parties (12 workers)...
+    200 parties en 268.4s (0.75 p/s)
+    Résultats: P0=91, P1=87, Nuls=22
+  Training: 2 epochs...
+  Loss: 4.3715 (LR: 0.000173)
+  Fin: Monday 12 January 2026 23:04:17
+  Durée itération: 4m 40s
+  Temps cumulé: 2h 50m 22s
+
+--- Itération 138 ---
+  Début: Monday 12 January 2026 23:04:17
+  Self-play: 200 parties (12 workers)...
+    200 parties en 266.3s (0.75 p/s)
+    Résultats: P0=88, P1=95, Nuls=17
+  Training: 2 epochs...
+  Loss: 4.3301 (LR: 0.000157)
+  Fin: Monday 12 January 2026 23:08:54
+  Durée itération: 4m 37s
+  Temps cumulé: 2h 54m 59s
+
+--- Itération 139 ---
+  Début: Monday 12 January 2026 23:08:54
+  Self-play: 200 parties (12 workers)...
+    200 parties en 266.5s (0.75 p/s)
+    Résultats: P0=95, P1=90, Nuls=15
+  Training: 2 epochs...
+  Loss: 4.2764 (LR: 0.000140)
+  Fin: Monday 12 January 2026 23:13:32
+  Durée itération: 4m 37s
+  Temps cumulé: 2h 59m 36s
+
+--- Itération 140 ---
+  Début: Monday 12 January 2026 23:13:32
+  Self-play: 200 parties (12 workers)...
+    200 parties en 269.9s (0.74 p/s)
+    Résultats: P0=100, P1=82, Nuls=18
+  Training: 2 epochs...
+  Loss: 4.2324 (LR: 0.000123)
+  Fin: Monday 12 January 2026 23:18:13
+  Durée itération: 4m 41s
+  Temps cumulé: 3h 04m 18s
+
+--- Itération 141 ---
+  Début: Monday 12 January 2026 23:18:13
+  Self-play: 200 parties (12 workers)...
+    200 parties en 272.0s (0.74 p/s)
+    Résultats: P0=99, P1=86, Nuls=15
+  Training: 2 epochs...
+  Loss: 4.1756 (LR: 0.000108)
+  Fin: Monday 12 January 2026 23:22:56
+  Durée itération: 4m 42s
+  Temps cumulé: 3h 09m 00s
+
+--- Itération 142 ---
+  Début: Monday 12 January 2026 23:22:56
+  Self-play: 200 parties (12 workers)...
+    200 parties en 269.8s (0.74 p/s)
+    Résultats: P0=96, P1=89, Nuls=15
+  Training: 2 epochs...
+  Loss: 4.1319 (LR: 0.000093)
+  Fin: Monday 12 January 2026 23:27:38
+  Durée itération: 4m 42s
+  Temps cumulé: 3h 13m 43s
+
+--- Itération 143 ---
+  Début: Monday 12 January 2026 23:27:38
+  Self-play: 200 parties (12 workers)...
+    200 parties en 267.9s (0.75 p/s)
+    Résultats: P0=95, P1=87, Nuls=18
+  Training: 2 epochs...
+  Loss: 4.0961 (LR: 0.000079)
+  Fin: Monday 12 January 2026 23:32:16
+  Durée itération: 4m 38s
+  Temps cumulé: 3h 18m 21s
+
+--- Itération 144 ---
+  Début: Monday 12 January 2026 23:32:16
+  Self-play: 200 parties (12 workers)...
+    200 parties en 261.2s (0.77 p/s)
+    Résultats: P0=100, P1=85, Nuls=15
+  Training: 2 epochs...
+  Loss: 4.0697 (LR: 0.000067)
+  Fin: Monday 12 January 2026 23:36:49
+  Durée itération: 4m 32s
+  Temps cumulé: 3h 22m 54s
+
+--- Itération 145 ---
+  Début: Monday 12 January 2026 23:36:49
+  Self-play: 200 parties (12 workers)...
+    200 parties en 277.2s (0.72 p/s)
+    Résultats: P0=97, P1=85, Nuls=18
+  Training: 2 epochs...
+  Loss: 4.0251 (LR: 0.000056)
+  Fin: Monday 12 January 2026 23:41:38
+  Durée itération: 4m 48s
+  Temps cumulé: 3h 27m 42s
+
+--- Itération 146 ---
+  Début: Monday 12 January 2026 23:41:38
+  Self-play: 200 parties (12 workers)...
+    200 parties en 264.5s (0.76 p/s)
+    Résultats: P0=91, P1=86, Nuls=23
+  Training: 2 epochs...
+  Loss: 4.0225 (LR: 0.000047)
+  Fin: Monday 12 January 2026 23:46:14
+  Durée itération: 4m 36s
+  Temps cumulé: 3h 32m 19s
+
+--- Itération 147 ---
+  Début: Monday 12 January 2026 23:46:14
+  Self-play: 200 parties (12 workers)...
+    200 parties en 262.1s (0.76 p/s)
+    Résultats: P0=87, P1=96, Nuls=17
+  Training: 2 epochs...
+  Loss: 4.0102 (LR: 0.000039)
+  Fin: Monday 12 January 2026 23:50:50
+  Durée itération: 4m 35s
+  Temps cumulé: 3h 36m 54s
+
+--- Itération 148 ---
+  Début: Monday 12 January 2026 23:50:50
+  Self-play: 200 parties (12 workers)...
+    200 parties en 257.0s (0.78 p/s)
+    Résultats: P0=90, P1=97, Nuls=13
+  Training: 2 epochs...
+  Loss: 4.0002 (LR: 0.000034)
+  Fin: Monday 12 January 2026 23:55:18
+  Durée itération: 4m 27s
+  Temps cumulé: 3h 41m 22s
+
+--- Itération 149 ---
+  Début: Monday 12 January 2026 23:55:18
+  Self-play: 200 parties (12 workers)...
+    200 parties en 271.9s (0.74 p/s)
+    Résultats: P0=102, P1=79, Nuls=19
+  Training: 2 epochs...
+  Loss: 3.9991 (LR: 0.000031)
+  Fin: Tuesday 13 January 2026 00:00:03
+  Durée itération: 4m 45s
+  Temps cumulé: 3h 46m 07s
+
+--- Itération 150 ---
+  Début: Tuesday 13 January 2026 00:00:03
+  Self-play: 200 parties (12 workers)...
+    200 parties en 263.5s (0.76 p/s)
+    Résultats: P0=95, P1=86, Nuls=19
+  Training: 2 epochs...
+  Loss: 4.0176 (LR: 0.000300)
+  Fin: Tuesday 13 January 2026 00:04:38
+  Durée itération: 4m 35s
+  Temps cumulé: 3h 50m 43s
+
+--- Itération 151 ---
+  Début: Tuesday 13 January 2026 00:04:38
+  Self-play: 200 parties (12 workers)...
+    200 parties en 268.2s (0.75 p/s)
+    Résultats: P0=84, P1=93, Nuls=23
+  Training: 2 epochs...
+  Loss: 4.8727 (LR: 0.000299)
+  Fin: Tuesday 13 January 2026 00:09:17
+  Durée itération: 4m 39s
+  Temps cumulé: 3h 55m 22s
+
+--- Itération 152 ---
+  Début: Tuesday 13 January 2026 00:09:17
+  Self-play: 200 parties (12 workers)...
+    200 parties en 271.0s (0.74 p/s)
+    Résultats: P0=98, P1=82, Nuls=20
+  Training: 2 epochs...
+  Loss: 4.8570 (LR: 0.000296)
+  Fin: Tuesday 13 January 2026 00:13:59
+  Durée itération: 4m 41s
+  Temps cumulé: 4h 00m 03s
+
+--- Itération 153 ---
+  Début: Tuesday 13 January 2026 00:13:59
+  Self-play: 200 parties (12 workers)...
+    200 parties en 274.0s (0.73 p/s)
+    Résultats: P0=97, P1=83, Nuls=20
+  Training: 2 epochs...
+  Loss: 4.7801 (LR: 0.000291)
+  Fin: Tuesday 13 January 2026 00:18:45
+  Durée itération: 4m 46s
+  Temps cumulé: 4h 04m 49s
+
+--- Itération 154 ---
+  Début: Tuesday 13 January 2026 00:18:45
+  Self-play: 200 parties (12 workers)...
+    200 parties en 274.6s (0.73 p/s)
+    Résultats: P0=88, P1=84, Nuls=28
+  Training: 2 epochs...
+  Loss: 4.7357 (LR: 0.000283)
+  Fin: Tuesday 13 January 2026 00:23:31
+  Durée itération: 4m 45s
+  Temps cumulé: 4h 09m 35s
+
+--- Itération 155 ---
+  Début: Tuesday 13 January 2026 00:23:31
+  Self-play: 200 parties (12 workers)...
+    200 parties en 269.8s (0.74 p/s)
+    Résultats: P0=93, P1=79, Nuls=28
+  Training: 2 epochs...
+  Loss: 4.6554 (LR: 0.000274)
+  Fin: Tuesday 13 January 2026 00:28:12
+  Durée itération: 4m 41s
+  Temps cumulé: 4h 14m 17s
+
+--- Itération 156 ---
+  Début: Tuesday 13 January 2026 00:28:12
+  Self-play: 200 parties (12 workers)...
+    200 parties en 274.5s (0.73 p/s)
+    Résultats: P0=105, P1=80, Nuls=15
+  Training: 2 epochs...
+  Loss: 4.6034 (LR: 0.000263)
+  Fin: Tuesday 13 January 2026 00:32:59
+  Durée itération: 4m 46s
+  Temps cumulé: 4h 19m 03s
+
+--- Itération 157 ---
+  Début: Tuesday 13 January 2026 00:32:59
+  Self-play: 200 parties (12 workers)...
+    200 parties en 268.4s (0.75 p/s)
+    Résultats: P0=91, P1=93, Nuls=16
+  Training: 2 epochs...
+  Loss: 4.5541 (LR: 0.000251)
+  Fin: Tuesday 13 January 2026 00:37:39
+  Durée itération: 4m 40s
+  Temps cumulé: 4h 23m 44s
+
+--- Itération 158 ---
+  Début: Tuesday 13 January 2026 00:37:39
+  Self-play: 200 parties (12 workers)...
+    200 parties en 280.5s (0.71 p/s)
+    Résultats: P0=82, P1=96, Nuls=22
+  Training: 2 epochs...
+  Loss: 4.5124 (LR: 0.000237)
+  Fin: Tuesday 13 January 2026 00:42:31
+  Durée itération: 4m 51s
+  Temps cumulé: 4h 28m 36s
+
+--- Itération 159 ---
+  Début: Tuesday 13 January 2026 00:42:31
+  Self-play: 200 parties (12 workers)...
+    200 parties en 274.5s (0.73 p/s)
+    Résultats: P0=87, P1=93, Nuls=20
+  Training: 2 epochs...
+  Loss: 4.4533 (LR: 0.000222)
+  Fin: Tuesday 13 January 2026 00:47:17
+  Durée itération: 4m 45s
+  Temps cumulé: 4h 33m 21s
+
+--- Itération 160 ---
+  Début: Tuesday 13 January 2026 00:47:17
+  Self-play: 200 parties (12 workers)...
+    200 parties en 263.8s (0.76 p/s)
+    Résultats: P0=89, P1=95, Nuls=16
+  Training: 2 epochs...
+  Loss: 4.4004 (LR: 0.000207)
+  Fin: Tuesday 13 January 2026 00:51:53
+  Durée itération: 4m 35s
+  Temps cumulé: 4h 37m 57s
+
+--- Itération 161 ---
+  Début: Tuesday 13 January 2026 00:51:53
+  Self-play: 200 parties (12 workers)...
+    200 parties en 263.4s (0.76 p/s)
+    Résultats: P0=100, P1=81, Nuls=19
+  Training: 2 epochs...
+  Loss: 4.3550 (LR: 0.000190)
+  Fin: Tuesday 13 January 2026 00:56:28
+  Durée itération: 4m 35s
+  Temps cumulé: 4h 42m 33s
+
+--- Itération 162 ---
+  Début: Tuesday 13 January 2026 00:56:28
+  Self-play: 200 parties (12 workers)...
+    200 parties en 267.2s (0.75 p/s)
+    Résultats: P0=82, P1=98, Nuls=20
+  Training: 2 epochs...
+  Loss: 4.3039 (LR: 0.000173)
+  Fin: Tuesday 13 January 2026 01:01:08
+  Durée itération: 4m 39s
+  Temps cumulé: 4h 47m 12s
+
+--- Itération 163 ---
+  Début: Tuesday 13 January 2026 01:01:08
+  Self-play: 200 parties (12 workers)...
+    200 parties en 275.0s (0.73 p/s)
+    Résultats: P0=106, P1=80, Nuls=14
+  Training: 2 epochs...
+  Loss: 4.2602 (LR: 0.000157)
+  Fin: Tuesday 13 January 2026 01:05:54
+  Durée itération: 4m 46s
+  Temps cumulé: 4h 51m 58s
+
+--- Itération 164 ---
+  Début: Tuesday 13 January 2026 01:05:54
+  Self-play: 200 parties (12 workers)...
+    200 parties en 263.7s (0.76 p/s)
+    Résultats: P0=101, P1=79, Nuls=20
+  Training: 2 epochs...
+  Loss: 4.2161 (LR: 0.000140)
+  Fin: Tuesday 13 January 2026 01:10:30
+  Durée itération: 4m 35s
+  Temps cumulé: 4h 56m 34s
+
+--- Itération 165 ---
+  Début: Tuesday 13 January 2026 01:10:30
+  Self-play: 200 parties (12 workers)...

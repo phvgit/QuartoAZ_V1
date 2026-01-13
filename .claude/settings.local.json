@@ -14,7 +14,9 @@
       "Bash(rmdir:*)",
       "Bash(findstr:*)",
       "Bash(echo:*)",
-      "Bash(pip install:*)"
+      "Bash(pip install:*)",
+      "Bash(git push:*)",
+      "Bash(git restore:*)"
     ]
   },
   "hooks": {
