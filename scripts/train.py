@@ -122,7 +122,12 @@ def train(args):
         )
     else:
         print("  Architecture: SERVER (InferenceServer centralisé)")
-        trainer = AlphaZeroTrainer(config, use_lr_scheduler=not args.no_lr_scheduler)
+        trainer = AlphaZeroTrainer(
+            config,
+            use_lr_scheduler=not args.no_lr_scheduler,
+            eval_frequency=args.eval_frequency,
+            eval_games=args.eval_games
+        )
 
     print(f"  Paramètres: {trainer.network.count_parameters():,}")
 
