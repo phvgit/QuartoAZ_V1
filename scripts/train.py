@@ -114,7 +114,12 @@ def train(args):
     print("\nInitialisation du trainer...")
     if args.arch == 'local':
         print("  Architecture: LOCAL (réseau par worker, rapide)")
-        trainer = AlphaZeroTrainerLocal(config, use_lr_scheduler=not args.no_lr_scheduler)
+        trainer = AlphaZeroTrainerLocal(
+            config,
+            use_lr_scheduler=not args.no_lr_scheduler,
+            eval_frequency=args.eval_frequency,
+            eval_games=args.eval_games
+        )
     else:
         print("  Architecture: SERVER (InferenceServer centralisé)")
         trainer = AlphaZeroTrainer(config, use_lr_scheduler=not args.no_lr_scheduler)
@@ -334,8 +339,10 @@ Exemples:
                        help='Fréquence de sauvegarde du best_model (défaut: 1)')
 
     # Évaluation
-    parser.add_argument('--eval-games', type=int, default=50,
-                       help='Nombre de parties pour l\'évaluation (défaut: 50)')
+    parser.add_argument('--eval-frequency', type=int, default=10,
+                       help='Fréquence d\'évaluation vs Random pendant l\'entraînement (défaut: 10, 0=désactivé)')
+    parser.add_argument('--eval-games', type=int, default=20,
+                       help='Nombre de parties pour l\'évaluation (défaut: 20)')
     parser.add_argument('--verbose', '-v', action='store_true',
                        help='Affichage détaillé')
 

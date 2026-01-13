@@ -91,9 +91,12 @@ class AlphaZeroTrainerLocal:
     Plus simple et plus rapide que l'architecture avec InferenceServer.
     """
 
-    def __init__(self, config: Config, use_lr_scheduler: bool = True):
+    def __init__(self, config: Config, use_lr_scheduler: bool = True,
+                 eval_frequency: int = 10, eval_games: int = 20):
         self.config = config
         self.use_lr_scheduler = use_lr_scheduler
+        self.eval_frequency = eval_frequency
+        self.eval_games = eval_games
 
         # Device pour l'entraînement (GPU si disponible)
         self.device = torch.device(
@@ -267,6 +270,10 @@ class AlphaZeroTrainerLocal:
             # Checkpoint
             if self.iteration % self.config.training.save_frequency == 0:
                 self._save_checkpoint()
+
+            # Évaluation périodique
+            if self.eval_frequency > 0 and self.iteration % self.eval_frequency == 0:
+                self._run_evaluation(verbose)
 
             # Early stopping: vérifier après chaque cycle complet
             if self.iters_since_best >= self.patience_cycles * self.cycle_length:
@@ -485,6 +492,67 @@ class AlphaZeroTrainerLocal:
             'value_loss': total_value_loss / num_batches,
             'num_batches': num_batches
         }
+
+    def _run_evaluation(self, verbose: bool = True):
+        """Évalue le réseau contre un joueur aléatoire."""
+        if self.eval_games <= 0:
+            return
+
+        if verbose:
+            print(f"\n  --- Évaluation ({self.eval_games} parties vs Random) ---")
+
+        self.network.eval()
+        mcts = MCTS(config=self.config.mcts, network=self.network)
+
+        wins, losses, draws = 0, 0, 0
+
+        for game_idx in range(self.eval_games):
+            game = Quarto()
+            network_is_player = game_idx % 2
+
+            # Premier choix de pièce
+            if network_is_player == 0:
+                piece_probs = mcts.search_piece(game, temperature=0)
+                piece = int(np.argmax(piece_probs)) + 1
+            else:
+                piece = np.random.choice(game.get_available_pieces())
+            game.choose_piece(piece)
+
+            while not game.game_over:
+                if game.current_player == network_is_player:
+                    move = mcts.get_best_move(game)
+                else:
+                    move = np.random.choice(game.get_legal_moves())
+                game.play_move(move)
+
+                if not game.game_over and game.get_available_pieces():
+                    if game.current_player == network_is_player:
+                        piece = mcts.get_best_piece(game)
+                    else:
+                        piece = np.random.choice(game.get_available_pieces())
+                    game.choose_piece(piece)
+
+            if game.winner == network_is_player:
+                wins += 1
+            elif game.winner is None:
+                draws += 1
+            else:
+                losses += 1
+
+        self.network.train()
+
+        winrate = wins / self.eval_games * 100
+        if verbose:
+            print(f"  WR vs Random: {winrate:.1f}% ({wins}W/{losses}L/{draws}D)")
+
+        # Sauvegarder dans les stats
+        if self.training_stats:
+            self.training_stats[-1]['eval'] = {
+                'winrate': winrate,
+                'wins': wins,
+                'losses': losses,
+                'draws': draws
+            }
 
     def _save_shared_weights(self):
         """Sauvegarde les poids pour les workers."""
